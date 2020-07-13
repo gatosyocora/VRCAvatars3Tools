@@ -7,6 +7,7 @@ using AnimatorControllerLayer = UnityEditor.Animations.AnimatorControllerLayer;
 using AnimatorController = UnityEditor.Animations.AnimatorController;
 using VRC.SDK3.Components;
 using Parameter = VRC.SDKBase.VRC_AvatarParameterDriver.Parameter;
+using System.Collections.Generic;
 
 // ver 1.0.2
 // Copyright (c) 2020 gatosyocora
@@ -193,10 +194,17 @@ namespace Gatosyocora.VRCAvatars3Tools
         }
 
         // TODO: StateMachineへの対応
-        private void CopyTransitions(AnimatorStateMachine srcStateMachine, AnimatorStateMachine dstStateMachine)
+        private void CopyTransitions(AnimatorStateMachine srcStateMachine, AnimatorStateMachine dstStateMachine,
+                                    AnimatorState[] srcStates = null, AnimatorState[] dstStates = null,
+                                    AnimatorStateMachine[] srcStateMachines = null, AnimatorStateMachine[] dstStateMachines = null)
         {
-            var srcStates = GetAllStates(srcStateMachine);
-            var dstStates = GetAllStates(dstStateMachine);
+            if (srcStates is null)
+            {
+                srcStates = GetAllStates(srcStateMachine);
+                dstStates = GetAllStates(dstStateMachine);
+                srcStateMachines = GetAllStateMachines(srcStateMachine);
+                dstStateMachines = GetAllStateMachines(dstStateMachine);
+            }
 
             // StateからのTransitionを設定
             for (int i = 0; i < srcStates.Length; i++)
@@ -208,43 +216,74 @@ namespace Gatosyocora.VRCAvatars3Tools
                     if (srcTransition.isExit)
                     {
                         dstTransition = dstStates[i].AddExitTransition();
+                        Debug.Log($"state:{srcStates[i].name} -> Exit");
                     }
-                    else
+                    else if (srcTransition.destinationState != null)
                     {
-                        if (srcTransition.destinationState is null) continue;
-
                         var stateIndex = Array.IndexOf(srcStates, srcTransition.destinationState);
                         dstTransition = dstStates[i].AddTransition(dstStates[stateIndex]);
                     }
+                    else if (srcTransition.destinationStateMachine != null)
+                    {
+                        var stateMachineIndex = Array.IndexOf(srcStateMachines, srcTransition.destinationStateMachine);
+                        dstTransition = dstStates[i].AddTransition(dstStateMachines[stateMachineIndex]);
+                    }
+                    else continue;
                     CopyTransitionParameters(srcTransition, dstTransition);
                 }
             }
 
-            // AnyStateからのTransitionを設定
-            foreach (var srcTransition in srcStateMachine.anyStateTransitions)
+            for (int i = 0; i < srcStateMachines.Length; i++)
             {
-                if (srcTransition.destinationState is null) continue;
+                // AnyStateからのTransitionを設定
+                foreach (var srcTransition in srcStateMachines[i].anyStateTransitions)
+                {
+                    AnimatorStateTransition dstTransition;
+                    if (srcTransition.isExit)
+                    {
+                        Debug.Log($"any:{srcStateMachines[i].name} -> Exit");
+                        continue;
+                    }
+                    else if (srcTransition.destinationState != null)
+                    {
+                        var stateIndex = Array.IndexOf(srcStates, srcTransition.destinationState);
+                        dstTransition = dstStateMachines[i].AddAnyStateTransition(dstStates[stateIndex]);
+                    }
+                    else if (srcTransition.destinationStateMachine != null)
+                    {
+                        var stateMachineIndex = Array.IndexOf(srcStateMachines, srcTransition.destinationStateMachine);
+                        dstTransition = dstStateMachines[i].AddAnyStateTransition(dstStateMachines[stateMachineIndex]);
+                    }
+                    else continue;
 
-                AnimatorStateTransition dstTransition;
+                    CopyTransitionParameters(srcTransition, dstTransition);
+                }
 
-                var stateIndex = Array.IndexOf(srcStates, srcTransition.destinationState);
-                dstTransition = dstStateMachine.AddAnyStateTransition(dstStates[stateIndex]);
-                CopyTransitionParameters(srcTransition, dstTransition);
+                // EntryStateからのTransitionを設定
+                foreach (var srcTransition in srcStateMachines[i].entryTransitions)
+                {
+                    AnimatorTransition dstTransition;
+                    if (srcTransition.isExit)
+                    {
+                        //dstTransition = dstStateMachines[i].AddStateMachineExitTransition(dstStateMachine);
+                        Debug.Log($"entry:{srcStateMachines[i].name} -> Exit");
+                        continue;
+                    }
+                    else if (srcTransition.destinationState != null)
+                    {
+                        var stateIndex = Array.IndexOf(srcStates, srcTransition.destinationState);
+                        dstTransition = dstStateMachines[i].AddEntryTransition(dstStates[stateIndex]);
+                    }
+                    else if (srcTransition.destinationStateMachine != null)
+                    {
+                        var stateMachineIndex = Array.IndexOf(srcStateMachines, srcTransition.destinationStateMachine);
+                        dstTransition = dstStateMachines[i].AddEntryTransition(dstStateMachines[stateMachineIndex]);
+                    }
+                    else continue;
+
+                    CopyTransitionParameters(srcTransition, dstTransition);
+                }
             }
-
-            // EntryStateからのTransitionを設定
-            foreach (var srcTransition in srcStateMachine.entryTransitions)
-            {
-                if (srcTransition.destinationState is null) continue;
-
-                AnimatorTransition dstTransition;
-
-                var stateIndex = Array.IndexOf(srcStates, srcTransition.destinationState);
-                dstTransition = dstStateMachine.AddEntryTransition(dstStates[stateIndex]);
-                CopyTransitionParameters(srcTransition, dstTransition);
-            }
-
-            // StateMachineからのTransitionを設定
         }
 
         private AnimatorState[] GetAllStates(AnimatorStateMachine stateMachine)
@@ -255,6 +294,21 @@ namespace Gatosyocora.VRCAvatars3Tools
                 stateList.AddRange(GetAllStates(subStatetMachine.stateMachine));
             }
             return stateList.ToArray();
+        }
+
+        private AnimatorStateMachine[] GetAllStateMachines(AnimatorStateMachine stateMachine)
+        {
+            var stateMachineList = new List<AnimatorStateMachine>
+            {
+                stateMachine
+            };
+
+            foreach (var subStateMachine in stateMachine.stateMachines)
+            {
+                stateMachineList.AddRange(GetAllStateMachines(subStateMachine.stateMachine));
+            }
+
+            return stateMachineList.ToArray();
         }
 
         private void CopyTransitionParameters(AnimatorStateTransition srcTransition, AnimatorStateTransition dstTransition)
@@ -278,10 +332,8 @@ namespace Gatosyocora.VRCAvatars3Tools
             }
         }
 
-        // TODO: destinationStateMachineの設定
         private void CopyTransitionParameters(AnimatorTransition srcTransition, AnimatorTransition dstTransition)
         {
-            //dstTransition.destinationStateMachine = null;
             dstTransition.hideFlags = srcTransition.hideFlags;
             dstTransition.isExit = srcTransition.isExit;
             dstTransition.mute = srcTransition.mute;
