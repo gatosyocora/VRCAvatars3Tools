@@ -78,7 +78,6 @@ namespace Gatosyocora.VRCAvatars3Tools
             AssetDatabase.Refresh();
         }
 
-        // TODO: StateMachineへの対応
         private AnimatorControllerLayer DuplicateLayer(AnimatorControllerLayer srcLayer, string dstLayerName, bool firstLayer = false)
         {
             var newLayer = new AnimatorControllerLayer()
@@ -93,7 +92,6 @@ namespace Gatosyocora.VRCAvatars3Tools
                 syncedLayerAffectsTiming = srcLayer.syncedLayerAffectsTiming,
                 syncedLayerIndex = srcLayer.syncedLayerIndex
             };
-
 
             // 最初のレイヤーはdefaultWeightがどんなものでも自動的にweightが1扱いになっているので
             // defaultWeightを1にする
@@ -194,33 +192,13 @@ namespace Gatosyocora.VRCAvatars3Tools
             };
         }
 
-        private void CopyTransitionParameters(AnimatorStateTransition srcTransition, AnimatorStateTransition dstTransition)
-        {
-            dstTransition.canTransitionToSelf = srcTransition.canTransitionToSelf;
-            dstTransition.duration = srcTransition.duration;
-            dstTransition.exitTime = srcTransition.exitTime;
-            dstTransition.hasExitTime = srcTransition.hasExitTime;
-            dstTransition.hasFixedDuration = srcTransition.hasFixedDuration;
-            dstTransition.hideFlags = srcTransition.hideFlags;
-            dstTransition.isExit = srcTransition.isExit;
-            dstTransition.mute = srcTransition.mute;
-            dstTransition.name = srcTransition.name;
-            dstTransition.offset = srcTransition.offset;
-            dstTransition.interruptionSource = srcTransition.interruptionSource;
-            dstTransition.orderedInterruption = srcTransition.orderedInterruption;
-            dstTransition.solo = srcTransition.solo;
-            foreach (var srcCondition in srcTransition.conditions)
-            {
-                dstTransition.AddCondition(srcCondition.mode, srcCondition.threshold, srcCondition.parameter);
-            }
-        }
-
+        // TODO: StateMachineへの対応
         private void CopyTransitions(AnimatorStateMachine srcStateMachine, AnimatorStateMachine dstStateMachine)
         {
             var srcChildStates = srcStateMachine.states;
-            var dstStates = dstStateMachine.states;
+            var dstChildStates = dstStateMachine.states;
 
-            // transitionsを設定
+            // StateからのTransitionを設定
             for (int i = 0; i < srcChildStates.Length; i++)
             {
                 foreach (var srcTransition in srcChildStates[i].state.transitions)
@@ -229,7 +207,7 @@ namespace Gatosyocora.VRCAvatars3Tools
 
                     if (srcTransition.isExit)
                     {
-                        transition = dstStates[i].state.AddExitTransition();
+                        transition = dstChildStates[i].state.AddExitTransition();
                     }
                     else
                     {
@@ -238,7 +216,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                                                 .Where(s => s.Value == srcTransition.destinationState)
                                                 .Select(s => s.Index).SingleOrDefault();
 
-                        transition = dstStates[i].state.AddTransition(dstStates[stateIndex].state);
+                        transition = dstChildStates[i].state.AddTransition(dstChildStates[stateIndex].state);
                     }
                     CopyTransitionParameters(srcTransition, transition);
                 }
@@ -266,6 +244,29 @@ namespace Gatosyocora.VRCAvatars3Tools
 
                 var transition = dstStateMachine.AddEntryTransition(dstStateMachine.states[stateIndex].state);
                 CopyTransitionParameters(srcTransition, transition);
+            }
+
+            // StateMachineからのTransitionを設定
+        }
+
+        private void CopyTransitionParameters(AnimatorStateTransition srcTransition, AnimatorStateTransition dstTransition)
+        {
+            dstTransition.canTransitionToSelf = srcTransition.canTransitionToSelf;
+            dstTransition.duration = srcTransition.duration;
+            dstTransition.exitTime = srcTransition.exitTime;
+            dstTransition.hasExitTime = srcTransition.hasExitTime;
+            dstTransition.hasFixedDuration = srcTransition.hasFixedDuration;
+            dstTransition.hideFlags = srcTransition.hideFlags;
+            dstTransition.isExit = srcTransition.isExit;
+            dstTransition.mute = srcTransition.mute;
+            dstTransition.name = srcTransition.name;
+            dstTransition.offset = srcTransition.offset;
+            dstTransition.interruptionSource = srcTransition.interruptionSource;
+            dstTransition.orderedInterruption = srcTransition.orderedInterruption;
+            dstTransition.solo = srcTransition.solo;
+            foreach (var srcCondition in srcTransition.conditions)
+            {
+                dstTransition.AddCondition(srcCondition.mode, srcCondition.threshold, srcCondition.parameter);
             }
         }
 
