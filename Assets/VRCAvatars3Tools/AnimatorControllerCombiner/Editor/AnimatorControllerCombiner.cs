@@ -56,7 +56,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                 dstController.AddLayer(newLayer);
 
                 // Unity再起動後も保持するためにアセットにオブジェクトを追加する必要がある
-                AddObjectsInLayerToAnimatorController(newLayer, dstControllerPath);
+                AddObjectsInStateMachineToAnimatorController(newLayer.stateMachine, dstControllerPath);
             }
 
             foreach (var parameter in srcController.parameters)
@@ -419,11 +419,10 @@ namespace Gatosyocora.VRCAvatars3Tools
             }
         }
 
-        // TODO: StateMachineへの対応
-        private void AddObjectsInLayerToAnimatorController(AnimatorControllerLayer layer, string controllerPath)
+        private void AddObjectsInStateMachineToAnimatorController(AnimatorStateMachine stateMachine, string controllerPath)
         {
-            AssetDatabase.AddObjectToAsset(layer.stateMachine, controllerPath);
-            foreach (var childState in layer.stateMachine.states)
+            AssetDatabase.AddObjectToAsset(stateMachine, controllerPath);
+            foreach (var childState in stateMachine.states)
             {
                 AssetDatabase.AddObjectToAsset(childState.state, controllerPath);
                 foreach (var transition in childState.state.transitions)
@@ -435,21 +434,21 @@ namespace Gatosyocora.VRCAvatars3Tools
                     AssetDatabase.AddObjectToAsset(behaviour, controllerPath);
                 }
             }
-            //foreach (var childStateMachine in layer.stateMachine.stateMachines)
-            //{
-            //    AssetDatabase.AddObjectToAsset(childStateMachine.stateMachine, controllerPath);
-            //}
-            foreach (var transition in layer.stateMachine.anyStateTransitions)
+            foreach (var transition in stateMachine.anyStateTransitions)
             {
                 AssetDatabase.AddObjectToAsset(transition, controllerPath);
             }
-            foreach (var transition in layer.stateMachine.entryTransitions)
+            foreach (var transition in stateMachine.entryTransitions)
             {
                 AssetDatabase.AddObjectToAsset(transition, controllerPath);
             }
-            foreach (var behaviour in layer.stateMachine.behaviours)
+            foreach (var behaviour in stateMachine.behaviours)
             {
                 AssetDatabase.AddObjectToAsset(behaviour, controllerPath);
+            }
+            foreach (var SubStateMachine in stateMachine.stateMachines)
+            {
+                AddObjectsInStateMachineToAnimatorController(SubStateMachine.stateMachine, controllerPath);
             }
         }
     }
