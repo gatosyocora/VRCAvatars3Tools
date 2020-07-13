@@ -99,6 +99,7 @@ namespace Gatosyocora.VRCAvatars3Tools
             if (firstLayer) newLayer.defaultWeight = 1f;
 
             // StateとStateMachineをすべて追加後に遷移を設定
+            // 親階層へ伸びているっぽい遷移もある?
             CopyTransitions(srcLayer.stateMachine, newLayer.stateMachine);
 
             return newLayer;
