@@ -487,6 +487,10 @@ namespace Gatosyocora.VRCAvatars3Tools
             }
             foreach (var SubStateMachine in stateMachine.stateMachines)
             {
+                foreach (var transition in stateMachine.GetStateMachineTransitions(SubStateMachine.stateMachine))
+                {
+                    AssetDatabase.AddObjectToAsset(transition, controllerPath);
+                }
                 AddObjectsInStateMachineToAnimatorController(SubStateMachine.stateMachine, controllerPath);
             }
         }
