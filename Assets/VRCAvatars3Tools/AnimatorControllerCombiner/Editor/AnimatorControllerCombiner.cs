@@ -97,39 +97,14 @@ namespace Gatosyocora.VRCAvatars3Tools
 
             // 最初のレイヤーはdefaultWeightがどんなものでも自動的にweightが1扱いになっているので
             // defaultWeightを1にする
-            if (firstLayer)
-            {
-                newLayer.defaultWeight = 1f;
-            }
-
-            // StateとStateMachineをすべて追加後に遷移を設定
-            CopyTransitions(srcLayer.stateMachine, newLayer.stateMachine);
-
-            // behaivoursを設定
-            foreach (var srcBehaivour in srcLayer.stateMachine.behaviours)
-            {
-                var behaivour = newLayer.stateMachine.AddStateMachineBehaviour(srcBehaivour.GetType());
-                CopyBehaivourParameters(srcBehaivour, behaivour);
-            }
-
-            // defaultStateの設定
-            {
-                if (srcLayer.stateMachine.defaultState != null)
-                {
-                    var defaultStateIndex = srcLayer.stateMachine.states
-                                        .Select((value, index) => new { Value = value.state, Index = index })
-                                        .Where(s => s.Value == srcLayer.stateMachine.defaultState)
-                                        .Select(s => s.Index).SingleOrDefault();
-                    newLayer.stateMachine.defaultState = newLayer.stateMachine.states[defaultStateIndex].state;
-                }
-            }
+            if (firstLayer) newLayer.defaultWeight = 1f;
 
             return newLayer;
         }
 
         private AnimatorStateMachine DuplicateStateMachine(AnimatorStateMachine srcStateMachine)
         {
-            return new AnimatorStateMachine
+            var dstStateMachine = new AnimatorStateMachine
             {
                 anyStatePosition = srcStateMachine.anyStatePosition,
                 entryPosition = srcStateMachine.entryPosition,
@@ -147,6 +122,28 @@ namespace Gatosyocora.VRCAvatars3Tools
                                     .ToArray(),
                 states = DuplicateChildStates(srcStateMachine.states),
             };
+
+            // StateとStateMachineをすべて追加後に遷移を設定
+            CopyTransitions(srcStateMachine, dstStateMachine);
+
+            // behaivoursを設定
+            foreach (var srcBehaivour in srcStateMachine.behaviours)
+            {
+                var behaivour = dstStateMachine.AddStateMachineBehaviour(srcBehaivour.GetType());
+                CopyBehaivourParameters(srcBehaivour, behaivour);
+            }
+
+            // defaultStateの設定
+            if (srcStateMachine.defaultState != null)
+            {
+                var defaultStateIndex = srcStateMachine.states
+                                    .Select((value, index) => new { Value = value.state, Index = index })
+                                    .Where(s => s.Value == srcStateMachine.defaultState)
+                                    .Select(s => s.Index).SingleOrDefault();
+                dstStateMachine.defaultState = dstStateMachine.states[defaultStateIndex].state;
+            }
+
+            return dstStateMachine;
         }
 
         private ChildAnimatorState[] DuplicateChildStates(ChildAnimatorState[] srcChildStates)
