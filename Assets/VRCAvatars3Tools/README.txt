@@ -1,7 +1,7 @@
 ﻿本セットに含まれる各種Editor拡張に関しての説明と利用規約を記載しています。
 
 ----------------------------------------------------
-〇AnimatorControllerCombiner (ver 1.0.2)
+〇AnimatorControllerCombiner (ver 1.0.3)
 AnimatorControllerのLayerとParameterを他のAnimatorControllerにコピーすることで合成します
 
 「VRCAvatars3Tools > AnimatorControllerCombiner」で以下の機能を持つウィンドウが開きます
@@ -11,13 +11,12 @@ Dst AnimatorController : コピー先AnimatorController
 
 「Combine」を押すとSourceAnmatorControllerのLayerとParameterがDestinationAnimatorControllerにコピーされます。
 
-・注意点
-現状ではまだ遷移先としてStateMachineを持つLayerの場合、一部がうまくコピーできません。
-
 ・既知の不具合
 StateBehaviourを持つStateを含むLayerをコピーするとエラーが表示されます（動作には問題ない感じがします）
 
 ・更新履歴
+ver1.0.3
+	* SubStateMachineに対応
 ver1.0.2 
 	* 一番上のLayerのweight値が正しくコピーされていない不具合を修正
 	* StateBehaviourのパラメータが正しくコピーされていない不具合を修正
