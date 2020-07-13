@@ -167,30 +167,6 @@ namespace Gatosyocora.VRCAvatars3Tools
                 }
             }
 
-            // transitionsを設定
-            for (int i = 0; i < srcChildStates.Length; i++)
-            {
-                foreach (var srcTransition in srcChildStates[i].state.transitions)
-                {
-                    AnimatorStateTransition transition;
-
-                    if (srcTransition.isExit)
-                    {
-                        transition = dstStates[i].state.AddExitTransition();
-                    }
-                    else
-                    {
-                        var stateIndex = srcChildStates
-                                                .Select((value, index) => new { Value = value.state, Index = index })
-                                                .Where(s => s.Value == srcTransition.destinationState)
-                                                .Select(s => s.Index).SingleOrDefault();
-
-                        transition = dstStates[i].state.AddTransition(dstStates[stateIndex].state);
-                    }
-                    CopyTransitionParameters(srcTransition, transition);
-                }
-            }
-
             return dstStates;
         }
 
@@ -241,6 +217,33 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         private void CopyTransitions(AnimatorStateMachine srcStateMachine, AnimatorStateMachine dstStateMachine)
         {
+            var srcChildStates = srcStateMachine.states;
+            var dstStates = dstStateMachine.states;
+
+            // transitionsを設定
+            for (int i = 0; i < srcChildStates.Length; i++)
+            {
+                foreach (var srcTransition in srcChildStates[i].state.transitions)
+                {
+                    AnimatorStateTransition transition;
+
+                    if (srcTransition.isExit)
+                    {
+                        transition = dstStates[i].state.AddExitTransition();
+                    }
+                    else
+                    {
+                        var stateIndex = srcChildStates
+                                                .Select((value, index) => new { Value = value.state, Index = index })
+                                                .Where(s => s.Value == srcTransition.destinationState)
+                                                .Select(s => s.Index).SingleOrDefault();
+
+                        transition = dstStates[i].state.AddTransition(dstStates[stateIndex].state);
+                    }
+                    CopyTransitionParameters(srcTransition, transition);
+                }
+            }
+
             // AnyStateからのTransitionを設定
             foreach (var srcTransition in srcStateMachine.anyStateTransitions)
             {
