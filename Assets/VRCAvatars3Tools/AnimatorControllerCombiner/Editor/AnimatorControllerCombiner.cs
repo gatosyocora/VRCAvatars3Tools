@@ -89,17 +89,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                 iKPass = srcLayer.iKPass,
                 name = dstLayerName,
                 // 新しく作らないとLayer削除時にコピー元LayerのStateが消える
-                stateMachine = new AnimatorStateMachine
-                {
-                    anyStatePosition = srcLayer.stateMachine.anyStatePosition,
-                    entryPosition = srcLayer.stateMachine.entryPosition,
-                    exitPosition = srcLayer.stateMachine.exitPosition,
-                    hideFlags = srcLayer.stateMachine.hideFlags,
-                    name = srcLayer.stateMachine.name,
-                    parentStateMachinePosition = srcLayer.stateMachine.parentStateMachinePosition,
-                    //stateMachines = srcLayer.stateMachine.stateMachines.Clone() as ChildAnimatorStateMachine[],
-                    states = DuplicateChildStates(srcLayer.stateMachine.states),
-                },
+                stateMachine = DuplicateStateMachine(srcLayer.stateMachine),
                 syncedLayerAffectsTiming = srcLayer.syncedLayerAffectsTiming,
                 syncedLayerIndex = srcLayer.syncedLayerIndex
             };
@@ -135,6 +125,28 @@ namespace Gatosyocora.VRCAvatars3Tools
             }
 
             return newLayer;
+        }
+
+        private AnimatorStateMachine DuplicateStateMachine(AnimatorStateMachine srcStateMachine)
+        {
+            return new AnimatorStateMachine
+            {
+                anyStatePosition = srcStateMachine.anyStatePosition,
+                entryPosition = srcStateMachine.entryPosition,
+                exitPosition = srcStateMachine.exitPosition,
+                hideFlags = srcStateMachine.hideFlags,
+                name = srcStateMachine.name,
+                parentStateMachinePosition = srcStateMachine.parentStateMachinePosition,
+                stateMachines = srcStateMachine.stateMachines
+                                    .Select(cs =>
+                                        new ChildAnimatorStateMachine
+                                        {
+                                            position = cs.position,
+                                            stateMachine = DuplicateStateMachine(cs.stateMachine)
+                                        })
+                                    .ToArray(),
+                states = DuplicateChildStates(srcStateMachine.states),
+            };
         }
 
         private ChildAnimatorState[] DuplicateChildStates(ChildAnimatorState[] srcChildStates)
