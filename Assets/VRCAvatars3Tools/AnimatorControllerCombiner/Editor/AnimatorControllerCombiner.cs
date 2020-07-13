@@ -112,29 +112,8 @@ namespace Gatosyocora.VRCAvatars3Tools
                 newLayer.defaultWeight = 1f;
             }
 
-            // AnyStateからのTransitionを設定
-            foreach (var srcTransition in srcLayer.stateMachine.anyStateTransitions)
-            {
-                var stateIndex = srcLayer.stateMachine.states
-                                        .Select((value, index) => new { Value = value.state, Index = index })
-                                        .Where(s => s.Value == srcTransition.destinationState)
-                                        .Select(s => s.Index).SingleOrDefault();
-
-                var transition = newLayer.stateMachine.AddAnyStateTransition(newLayer.stateMachine.states[stateIndex].state);
-                CopyTransitionParameters(srcTransition, transition);
-            }
-
-            // EntryStateからのTransitionを設定
-            foreach (var srcTransition in srcLayer.stateMachine.entryTransitions)
-            {
-                var stateIndex = srcLayer.stateMachine.states
-                                        .Select((value, index) => new { Value = value.state, Index = index })
-                                        .Where(s => s.Value == srcTransition.destinationState)
-                                        .Select(s => s.Index).SingleOrDefault();
-
-                var transition = newLayer.stateMachine.AddEntryTransition(newLayer.stateMachine.states[stateIndex].state);
-                CopyTransitionParameters(srcTransition, transition);
-            }
+            // StateとStateMachineをすべて追加後に遷移を設定
+            CopyTransitions(srcLayer.stateMachine, newLayer.stateMachine);
 
             // behaivoursを設定
             foreach (var srcBehaivour in srcLayer.stateMachine.behaviours)
@@ -248,6 +227,33 @@ namespace Gatosyocora.VRCAvatars3Tools
             foreach (var srcCondition in srcTransition.conditions)
             {
                 dstTransition.AddCondition(srcCondition.mode, srcCondition.threshold, srcCondition.parameter);
+            }
+        }
+
+        private void CopyTransitions(AnimatorStateMachine srcStateMachine, AnimatorStateMachine dstStateMachine)
+        {
+            // AnyStateからのTransitionを設定
+            foreach (var srcTransition in srcStateMachine.anyStateTransitions)
+            {
+                var stateIndex = srcStateMachine.states
+                                        .Select((value, index) => new { Value = value.state, Index = index })
+                                        .Where(s => s.Value == srcTransition.destinationState)
+                                        .Select(s => s.Index).SingleOrDefault();
+
+                var transition = dstStateMachine.AddAnyStateTransition(dstStateMachine.states[stateIndex].state);
+                CopyTransitionParameters(srcTransition, transition);
+            }
+
+            // EntryStateからのTransitionを設定
+            foreach (var srcTransition in srcStateMachine.entryTransitions)
+            {
+                var stateIndex = srcStateMachine.states
+                                        .Select((value, index) => new { Value = value.state, Index = index })
+                                        .Where(s => s.Value == srcTransition.destinationState)
+                                        .Select(s => s.Index).SingleOrDefault();
+
+                var transition = dstStateMachine.AddEntryTransition(dstStateMachine.states[stateIndex].state);
+                CopyTransitionParameters(srcTransition, transition);
             }
         }
 
