@@ -97,6 +97,9 @@ namespace Gatosyocora.VRCAvatars3Tools
             // defaultWeightを1にする
             if (firstLayer) newLayer.defaultWeight = 1f;
 
+            // StateとStateMachineをすべて追加後に遷移を設定
+            CopyTransitions(srcLayer.stateMachine, newLayer.stateMachine);
+
             return newLayer;
         }
 
@@ -120,9 +123,6 @@ namespace Gatosyocora.VRCAvatars3Tools
                                     .ToArray(),
                 states = DuplicateChildStates(srcStateMachine.states),
             };
-
-            // StateとStateMachineをすべて追加後に遷移を設定
-            CopyTransitions(srcStateMachine, dstStateMachine);
 
             // behaivoursを設定
             foreach (var srcBehaivour in srcStateMachine.behaviours)
@@ -195,58 +195,66 @@ namespace Gatosyocora.VRCAvatars3Tools
         // TODO: StateMachineへの対応
         private void CopyTransitions(AnimatorStateMachine srcStateMachine, AnimatorStateMachine dstStateMachine)
         {
-            var srcChildStates = srcStateMachine.states;
-            var dstChildStates = dstStateMachine.states;
+            var srcStates = GetAllStates(srcStateMachine);
+            var dstStates = GetAllStates(dstStateMachine);
 
             // StateからのTransitionを設定
-            for (int i = 0; i < srcChildStates.Length; i++)
+            for (int i = 0; i < srcStates.Length; i++)
             {
-                foreach (var srcTransition in srcChildStates[i].state.transitions)
+                foreach (var srcTransition in srcStates[i].transitions)
                 {
-                    AnimatorStateTransition transition;
+                    AnimatorStateTransition dstTransition;
 
                     if (srcTransition.isExit)
                     {
-                        transition = dstChildStates[i].state.AddExitTransition();
+                        dstTransition = dstStates[i].AddExitTransition();
                     }
                     else
                     {
-                        var stateIndex = srcChildStates
-                                                .Select((value, index) => new { Value = value.state, Index = index })
-                                                .Where(s => s.Value == srcTransition.destinationState)
-                                                .Select(s => s.Index).SingleOrDefault();
+                        if (srcTransition.destinationState is null) continue;
 
-                        transition = dstChildStates[i].state.AddTransition(dstChildStates[stateIndex].state);
+                        var stateIndex = Array.IndexOf(srcStates, srcTransition.destinationState);
+                        dstTransition = dstStates[i].AddTransition(dstStates[stateIndex]);
                     }
-                    CopyTransitionParameters(srcTransition, transition);
+                    CopyTransitionParameters(srcTransition, dstTransition);
                 }
             }
 
             // AnyStateからのTransitionを設定
             foreach (var srcTransition in srcStateMachine.anyStateTransitions)
             {
-                var stateIndex = srcStateMachine.states
-                                        .Select((value, index) => new { Value = value.state, Index = index })
-                                        .Where(s => s.Value == srcTransition.destinationState)
-                                        .Select(s => s.Index).SingleOrDefault();
+                if (srcTransition.destinationState is null) continue;
 
-                var transition = dstStateMachine.AddAnyStateTransition(dstStateMachine.states[stateIndex].state);
-                CopyTransitionParameters(srcTransition, transition);
+                AnimatorStateTransition dstTransition;
+
+                var stateIndex = Array.IndexOf(srcStates, srcTransition.destinationState);
+                dstTransition = dstStateMachine.AddAnyStateTransition(dstStates[stateIndex]);
+                CopyTransitionParameters(srcTransition, dstTransition);
             }
 
             // EntryStateからのTransitionを設定
             foreach (var srcTransition in srcStateMachine.entryTransitions)
             {
-                var stateIndex = srcStateMachine.states
-                                        .Select((value, index) => new { Value = value.state, Index = index })
-                                        .Where(s => s.Value == srcTransition.destinationState)
-                                        .Select(s => s.Index).SingleOrDefault();
+                if (srcTransition.destinationState is null) continue;
 
-                var transition = dstStateMachine.AddEntryTransition(dstStateMachine.states[stateIndex].state);
-                CopyTransitionParameters(srcTransition, transition);
+                AnimatorTransition dstTransition;
+
+                var stateIndex = Array.IndexOf(srcStates, srcTransition.destinationState);
+                dstTransition = dstStateMachine.AddEntryTransition(dstStates[stateIndex]);
+                CopyTransitionParameters(srcTransition, dstTransition);
             }
 
             // StateMachineからのTransitionを設定
+        }
+
+        private AnimatorState[] GetAllStates(AnimatorStateMachine stateMachine)
+        {
+            var stateList = stateMachine.states.Select(sc => sc.state).ToList();
+            foreach (var subStatetMachine in stateMachine.stateMachines)
+            {
+                stateList.AddRange(GetAllStates(subStatetMachine.stateMachine));
+            }
+            return stateList.ToArray();
         }
 
         private void CopyTransitionParameters(AnimatorStateTransition srcTransition, AnimatorStateTransition dstTransition)
