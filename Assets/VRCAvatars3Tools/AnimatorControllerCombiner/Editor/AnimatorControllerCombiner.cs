@@ -194,18 +194,12 @@ namespace Gatosyocora.VRCAvatars3Tools
             };
         }
 
-        // TODO: StateMachineへの対応
-        private void CopyTransitions(AnimatorStateMachine srcStateMachine, AnimatorStateMachine dstStateMachine,
-                                    AnimatorState[] srcStates = null, AnimatorState[] dstStates = null,
-                                    AnimatorStateMachine[] srcStateMachines = null, AnimatorStateMachine[] dstStateMachines = null)
+        private void CopyTransitions(AnimatorStateMachine srcStateMachine, AnimatorStateMachine dstStateMachine)
         {
-            if (srcStates is null)
-            {
-                srcStates = GetAllStates(srcStateMachine);
-                dstStates = GetAllStates(dstStateMachine);
-                srcStateMachines = GetAllStateMachines(srcStateMachine);
-                dstStateMachines = GetAllStateMachines(dstStateMachine);
-            }
+            var srcStates = GetAllStates(srcStateMachine);
+            var dstStates = GetAllStates(dstStateMachine);
+            var srcStateMachines = GetAllStateMachines(srcStateMachine);
+            var dstStateMachines = GetAllStateMachines(dstStateMachine);
 
             // StateからのTransitionを設定
             for (int i = 0; i < srcStates.Length; i++)
@@ -217,7 +211,6 @@ namespace Gatosyocora.VRCAvatars3Tools
                     if (srcTransition.isExit)
                     {
                         dstTransition = dstStates[i].AddExitTransition();
-                        Debug.Log($"state:{srcStates[i].name} -> Exit");
                     }
                     else if (srcTransition.destinationState != null)
                     {
@@ -230,19 +223,28 @@ namespace Gatosyocora.VRCAvatars3Tools
                         dstTransition = dstStates[i].AddTransition(dstStateMachines[stateMachineIndex]);
                     }
                     else continue;
+
                     CopyTransitionParameters(srcTransition, dstTransition);
                 }
             }
 
+            // SubStateMachine, EntryState, AnyStateからのTransitionを設定
             for (int i = 0; i < srcStateMachines.Length; i++)
             {
+                // SubStateMachineからのTransitionを設定
+                CopyTransitionOfSubStateMachine(srcStateMachines[i], dstStateMachines[i],
+                                                srcStates, dstStates,
+                                                srcStateMachines, dstStateMachines);
+
                 // AnyStateからのTransitionを設定
                 foreach (var srcTransition in srcStateMachines[i].anyStateTransitions)
                 {
                     AnimatorStateTransition dstTransition;
+
+                    // AnyStateからExitStateへの遷移は存在しないはず
                     if (srcTransition.isExit)
                     {
-                        Debug.Log($"any:{srcStateMachines[i].name} -> Exit");
+                        Debug.LogError($"Unknown transition:{srcStateMachines[i].name}.AnyState->Exit");
                         continue;
                     }
                     else if (srcTransition.destinationState != null)
@@ -264,10 +266,11 @@ namespace Gatosyocora.VRCAvatars3Tools
                 foreach (var srcTransition in srcStateMachines[i].entryTransitions)
                 {
                     AnimatorTransition dstTransition;
+
+                    // EntryStateからExitStateへの遷移は存在しないはず
                     if (srcTransition.isExit)
                     {
-                        //dstTransition = dstStateMachines[i].AddStateMachineExitTransition(dstStateMachine);
-                        Debug.Log($"entry:{srcStateMachines[i].name} -> Exit");
+                        Debug.LogError($"Unknown transition:{srcStateMachines[i].name}.Entry->Exit");
                         continue;
                     }
                     else if (srcTransition.destinationState != null)
@@ -279,6 +282,42 @@ namespace Gatosyocora.VRCAvatars3Tools
                     {
                         var stateMachineIndex = Array.IndexOf(srcStateMachines, srcTransition.destinationStateMachine);
                         dstTransition = dstStateMachines[i].AddEntryTransition(dstStateMachines[stateMachineIndex]);
+                    }
+                    else continue;
+
+                    CopyTransitionParameters(srcTransition, dstTransition);
+                }
+            }
+
+        }
+
+        private void CopyTransitionOfSubStateMachine(AnimatorStateMachine srcParentStateMachine, AnimatorStateMachine dstParentStateMachine,
+                                                     AnimatorState[] srcStates, AnimatorState[] dstStates,
+                                                     AnimatorStateMachine[] srcStateMachines, AnimatorStateMachine[] dstStateMachines)
+        {
+            // SubStateMachineからのTransitionを設定
+            for (int i = 0; i < srcParentStateMachine.stateMachines.Length; i++)
+            {
+                var srcSubStateMachine = srcParentStateMachine.stateMachines[i].stateMachine;
+                var dstSubStateMachine = dstParentStateMachine.stateMachines[i].stateMachine;
+
+                foreach (var srcTransition in srcParentStateMachine.GetStateMachineTransitions(srcSubStateMachine))
+                {
+                    AnimatorTransition dstTransition;
+
+                    if (srcTransition.isExit)
+                    {
+                        dstTransition = dstParentStateMachine.AddStateMachineExitTransition(dstSubStateMachine);
+                    }
+                    else if (srcTransition.destinationState != null)
+                    {
+                        var stateIndex = Array.IndexOf(srcStates, srcTransition.destinationState);
+                        dstTransition = dstParentStateMachine.AddStateMachineTransition(dstSubStateMachine, dstStates[stateIndex]);
+                    }
+                    else if (srcTransition.destinationStateMachine != null)
+                    {
+                        var stateMachineIndex = Array.IndexOf(srcStateMachines, srcTransition.destinationStateMachine);
+                        dstTransition = dstParentStateMachine.AddStateMachineTransition(dstSubStateMachine, dstStateMachines[stateMachineIndex]);
                     }
                     else continue;
 
