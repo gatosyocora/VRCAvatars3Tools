@@ -7,7 +7,7 @@ on:
 # 実行内容
 jobs:
   create_readme:
-    runs-on: windows-2019
+    runs-on: windows-lastest
     steps:
     - uses: actions/checkout@master
 
@@ -18,9 +18,9 @@ jobs:
         PS_FILE_PATH: ./.github/make_md.ps1 
         EMAIL: ${{ secrets.EMAIL }} 
       run: |
-        Unblock-File ${PS_FILE_PATH}
-        powershell ${PS_FILE_PATH} ${SRC_README_PATH} ${DST_README_PATH}
-        git config --global user.email ${EMAIL}
+        Unblock-File %PS_FILE_PATH%
+        powershell %PS_FILE_PATH% %SRC_README_PATH% %DST_README_PATH%
+        git config --global user.email %EMAIL%
         git config --global user.name "gatosyocora"
         git add .
         git commit -m "update readme" && git push origin master || true
