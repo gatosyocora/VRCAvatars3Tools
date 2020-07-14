@@ -3,7 +3,8 @@ name: Create Readme
 on:
   push:
     branches:
-    - master
+      - master
+    paths:
       - "Assets/VRCAvatars3Tools/README.txt"
 # 実行内容
 jobs:
