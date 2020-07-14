@@ -10,12 +10,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-      with:
-        fetch-depth: 0
 
     - name: create readme
       env:
-        SRC_README_PATH: 
-        DST_README_PATH: .github/README.txt
+        SRC_README_PATH: ./Assets/VRCAvatars3Tools/README.txt
+        DST_README_PATH: ./.github/README.md
+        EMAIL: ${{ secrets.EMAIL }} 
       run: |
-        echo Hello, world
+        cp --force ${SRC_README_PATH} ${DST_README_PATH}
+        cat ${DST_README_PATH} | sed s/〇/##/ > ${DST_README_PATH}
+        cat ${DST_README_PATH} | sed s/●/###/ > ${DST_README_PATH}
+        cat ${DST_README_PATH} | sed s/・/####/ > ${DST_README_PATH}
+        git config --global user.email ${EMAIL}
+        git config --global user.name "gatosyocora"
+        git add .
+        git commit -m "update readme" && git push origin master || true
