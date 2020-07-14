@@ -24,4 +24,4 @@ jobs:
         git config --global user.name "gatosyocora"
         git add .
         git commit -m "update readme" || echo "No changes to commit"
-        git push origin master
+        git push origin master || True
