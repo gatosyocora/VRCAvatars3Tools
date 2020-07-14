@@ -22,8 +22,8 @@ jobs:
       run: |
         Unblock-File $env:PS_FILE_PATH
         powershell $env:PS_FILE_PATH $env:SRC_README_PATH $env:DST_README_PATH
-        git config --global user.email $env:EMAIL
-        git config --global user.name "gatosyocora"
-        git add .
-        git commit -m "update readme"
-        git push origin master
+        #git config --global user.email $env:EMAIL
+        #git config --global user.name "gatosyocora"
+        #git add .
+        #git commit -m "update readme"
+        #git push origin master
