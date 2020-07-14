@@ -1,0 +1,21 @@
+name: Create Readme
+# masterブランチにpushされたときに実行
+on:
+  push:
+    branches:
+    - master
+# 実行内容
+jobs:
+  create_readme:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+      with:
+        fetch-depth: 0
+
+    - name: create readme
+      env:
+        SRC_README_PATH: 
+        DST_README_PATH: .github/README.txt
+      run: |
+        echo Hello, world
