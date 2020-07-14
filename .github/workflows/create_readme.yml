@@ -18,7 +18,7 @@ jobs:
         EMAIL: ${{ secrets.EMAIL }} 
       run: |
         cp --force ${SRC_README_PATH} ${DST_README_PATH}
-        sed -i -e "s/\n/  \n/g" ${DST_README_PATH}
+        sed -i -e "s/\r\n/  \r\n/g" ${DST_README_PATH}
         git config --global user.email ${EMAIL}
         git config --global user.name "gatosyocora"
         git add .
