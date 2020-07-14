@@ -7,7 +7,7 @@ on:
 # 実行内容
 jobs:
   create_readme:
-    runs-on: ubuntu-latest
+    runs-on: windows-2019
     steps:
     - uses: actions/checkout@master
 
@@ -15,10 +15,11 @@ jobs:
       env:
         SRC_README_PATH: ./Assets/VRCAvatars3Tools/README.txt
         DST_README_PATH: ./.github/README.md
+        PS_FILE_PATH: ./.github/make_md.ps1 
         EMAIL: ${{ secrets.EMAIL }} 
       run: |
-        cp --force ${SRC_README_PATH} ${DST_README_PATH}
-        sed -i -e 's/\n/  \n/g' ${DST_README_PATH}
+        Unblock-File ${PS_FILE_PATH}
+        powershell ${PS_FILE_PATH} ${SRC_README_PATH} ${DST_README_PATH}
         git config --global user.email ${EMAIL}
         git config --global user.name "gatosyocora"
         git add .
