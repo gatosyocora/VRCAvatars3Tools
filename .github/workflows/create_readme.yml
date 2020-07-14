@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - "Assets/VRCAvatars3Tools/README.txt"
+      - 'Assets/VRCAvatars3Tools/README.txt'
 # 実行内容
 jobs:
   create_readme:
