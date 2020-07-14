@@ -7,7 +7,7 @@ on:
 # 実行内容
 jobs:
   create_readme:
-    runs-on: windows-lastest
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@master
 
