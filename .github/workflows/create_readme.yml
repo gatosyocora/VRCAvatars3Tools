@@ -4,6 +4,7 @@ on:
   push:
     branches:
     - master
+      - "Assets/VRCAvatars3Tools/README.txt"
 # 実行内容
 jobs:
   create_readme:
@@ -22,7 +23,6 @@ jobs:
         powershell $env:PS_FILE_PATH $env:SRC_README_PATH $env:DST_README_PATH
         git config --global user.email $env:EMAIL
         git config --global user.name "gatosyocora"
-        # ファイルに変更がなかった場合エラーが出るのでechoでcatchする
-        git add . || echo "nothing to commit, working tree clean"
-        git commit -m "update readme" || echo "No changes to commit"
-        git push origin master || echo "Everything up-to-date"
+        git add .
+        git commit -m "update readme"
+        git push origin master
