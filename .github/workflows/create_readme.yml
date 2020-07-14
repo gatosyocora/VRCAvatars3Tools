@@ -23,5 +23,6 @@ jobs:
         git config --global user.email $env:EMAIL
         git config --global user.name "gatosyocora"
         git add .
+        # ファイルに変更がなかった場合エラーが出るのでechoでcatchする
         git commit -m "update readme" || echo "No changes to commit"
-        git push origin master
+        git push origin master || echo "Everything up-to-date"
