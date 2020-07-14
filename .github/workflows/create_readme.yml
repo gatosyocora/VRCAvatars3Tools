@@ -18,9 +18,9 @@ jobs:
         PS_FILE_PATH: ./.github/make_md.ps1 
         EMAIL: ${{ secrets.EMAIL }} 
       run: |
-        Unblock-File %PS_FILE_PATH%
-        powershell %PS_FILE_PATH% %SRC_README_PATH% %DST_README_PATH%
-        git config --global user.email %EMAIL%
+        Unblock-File $env:PS_FILE_PATH
+        powershell $env:PS_FILE_PATH $env:SRC_README_PATH $env:DST_README_PATH
+        git config --global user.email $env:EMAIL
         git config --global user.name "gatosyocora"
         git add .
         git commit -m "update readme" && git push origin master || true
