@@ -30,11 +30,11 @@ namespace Gatosyocora.VRCAvatars3Tools
         private VRCAvatarDescripterDeserializedObject avatar2Info;
 
         // 2.0のAnimatorOverrideControllerと3.0のHandLayerControllerの
-        // AnimationClip設定位置を対応させるIndex
+        // AnimationClip設定位置を対応させる
         // 配列Indexが2.0に対し, 各Valueが3.0
-        private static int[] clipIndexPair = new int[]
+        private static string[] clipIndexPair = new string[]
         {
-            0, 1, 4, 2, 6, 3, 5
+            "Fist", "Point", "RockNRoll", "Open", "Thumbs up", "Peace", "Gun"
         };
 
         [MenuItem("VRCAvatars3Tools/VRCAvatarConverterTo3")]
@@ -173,6 +173,7 @@ namespace Gatosyocora.VRCAvatars3Tools
             var fxController = AssetDatabase.LoadAssetAtPath(fxControllerPath, typeof(AnimatorController)) as AnimatorController;
 
             avatar.baseAnimationLayers[4].isDefault = false;
+            avatar.baseAnimationLayers[4].isEnabled = true;
             avatar.baseAnimationLayers[4].animatorController = fxController as RuntimeAnimatorController;
             avatar.baseAnimationLayers[4].mask = null;
 
@@ -186,7 +187,8 @@ namespace Gatosyocora.VRCAvatars3Tools
                     if (string.IsNullOrEmpty(animPath)) continue;
 
                     var animClip = AssetDatabase.LoadAssetAtPath(animPath, typeof(AnimationClip)) as AnimationClip;
-                    layer.stateMachine.states[clipIndexPair[i]].state.motion = animClip;
+                    var state = GetAnimatorStateFromStateName(layer.stateMachine, clipIndexPair[i]);
+                    state.motion = animClip;
                 }
             }
 
@@ -333,6 +335,16 @@ namespace Gatosyocora.VRCAvatars3Tools
 
             path = path.Substring(0, path.Length - 1);
             return path;
+        }
+
+        private AnimatorState GetAnimatorStateFromStateName(AnimatorStateMachine stateMachine, string stateName)
+        {
+            foreach (var state in stateMachine.states)
+            {
+                if (state.state.name != stateName) continue;
+                return state.state;
+            }
+            return null;
         }
 
         private static string GetAssetPathForSearch(string filter)
