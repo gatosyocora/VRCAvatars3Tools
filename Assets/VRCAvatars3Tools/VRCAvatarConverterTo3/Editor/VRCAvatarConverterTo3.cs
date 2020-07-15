@@ -160,7 +160,7 @@ namespace Gatosyocora.VRCAvatars3Tools
 
             var originalHandLayerControllerPath = GetAssetPathForSearch("vrc_AvatarV3HandsLayer t:AnimatorController");
             var fxControllerName = $"{Path.GetFileNameWithoutExtension(originalHandLayerControllerPath)}_{avatarPrefab2.name}.controller";
-            var fxControllerPath = AssetDatabase.GenerateUniqueAssetPath(Path.Combine(Path.GetDirectoryName(originalHandLayerControllerPath), fxControllerName));
+            var fxControllerPath = AssetDatabase.GenerateUniqueAssetPath(Path.Combine(Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath), fxControllerName));
             AssetDatabase.CopyAsset(originalHandLayerControllerPath, fxControllerPath);
             var fxController = AssetDatabase.LoadAssetAtPath(fxControllerPath, typeof(AnimatorController));
 
