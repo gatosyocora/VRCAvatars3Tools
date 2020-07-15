@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEngine;
 using VRC.SDK3.Components;
 using YamlDotNet.RepresentationModel;
@@ -113,6 +114,66 @@ namespace Gatosyocora.VRCAvatars3Tools
             {
                 avatar.enableEyeLook = false;
             }
+
+            avatar.customizeAnimationLayers = true;
+            avatar.baseAnimationLayers = new VRCAvatarDescriptor.CustomAnimLayer[]
+            {
+                new VRCAvatarDescriptor.CustomAnimLayer
+                {
+                    type = VRCAvatarDescriptor.AnimLayerType.Base,
+                    isDefault = true
+                },
+                new VRCAvatarDescriptor.CustomAnimLayer
+                {
+                    type = VRCAvatarDescriptor.AnimLayerType.Additive,
+                    isDefault = true
+                },
+                new VRCAvatarDescriptor.CustomAnimLayer
+                {
+                    type = VRCAvatarDescriptor.AnimLayerType.Gesture,
+                    isDefault = true
+                },
+                new VRCAvatarDescriptor.CustomAnimLayer
+                {
+                    type = VRCAvatarDescriptor.AnimLayerType.Action,
+                    isDefault = true
+                },
+                new VRCAvatarDescriptor.CustomAnimLayer
+                {
+                    type = VRCAvatarDescriptor.AnimLayerType.FX,
+                    isDefault = true
+                }
+            };
+
+            avatar.specialAnimationLayers = new VRCAvatarDescriptor.CustomAnimLayer[]
+            {
+                new VRCAvatarDescriptor.CustomAnimLayer
+                {
+                    type = VRCAvatarDescriptor.AnimLayerType.Sitting,
+                    isDefault = true
+                },
+                new VRCAvatarDescriptor.CustomAnimLayer
+                {
+                    type = VRCAvatarDescriptor.AnimLayerType.TPose,
+                    isDefault = true
+                },
+                new VRCAvatarDescriptor.CustomAnimLayer
+                {
+                    type = VRCAvatarDescriptor.AnimLayerType.IKPose,
+                    isDefault = true
+                }
+            };
+
+            var originalHandLayerControllerPath = GetAssetPathForSearch("vrc_AvatarV3HandsLayer t:AnimatorController");
+            var fxControllerName = $"{Path.GetFileNameWithoutExtension(originalHandLayerControllerPath)}_{avatarPrefab2.name}.controller";
+            var fxControllerPath = AssetDatabase.GenerateUniqueAssetPath(Path.Combine(Path.GetDirectoryName(originalHandLayerControllerPath), fxControllerName));
+            AssetDatabase.CopyAsset(originalHandLayerControllerPath, fxControllerPath);
+            var fxController = AssetDatabase.LoadAssetAtPath(fxControllerPath, typeof(AnimatorController));
+
+            avatar.baseAnimationLayers[4].isDefault = false;
+            avatar.baseAnimationLayers[4].animatorController = fxController as RuntimeAnimatorController;
+            avatar.baseAnimationLayers[4].mask = null;
+
             return avatarObj3;
         }
 
@@ -228,6 +289,12 @@ namespace Gatosyocora.VRCAvatars3Tools
 
             path = path.Substring(0, path.Length - 1);
             return path;
+        }
+
+        private static string GetAssetPathForSearch(string filter)
+        {
+            var guid = AssetDatabase.FindAssets(filter).FirstOrDefault();
+            return AssetDatabase.GUIDToAssetPath(guid);
         }
     }
 }
