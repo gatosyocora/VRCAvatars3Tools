@@ -24,6 +24,6 @@ jobs:
         powershell $env:PS_FILE_PATH $env:SRC_README_PATH $env:DST_README_PATH
         git config --global user.email $env:EMAIL
         git config --global user.name "gatosyocora"
-        #git add .
-        #git commit -m "update readme"
+        git add .
+        git commit -m "auto convert txt to md"
         #git push origin master
