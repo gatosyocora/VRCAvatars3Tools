@@ -97,22 +97,22 @@ namespace Gatosyocora.VRCAvatars3Tools
             avatar.VisemeSkinnedMesh = avatarObj3.transform.Find(avatar2Info.faceMeshRendererPath)?.GetComponent<SkinnedMeshRenderer>() ?? null;
             avatar.VisemeBlendShapes = avatar2Info.VisemeBlendShapes;
             avatar.enableEyeLook = true;
-            var customEyeLookSettings = new VRCAvatarDescriptor.CustomEyeLookSettings
+            avatar.customEyeLookSettings = new VRCAvatarDescriptor.CustomEyeLookSettings
             {
                 leftEye = avatarObj3.transform.Find("Armature/Hips/Spine/Chest/Neck/Head/LeftEye"),
                 rightEye = avatarObj3.transform.Find("Armature/Hips/Spine/Chest/Neck/Head/RightEye"),
-                eyelidType = VRCAvatarDescriptor.EyelidType.Blendshapes,
-                eyelidsSkinnedMesh = avatarObj3.transform.Find("Body")?.GetComponent<SkinnedMeshRenderer>() ?? null
+                // TODO: 設定が未完了なのでアバターが鏡に写らなくなってしまう
+                //eyelidType = VRCAvatarDescriptor.EyelidType.Blendshapes,
+                //eyelidsSkinnedMesh = avatarObj3.transform.Find("Body")?.GetComponent<SkinnedMeshRenderer>() ?? null
             };
-            avatar.customEyeLookSettings = customEyeLookSettings;
 
-            if (customEyeLookSettings.eyelidsSkinnedMesh is null)
+            if (avatar.customEyeLookSettings.eyelidsSkinnedMesh is null)
             {
-                customEyeLookSettings.eyelidType = VRCAvatarDescriptor.EyelidType.None;
+                avatar.customEyeLookSettings.eyelidType = VRCAvatarDescriptor.EyelidType.None;
             }
 
-            if (customEyeLookSettings.leftEye is null && customEyeLookSettings.rightEye is null &&
-                customEyeLookSettings.eyelidType == VRCAvatarDescriptor.EyelidType.None)
+            if (avatar.customEyeLookSettings.leftEye is null && avatar.customEyeLookSettings.rightEye is null &&
+                avatar.customEyeLookSettings.eyelidType == VRCAvatarDescriptor.EyelidType.None)
             {
                 avatar.enableEyeLook = false;
             }
