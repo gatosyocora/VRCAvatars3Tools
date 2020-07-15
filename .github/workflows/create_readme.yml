@@ -25,7 +25,7 @@ jobs:
         powershell $env:PS_FILE_PATH $env:SRC_README_PATH $env:DST_README_PATH
         git config --global user.email $env:EMAIL
         git config --global user.name "gatosyocora"
-        git remote set-url origin https://gatosyocora:${GITHUB_TOKEN}@github.com/gatosyocora/VRCAvatars3Tools.git
+        git remote set-url origin https://gatosyocora:$env:GITHUB_TOKEN@github.com/gatosyocora/VRCAvatars3Tools.git
         git add .
         git commit -m "auto convert txt to md"
         git push origin HEAD
