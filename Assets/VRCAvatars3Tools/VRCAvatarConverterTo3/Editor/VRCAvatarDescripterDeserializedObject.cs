@@ -18,5 +18,6 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         // AnimationLayers
         public string standingOverrideControllerPath { get; set; }
+        public string[] OverrideAnimationClips { get; set; }
     }
 }

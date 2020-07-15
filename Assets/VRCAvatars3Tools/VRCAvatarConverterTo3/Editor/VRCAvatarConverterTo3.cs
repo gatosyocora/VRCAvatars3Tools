@@ -29,6 +29,14 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         private VRCAvatarDescripterDeserializedObject avatar2Info;
 
+        // 2.0のAnimatorOverrideControllerと3.0のHandLayerControllerの
+        // AnimationClip設定位置を対応させるIndex
+        // 配列Indexが2.0に対し, 各Valueが3.0
+        private static int[] clipIndexPair = new int[]
+        {
+            0, 1, 4, 2, 6, 3, 5
+        };
+
         [MenuItem("VRCAvatars3Tools/VRCAvatarConverterTo3")]
         public static void Open()
         {
@@ -162,11 +170,25 @@ namespace Gatosyocora.VRCAvatars3Tools
             var fxControllerName = $"{Path.GetFileNameWithoutExtension(originalHandLayerControllerPath)}_{avatarPrefab2.name}.controller";
             var fxControllerPath = AssetDatabase.GenerateUniqueAssetPath(Path.Combine(Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath), fxControllerName));
             AssetDatabase.CopyAsset(originalHandLayerControllerPath, fxControllerPath);
-            var fxController = AssetDatabase.LoadAssetAtPath(fxControllerPath, typeof(AnimatorController));
+            var fxController = AssetDatabase.LoadAssetAtPath(fxControllerPath, typeof(AnimatorController)) as AnimatorController;
 
             avatar.baseAnimationLayers[4].isDefault = false;
             avatar.baseAnimationLayers[4].animatorController = fxController as RuntimeAnimatorController;
             avatar.baseAnimationLayers[4].mask = null;
+
+            foreach (var layer in fxController.layers)
+            {
+                if (layer.name != "Left Hand" && layer.name != "Right Hand") continue;
+
+                for (int i = 0; i < avatar2Info.OverrideAnimationClips.Length; i++)
+                {
+                    var animPath = avatar2Info.OverrideAnimationClips[i];
+                    if (string.IsNullOrEmpty(animPath)) continue;
+
+                    var animClip = AssetDatabase.LoadAssetAtPath(animPath, typeof(AnimationClip)) as AnimationClip;
+                    layer.stateMachine.states[clipIndexPair[i]].state.motion = animClip;
+                }
+            }
 
             return avatarObj3;
         }
@@ -227,6 +249,29 @@ namespace Gatosyocora.VRCAvatars3Tools
                 // CustomStaindingAnims
                 var standingOverrideControllerGuid = ((YamlScalarNode)((YamlMappingNode)vrcAvatarDescripter["CustomStandingAnims"]).Children["guid"]).Value;
                 avatar2Info.standingOverrideControllerPath = AssetDatabase.GUIDToAssetPath(standingOverrideControllerGuid);
+
+                var yamlController = new YamlStream();
+                using (var sr = new StreamReader(avatar2Info.standingOverrideControllerPath, System.Text.Encoding.UTF8))
+                {
+                    yaml.Load(sr);
+                }
+                var controllerNode = (YamlMappingNode)yaml.Documents[0].RootNode;
+                var overrideController = (YamlMappingNode)controllerNode.Children["AnimatorOverrideController"];
+                var clips = (YamlSequenceNode)overrideController.Children["m_Clips"];
+                avatar2Info.OverrideAnimationClips = new string[clips.Count()];
+                for (int i = 0; i < clips.Count(); i++)
+                {
+                    var clip = clips[i];
+                    var clipPair = (YamlMappingNode)clip;
+                    var overrideClip = (YamlMappingNode)clipPair.Children["m_OverrideClip"];
+
+                    if (!overrideClip.Children.TryGetValue("guid", out YamlNode overrideClipGuidNode))
+                    {
+                        continue;
+                    }
+                    var overrideClipGuid = ((YamlScalarNode)overrideClipGuidNode).Value;
+                    avatar2Info.OverrideAnimationClips[i] = AssetDatabase.GUIDToAssetPath(overrideClipGuid);
+                }
 
                 break;
             }
