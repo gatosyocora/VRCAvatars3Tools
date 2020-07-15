@@ -64,14 +64,8 @@ namespace Gatosyocora.VRCAvatars3Tools
                 EditorGUILayout.LabelField("Eyelids.BlendShapeStates", "Unimplemented");
 
                 EditorGUILayout.LabelField("AnimationLayers", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("Base.Base", "Unimplemented");
-                EditorGUILayout.LabelField("Base.Additive", "Unimplemented");
-                EditorGUILayout.LabelField("Base.Gesture", "Unimplemented");
-                EditorGUILayout.LabelField("Base.Action", "Unimplemented");
-                EditorGUILayout.LabelField("Base.FX", "Unimplemented");
-                EditorGUILayout.LabelField("Special.Sitting", "Unimplemented");
-
-
+                EditorGUILayout.LabelField("StandingOverrideControllerPath", avatar2Info.standingOverrideControllerPath);
+                EditorGUILayout.LabelField("SittingOverrideControllerPath", "Unimplemented");
             }
 
             using (new EditorGUI.DisabledGroupScope(avatarPrefab is null || avatar2Info is null))
@@ -228,6 +222,11 @@ namespace Gatosyocora.VRCAvatars3Tools
                 {
                     avatar2Info.VisemeBlendShapes[i] = ((YamlScalarNode)visemeBlendShapes[i]).Value;
                 }
+
+                // [AnimationLayers]
+                // CustomStaindingAnims
+                var standingOverrideControllerGuid = ((YamlScalarNode)((YamlMappingNode)vrcAvatarDescripter["CustomStandingAnims"]).Children["guid"]).Value;
+                avatar2Info.standingOverrideControllerPath = AssetDatabase.GUIDToAssetPath(standingOverrideControllerGuid);
 
                 break;
             }

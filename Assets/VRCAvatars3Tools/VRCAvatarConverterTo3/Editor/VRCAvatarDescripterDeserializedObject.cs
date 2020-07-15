@@ -15,5 +15,8 @@ namespace Gatosyocora.VRCAvatars3Tools
         public VRC_AvatarDescriptor.LipSyncStyle lipSync { get; set; }
         public string faceMeshRendererPath { get; set; }
         public string[] VisemeBlendShapes { get; set; }
+
+        // AnimationLayers
+        public string standingOverrideControllerPath { get; set; }
     }
 }
