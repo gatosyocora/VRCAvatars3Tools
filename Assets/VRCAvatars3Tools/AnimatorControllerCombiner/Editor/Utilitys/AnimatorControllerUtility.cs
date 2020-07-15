@@ -19,12 +19,7 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
 
             for (int i = 0; i < srcController.layers.Length; i++)
             {
-                var layer = srcController.layers[i];
-                var newLayer = DuplicateLayer(layer, dstController.MakeUniqueLayerName(layer.name), i == 0);
-                dstController.AddLayer(newLayer);
-
-                // Unity再起動後も保持するためにアセットにオブジェクトを追加する必要がある
-                AddObjectsInStateMachineToAnimatorController(newLayer.stateMachine, dstControllerPath);
+                AddLayer(dstController, srcController.layers[i], i == 0, dstControllerPath);
             }
 
             foreach (var parameter in srcController.parameters)
@@ -45,6 +40,22 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
             EditorUtility.SetDirty(dstController);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
+        }
+
+        public static AnimatorControllerLayer AddLayer(AnimatorController controller, AnimatorControllerLayer srcLayer, bool setWeightTo1 = false, string controllerPath = "")
+        {
+            var newLayer = DuplicateLayer(srcLayer, controller.MakeUniqueLayerName(srcLayer.name), setWeightTo1);
+            controller.AddLayer(newLayer);
+
+            if (string.IsNullOrEmpty(controllerPath))
+            {
+                controllerPath = AssetDatabase.GetAssetPath(controller);
+            }
+
+            // Unity再起動後も保持するためにアセットにオブジェクトを追加する必要がある
+            AddObjectsInStateMachineToAnimatorController(newLayer.stateMachine, controllerPath);
+
+            return newLayer;
         }
 
         private static AnimatorControllerLayer DuplicateLayer(AnimatorControllerLayer srcLayer, string dstLayerName, bool firstLayer = false)
