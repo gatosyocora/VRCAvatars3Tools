@@ -9,7 +9,7 @@ using VRC.SDK3.Components;
 using static VRC.SDKBase.VRC_AvatarParameterDriver;
 #endif
 
-// ver 1.0
+// ver 1.0.1
 // Copyright (c) 2020 gatosyocora
 // MIT License. See LICENSE.txt
 
@@ -393,13 +393,22 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
                 locomotionControl.debugString = srcControl.debugString;
                 locomotionControl.disableLocomotion = srcControl.disableLocomotion;
             }
-            else if (dstBehaivour is VRCAnimatorSetView setView)
+            else if (dstBehaivour is VRCAnimatorRemeasureAvatar remeasureAvatar)
             {
-                var srcView = srcBehaivour as VRCAnimatorSetView;
-                setView.ApplySettings = srcView.ApplySettings;
-                setView.debugString = srcView.debugString;
-                setView.delayTime = srcView.delayTime;
-                setView.setView = srcView.setView;
+                var srcRemeasureAvatar = srcBehaivour as VRCAnimatorRemeasureAvatar;
+                remeasureAvatar.ApplySettings = srcRemeasureAvatar.ApplySettings;
+                remeasureAvatar.debugString = srcRemeasureAvatar.debugString;
+                remeasureAvatar.delayTime = srcRemeasureAvatar.delayTime;
+                remeasureAvatar.fixedDelay = srcRemeasureAvatar.fixedDelay;
+            }
+            else if (dstBehaivour is VRCAnimatorTemporaryPoseSpace poseSpace)
+            {
+                var srcPoseSpace = srcBehaivour as VRCAnimatorTemporaryPoseSpace;
+                poseSpace.ApplySettings = srcPoseSpace.ApplySettings;
+                poseSpace.debugString = srcPoseSpace.debugString;
+                poseSpace.delayTime = srcPoseSpace.delayTime;
+                poseSpace.enterPoseSpace = srcPoseSpace.enterPoseSpace;
+                poseSpace.fixedDelay = srcPoseSpace.fixedDelay;
             }
             else if (dstBehaivour is VRCAnimatorTrackingControl trackingControl)
             {
