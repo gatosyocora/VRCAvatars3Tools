@@ -9,6 +9,10 @@ using VRC.SDK3.Components;
 using static VRC.SDKBase.VRC_AvatarParameterDriver;
 #endif
 
+// ver 1.0
+// Copyright (c) 2020 gatosyocora
+// MIT License. See LICENSE.txt
+
 namespace Gatosyocora.VRCAvatars3Tools.Utilitys
 {
     public static class AnimatorControllerUtility

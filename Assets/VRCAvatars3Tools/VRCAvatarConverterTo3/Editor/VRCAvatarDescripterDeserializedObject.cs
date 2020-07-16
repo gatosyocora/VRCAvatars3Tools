@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using VRC.SDKBase;
 
+// ver 1.0
+// Copyright (c) 2020 gatosyocora
+// MIT License. See LICENSE.txt
+
 namespace Gatosyocora.VRCAvatars3Tools
 {
     public class VRCAvatarDescripterDeserializedObject
