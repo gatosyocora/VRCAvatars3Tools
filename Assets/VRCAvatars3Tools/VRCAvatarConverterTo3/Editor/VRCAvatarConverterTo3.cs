@@ -14,17 +14,6 @@ namespace Gatosyocora.VRCAvatars3Tools
 {
     public class VRCAvatarConverterTo3 : EditorWindow
     {
-        /*
-            114210250354209916 : PileLineManager
-                - blueprintId
-            114962464251023968 : VRCAvatarDescripter
-                - VisemeBlendShapes
-                - ViewPosition : {x: 0, y: 1.21, z: 0.069}
-                - CustomStandingAnims : guid: 156f670b4f8094e488e6e6c82595507a
-                - ScaleIPD : 0 or 1
-                - VisemeSkinnedMesh : {fileID: 137651239226841522}
-        */
-
         private GameObject avatarPrefab;
 
         private VRCAvatarDescripterDeserializedObject avatar2Info;
