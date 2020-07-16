@@ -80,7 +80,8 @@ namespace Gatosyocora.VRCAvatars3Tools
             {
                 if (GUILayout.Button("Convert Avatar To 3.0"))
                 {
-                    ConvertAvatarTo3(avatarPrefab, avatar2Info);
+                    var avatar3Obj = ConvertAvatarTo3(avatarPrefab, avatar2Info);
+                    Selection.activeObject = avatar3Obj;
                 }
             }
         }
