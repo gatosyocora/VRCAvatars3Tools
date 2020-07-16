@@ -18,6 +18,10 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         private VRCAvatarDescripterDeserializedObject avatar2Info;
 
+        private const string LEFT_EYE_PATH = "Armature/Hips/Spine/Chest/Neck/Head/LeftEye";
+        private const string RIGHT_EYE_PATH = "Armature/Hips/Spine/Chest/Neck/Head/RightEye";
+        private const string EYELIDS_MESH_PATH = "Body";
+
         // 2.0のAnimatorOverrideControllerと3.0のHandLayerControllerの
         // AnimationClip設定位置を対応させる
         // 配列Indexが2.0に対し, 各Valueが3.0
@@ -89,11 +93,11 @@ namespace Gatosyocora.VRCAvatars3Tools
             avatar.enableEyeLook = true;
             avatar.customEyeLookSettings = new VRCAvatarDescriptor.CustomEyeLookSettings
             {
-                leftEye = avatarObj3.transform.Find("Armature/Hips/Spine/Chest/Neck/Head/LeftEye"),
-                rightEye = avatarObj3.transform.Find("Armature/Hips/Spine/Chest/Neck/Head/RightEye"),
+                leftEye = avatarObj3.transform.Find(LEFT_EYE_PATH),
+                rightEye = avatarObj3.transform.Find(RIGHT_EYE_PATH),
                 // TODO: 設定が未完了なのでアバターが鏡に写らなくなってしまう
                 //eyelidType = VRCAvatarDescriptor.EyelidType.Blendshapes,
-                eyelidsSkinnedMesh = avatarObj3.transform.Find("Body")?.GetComponent<SkinnedMeshRenderer>() ?? null
+                eyelidsSkinnedMesh = avatarObj3.transform.Find(EYELIDS_MESH_PATH)?.GetComponent<SkinnedMeshRenderer>() ?? null
             };
 
             if (avatar.customEyeLookSettings.eyelidsSkinnedMesh is null)
