@@ -47,6 +47,10 @@ namespace Gatosyocora.VRCAvatars3Tools
             using (var check = new EditorGUI.ChangeCheckScope())
             {
                 avatarPrefab = EditorGUILayout.ObjectField("2.0 Avatar Prefab", avatarPrefab, typeof(GameObject), false) as GameObject;
+                if (ObjectSelectorWrapper.isVisible)
+                {
+                    ObjectSelectorWrapper.SetFilterString("t:prefab");
+                }
 
                 if (check.changed && avatarPrefab != null)
                 {
