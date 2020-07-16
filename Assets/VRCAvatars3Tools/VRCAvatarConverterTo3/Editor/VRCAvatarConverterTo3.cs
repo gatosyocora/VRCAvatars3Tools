@@ -103,7 +103,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                 rightEye = avatarObj3.transform.Find("Armature/Hips/Spine/Chest/Neck/Head/RightEye"),
                 // TODO: 設定が未完了なのでアバターが鏡に写らなくなってしまう
                 //eyelidType = VRCAvatarDescriptor.EyelidType.Blendshapes,
-                //eyelidsSkinnedMesh = avatarObj3.transform.Find("Body")?.GetComponent<SkinnedMeshRenderer>() ?? null
+                eyelidsSkinnedMesh = avatarObj3.transform.Find("Body")?.GetComponent<SkinnedMeshRenderer>() ?? null
             };
 
             if (avatar.customEyeLookSettings.eyelidsSkinnedMesh is null)
