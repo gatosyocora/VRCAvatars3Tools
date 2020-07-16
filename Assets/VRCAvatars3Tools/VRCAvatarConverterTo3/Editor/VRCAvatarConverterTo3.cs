@@ -30,6 +30,12 @@ namespace Gatosyocora.VRCAvatars3Tools
             "Fist", "Point", "RockNRoll", "Open", "Thumbs up", "Peace", "Gun"
         };
 
+        private bool showViewInfo = true;
+        private bool showLipSyncInfo = true;
+        private bool showEyeLookInfo = true;
+        private bool showAnimationLayersInfo = true;
+        private Vector2 scrollPos = Vector2.zero;
+
         [MenuItem("VRCAvatars3Tools/VRCAvatarConverterTo3")]
         public static void Open()
         {
@@ -50,23 +56,56 @@ namespace Gatosyocora.VRCAvatars3Tools
 
             if (avatarPrefab != null && avatar2Info != null)
             {
-                EditorGUILayout.LabelField("Prefab Name", avatarPrefab.name);
+                using (var scroll = new EditorGUILayout.ScrollViewScope(scrollPos))
+                {
+                    scrollPos = scroll.scrollPosition;
 
-                EditorGUILayout.LabelField("View", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("ViewPosition", avatar2Info.ViewPosition.ToString());
-                EditorGUILayout.LabelField("ScaleIPD", avatar2Info.ScaleIPD.ToString());
+                    EditorGUILayout.LabelField("Prefab Name", avatarPrefab.name);
 
-                EditorGUILayout.LabelField("LipSync", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("FaceMeshPath", avatar2Info.faceMeshRendererPath);
+                    showViewInfo = EditorGUILayout.Foldout(showViewInfo, "View");
+                    if (showViewInfo)
+                    {
+                        using (new EditorGUI.IndentLevelScope())
+                        {
+                            EditorGUILayout.LabelField("ViewPosition", avatar2Info.ViewPosition.ToString());
+                            EditorGUILayout.LabelField("ScaleIPD", avatar2Info.ScaleIPD.ToString());
+                        }
+                    }
 
-                EditorGUILayout.LabelField("EyeLook", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("Eyes.LeftEyeBonePath", "Unimplemented");
-                EditorGUILayout.LabelField("Eyes.RightEyeBonePath", "Unimplemented");
-                EditorGUILayout.LabelField("Eyelids.BlendShapeStates", "Unimplemented");
+                    showLipSyncInfo = EditorGUILayout.Foldout(showLipSyncInfo, "LipSync");
+                    if (showLipSyncInfo)
+                    {
+                        using (new EditorGUI.IndentLevelScope())
+                        {
+                            EditorGUILayout.LabelField("FaceMeshPath", avatar2Info.faceMeshRendererPath);
+                        }
+                    }
 
-                EditorGUILayout.LabelField("AnimationLayers", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("StandingOverrideControllerPath", avatar2Info.standingOverrideControllerPath);
-                EditorGUILayout.LabelField("SittingOverrideControllerPath", "Unimplemented");
+                    showEyeLookInfo = EditorGUILayout.Foldout(showEyeLookInfo, "EyeLook");
+                    if (showEyeLookInfo)
+                    {
+                        using (new EditorGUI.IndentLevelScope())
+                        {
+                            EditorGUILayout.LabelField("Eyes.LeftEyeBone", LEFT_EYE_PATH);
+                            EditorGUILayout.LabelField("Eyes.RightEyeBone", RIGHT_EYE_PATH);
+                            EditorGUILayout.LabelField("EyelidType", "None");
+                            EditorGUILayout.HelpBox("If use this, change type after convert", MessageType.Info);
+                            EditorGUILayout.LabelField("Eyelids.FyelidsMesh", EYELIDS_MESH_PATH);
+                            EditorGUILayout.LabelField("Eyelids.BlendShapeStates", "<Unimplemented>");
+                            EditorGUILayout.HelpBox("Set LeftEyeBone, RightEyeBone and EyelidsMesh if found them", MessageType.Warning);
+                        }
+                    }
+
+                    showAnimationLayersInfo = EditorGUILayout.Foldout(showAnimationLayersInfo, "AnimationLayers");
+                    if (showAnimationLayersInfo)
+                    {
+                        using (new EditorGUI.IndentLevelScope())
+                        {
+                            EditorGUILayout.LabelField("StandingOverrideController", avatar2Info.standingOverrideControllerPath);
+                            EditorGUILayout.LabelField("SittingOverrideController", "<Unimplemented>");
+                        }
+                    }
+                }
             }
 
             using (new EditorGUI.DisabledGroupScope(avatarPrefab is null || avatar2Info is null))
