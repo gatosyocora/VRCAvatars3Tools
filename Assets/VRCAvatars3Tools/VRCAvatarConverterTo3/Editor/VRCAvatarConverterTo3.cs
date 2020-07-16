@@ -120,6 +120,9 @@ namespace Gatosyocora.VRCAvatars3Tools
                     Selection.activeObject = avatar3Obj;
                 }
             }
+            EditorGUILayout.Space();
+            EditorGUILayout.HelpBox("Remove missing component after convert", MessageType.Warning);
+            EditorGUILayout.Space();
         }
 
         private GameObject ConvertAvatarTo3(GameObject avatarPrefab2, VRCAvatarDescripterDeserializedObject avatar2Info)
