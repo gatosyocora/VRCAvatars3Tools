@@ -385,6 +385,7 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
                 layerControl.blendDuration = srcControl.blendDuration;
                 layerControl.debugString = srcControl.debugString;
                 layerControl.goalWeight = srcControl.goalWeight;
+                layerControl.layer = srcControl.layer;
                 layerControl.playable = srcControl.playable;
             }
             else if (dstBehaivour is VRCAnimatorLocomotionControl locomotionControl)
@@ -422,6 +423,7 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
                 trackingControl.trackingLeftFingers = srcControl.trackingLeftFingers;
                 trackingControl.trackingLeftFoot = srcControl.trackingLeftFoot;
                 trackingControl.trackingLeftHand = srcControl.trackingLeftHand;
+                trackingControl.trackingMouth = srcControl.trackingMouth;
                 trackingControl.trackingRightFingers = srcControl.trackingRightFingers;
                 trackingControl.trackingRightFoot = srcControl.trackingRightFoot;
                 trackingControl.trackingRightHand = srcControl.trackingRightHand;
