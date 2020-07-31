@@ -4,13 +4,12 @@ using UnityEngine;
 using UnityEditor;
 using System.Linq;
 using System;
-using VRC.SDK3.Avatars.Components;
 #if VRC_SDK_VRCSDK3
-using VRC.SDK3.Components;
+using VRC.SDK3.Avatars.Components;
 using static VRC.SDKBase.VRC_AvatarParameterDriver;
 #endif
 
-// ver 1.0.1
+// ver 1.0.2
 // Copyright (c) 2020 gatosyocora
 // MIT License. See LICENSE.txt
 
