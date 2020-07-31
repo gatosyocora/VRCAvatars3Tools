@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Linq;
 using System;
+using VRC.SDK3.Avatars.Components;
 #if VRC_SDK_VRCSDK3
 using VRC.SDK3.Components;
 using static VRC.SDKBase.VRC_AvatarParameterDriver;
