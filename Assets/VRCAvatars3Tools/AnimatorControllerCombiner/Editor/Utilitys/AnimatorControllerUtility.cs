@@ -5,11 +5,11 @@ using UnityEditor;
 using System.Linq;
 using System;
 #if VRC_SDK_VRCSDK3
-using VRC.SDK3.Components;
+using VRC.SDK3.Avatars.Components;
 using static VRC.SDKBase.VRC_AvatarParameterDriver;
 #endif
 
-// ver 1.0.1
+// ver 1.0.2
 // Copyright (c) 2020 gatosyocora
 // MIT License. See LICENSE.txt
 
@@ -384,6 +384,7 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
                 layerControl.blendDuration = srcControl.blendDuration;
                 layerControl.debugString = srcControl.debugString;
                 layerControl.goalWeight = srcControl.goalWeight;
+                layerControl.layer = srcControl.layer;
                 layerControl.playable = srcControl.playable;
             }
             else if (dstBehaivour is VRCAnimatorLocomotionControl locomotionControl)
@@ -421,6 +422,7 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
                 trackingControl.trackingLeftFingers = srcControl.trackingLeftFingers;
                 trackingControl.trackingLeftFoot = srcControl.trackingLeftFoot;
                 trackingControl.trackingLeftHand = srcControl.trackingLeftHand;
+                trackingControl.trackingMouth = srcControl.trackingMouth;
                 trackingControl.trackingRightFingers = srcControl.trackingRightFingers;
                 trackingControl.trackingRightFoot = srcControl.trackingRightFoot;
                 trackingControl.trackingRightHand = srcControl.trackingRightHand;

@@ -5,12 +5,10 @@ using System.Linq;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
-using VRC.SDK3.Components;
+using VRC.SDK3.Avatars.Components;
 using YamlDotNet.RepresentationModel;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 
-// ver 1.0
+// ver 1.0.0.1
 // Copyright (c) 2020 gatosyocora
 // MIT License. See LICENSE.txt
 
