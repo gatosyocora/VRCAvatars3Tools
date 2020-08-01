@@ -290,6 +290,9 @@ namespace Gatosyocora.VRCAvatars3Tools
                 state.motion = animClip;
             }
 
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
             return avatarObj3;
         }
 
