@@ -6,6 +6,7 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 using VRC.SDK3.Avatars.Components;
+using VRC.SDK3.Avatars.ScriptableObjects;
 using YamlDotNet.RepresentationModel;
 
 // ver 1.0.0.1
@@ -289,6 +290,24 @@ namespace Gatosyocora.VRCAvatars3Tools
                 if (state is null) continue;
                 state.motion = animClip;
             }
+
+            avatar.customExpressions = true;
+            var exMenu = CreateInstance<VRCExpressionsMenu>();
+            AssetDatabase.CreateAsset(
+                            exMenu,
+                            AssetDatabase.GenerateUniqueAssetPath(
+                                Path.Combine(
+                                    Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
+                                    $"ExMenu_{avatarPrefab2.name}.asset")));
+            var exParameters = CreateInstance<VRCExpressionParameters>();
+            AssetDatabase.CreateAsset(
+                            exParameters,
+                            AssetDatabase.GenerateUniqueAssetPath(
+                                Path.Combine(
+                                    Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
+                                    $"ExParams_{avatarPrefab2.name}.asset")));
+            avatar.expressionsMenu = exMenu;
+            avatar.expressionParameters = exParameters;
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
