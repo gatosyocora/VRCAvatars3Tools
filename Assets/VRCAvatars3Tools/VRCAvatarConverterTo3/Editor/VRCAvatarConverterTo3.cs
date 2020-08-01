@@ -389,11 +389,11 @@ namespace Gatosyocora.VRCAvatars3Tools
             return null;
         }
 
-        private static string GetAssetPathForSearch(string filter)
-        {
-            var guid = AssetDatabase.FindAssets(filter).FirstOrDefault();
-            return AssetDatabase.GUIDToAssetPath(guid);
-        }
+        private static string GetAssetPathForSearch(string filter) =>
+            AssetDatabase.FindAssets(filter)
+                .Select(g => AssetDatabase.GUIDToAssetPath(g))
+                .OrderBy(p => Path.GetFileName(p).Count())
+                .First();
     }
 }
 
