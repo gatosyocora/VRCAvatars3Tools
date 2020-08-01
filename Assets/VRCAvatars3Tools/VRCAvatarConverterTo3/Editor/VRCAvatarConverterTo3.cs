@@ -346,6 +346,8 @@ namespace Gatosyocora.VRCAvatars3Tools
                         value = int.Parse(animationInfo.Type.Replace("Emote", string.Empty))
                     });
                 }
+
+                Selection.activeObject = exParameters;
             }
 
             AssetDatabase.SaveAssets();
