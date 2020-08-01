@@ -1,0 +1,29 @@
+name: Create Readme
+# masterブランチにpushされたときに実行
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'Assets/VRCAvatars3Tools/README.txt'
+# 実行内容
+jobs:
+  create_readme:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@master
+
+    - name: create readme
+      env:
+        SRC_README_PATH: "./Assets/VRCAvatars3Tools/README.txt"
+        DST_README_PATH: "./.github/README.md"
+        PS_FILE_PATH: "./.github/make_md.ps1"
+      run: |
+        Unblock-File $env:PS_FILE_PATH
+        powershell $env:PS_FILE_PATH $env:SRC_README_PATH $env:DST_README_PATH
+        git config --global user.email ${{ secrets.EMAIL }}
+        git config --global user.name "gatosyocora"
+        git remote set-url origin https://gatosyocora:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+        git add .
+        git commit -m "auto convert txt to md"
+        git push
