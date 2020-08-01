@@ -216,7 +216,7 @@ namespace Gatosyocora.VRCAvatars3Tools
 
             avatar.baseAnimationLayers[4].isDefault = false;
             avatar.baseAnimationLayers[4].isEnabled = true;
-            avatar.baseAnimationLayers[4].animatorController = fxController as RuntimeAnimatorController;
+            avatar.baseAnimationLayers[4].animatorController = fxController;
             avatar.baseAnimationLayers[4].mask = null;
 
             foreach (var layer in fxController.layers)
