@@ -32,7 +32,7 @@ ver1.0
 	* ツールを作成
 
 ----------------------------------------------------
-〇VRCAvatarConverterTo3 (ver 1.0.0.1)
+〇VRCAvatarConverterTo3 (ver 1.1)
 VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変換できます。
 
 「VRCAvatars3Tools > VRCAvatarConverterTo3」で以下の機能を持つウィンドウが開きます
@@ -48,14 +48,16 @@ VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変
  * EyeLookのEyelidsはBlink,LookingUp,LookingDownに最適なBlendShapeを決定できないので、
 	EyelidTypeはNoneにしています。使用する場合は変更して下さい。
 	Blendshapesを選択した場合はEyelidsMeshにBodyという名前のSkinnedMeshRendererが選択されるようにしています。
- * まだEmoteやIdleAnimation, CustomSittingAnimsの変換はできていません。
+ * まだIdleAnimation, CustomSittingAnimsの変換はできていません。
 
 ・使用ライブラリ
  * YamlDotNet for Unity
  Copyright (c) 2008, 2009, 2010, 2011, 2012, 2013, 2014 Antoine Aubry
 
  ・更新履歴
- ver1.0.1
+ ver1.1
+	* Emoteも変換されるように
+ ver1.0.0.1
 	* VRCSDK3-AVATAR-2020.07.30.09.18_Public.unitypackageに対応
  ver1.0
 	* ツールを作成
