@@ -266,48 +266,72 @@ namespace Gatosyocora.VRCAvatars3Tools
                 }
             }
 
-            // Emote
-            var originalActionLayerController = Resources.Load<AnimatorController>("Controllers/vrc_AvatarV3ActionLayer_VRCAV3T");
-            var originalActionLayerControllerPath = AssetDatabase.GetAssetPath(originalActionLayerController);
-            var actionController = DuplicateAnimationLayerController(
-                                        originalActionLayerControllerPath,
-                                        Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
-                                        avatarPrefab2.name);
-
-            avatar.baseAnimationLayers[(int)AnimationLayerType.Action].isDefault = false;
-            avatar.baseAnimationLayers[(int)AnimationLayerType.Action].isEnabled = true;
-            avatar.baseAnimationLayers[(int)AnimationLayerType.Action].animatorController = actionController;
-            avatar.baseAnimationLayers[(int)AnimationLayerType.Action].mask = null;
-
-            var actionLayer = actionController.layers[0];
-            for (int i = 0; i < avatar2Info.OverrideAnimationClips.Length; i++)
+            if (HasEmoteAnimation(avatar2Info.OverrideAnimationClips))
             {
-                var animationInfo = avatar2Info.OverrideAnimationClips[i];
-                if (animationInfo is null || string.IsNullOrEmpty(animationInfo.Path) || !animationInfo.Type.StartsWith("Emote")) continue;
+                // Emote
+                var originalActionLayerController = Resources.Load<AnimatorController>("Controllers/vrc_AvatarV3ActionLayer_VRCAV3T");
+                var originalActionLayerControllerPath = AssetDatabase.GetAssetPath(originalActionLayerController);
+                var actionController = DuplicateAnimationLayerController(
+                                            originalActionLayerControllerPath,
+                                            Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
+                                            avatarPrefab2.name);
 
-                var animClip = AssetDatabase.LoadAssetAtPath(animationInfo.Path, typeof(AnimationClip)) as AnimationClip;
-                var state = GetAnimatorStateFromStateName(actionLayer.stateMachine, animationInfo.Type);
-                if (state is null) continue;
-                state.motion = animClip;
+                avatar.baseAnimationLayers[(int)AnimationLayerType.Action].isDefault = false;
+                avatar.baseAnimationLayers[(int)AnimationLayerType.Action].isEnabled = true;
+                avatar.baseAnimationLayers[(int)AnimationLayerType.Action].animatorController = actionController;
+                avatar.baseAnimationLayers[(int)AnimationLayerType.Action].mask = null;
+
+                var actionLayer = actionController.layers[0];
+                for (int i = 0; i < avatar2Info.OverrideAnimationClips.Length; i++)
+                {
+                    var animationInfo = avatar2Info.OverrideAnimationClips[i];
+                    if (animationInfo is null || string.IsNullOrEmpty(animationInfo.Path) || !animationInfo.Type.StartsWith("Emote")) continue;
+
+                    var animClip = AssetDatabase.LoadAssetAtPath(animationInfo.Path, typeof(AnimationClip)) as AnimationClip;
+                    var state = GetAnimatorStateFromStateName(actionLayer.stateMachine, animationInfo.Type);
+                    if (state is null) continue;
+                    state.motion = animClip;
+                }
+
+                avatar.customExpressions = true;
+                var exMenu = CreateInstance<VRCExpressionsMenu>();
+                AssetDatabase.CreateAsset(
+                                exMenu,
+                                AssetDatabase.GenerateUniqueAssetPath(
+                                    Path.Combine(
+                                        Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
+                                        $"ExMenu_{avatarPrefab2.name}.asset")));
+                var exParameters = CreateInstance<VRCExpressionParameters>();
+                AssetDatabase.CreateAsset(
+                                exParameters,
+                                AssetDatabase.GenerateUniqueAssetPath(
+                                    Path.Combine(
+                                        Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
+                                        $"ExParams_{avatarPrefab2.name}.asset")));
+                avatar.expressionsMenu = exMenu;
+                avatar.expressionParameters = exParameters;
+
+                var emoteIconPath = GetAssetPathForSearch("person_dance t:texture");
+                var emoteIcon = AssetDatabase.LoadAssetAtPath<Texture2D>(emoteIconPath);
+
+                for (int i = 0; i < avatar2Info.OverrideAnimationClips.Length; i++)
+                {
+                    var animationInfo = avatar2Info.OverrideAnimationClips[i];
+                    if (animationInfo is null || string.IsNullOrEmpty(animationInfo.Path) || !animationInfo.Type.StartsWith("Emote")) continue;
+
+                    exMenu.controls.Add(new VRCExpressionsMenu.Control
+                    {
+                        name = Path.GetFileNameWithoutExtension(animationInfo.Path),
+                        icon = emoteIcon,
+                        type = VRCExpressionsMenu.Control.ControlType.Button,
+                        parameter = new VRCExpressionsMenu.Control.Parameter
+                        {
+                            name = "VRCEmote"
+                        },
+                        value = int.Parse(animationInfo.Type.Replace("Emote", string.Empty))
+                    });
+                }
             }
-
-            avatar.customExpressions = true;
-            var exMenu = CreateInstance<VRCExpressionsMenu>();
-            AssetDatabase.CreateAsset(
-                            exMenu,
-                            AssetDatabase.GenerateUniqueAssetPath(
-                                Path.Combine(
-                                    Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
-                                    $"ExMenu_{avatarPrefab2.name}.asset")));
-            var exParameters = CreateInstance<VRCExpressionParameters>();
-            AssetDatabase.CreateAsset(
-                            exParameters,
-                            AssetDatabase.GenerateUniqueAssetPath(
-                                Path.Combine(
-                                    Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
-                                    $"ExParams_{avatarPrefab2.name}.asset")));
-            avatar.expressionsMenu = exMenu;
-            avatar.expressionParameters = exParameters;
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
@@ -486,6 +510,11 @@ namespace Gatosyocora.VRCAvatars3Tools
             AssetDatabase.CopyAsset(originalControllerPath, controllerPath);
             return AssetDatabase.LoadAssetAtPath(controllerPath, typeof(AnimatorController)) as AnimatorController;
         }
+
+        private bool HasEmoteAnimation(AnimationClipInfo[] infos) =>
+            infos
+                .Select(i => i.Type)
+                .Any(t => t.StartsWith("Emote"));
     }
 }
 
