@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using VRC.SDKBase;
 
 // ver 1.0
@@ -22,6 +23,12 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         // AnimationLayers
         public string standingOverrideControllerPath { get; set; }
-        public string[] OverrideAnimationClips { get; set; }
+        public AnimationClipInfo[] OverrideAnimationClips { get; set; }
+    }
+
+    public class AnimationClipInfo
+    {
+        public string Type { get; set; }
+        public string Path { get; set; }
     }
 }

@@ -24,12 +24,21 @@ namespace Gatosyocora.VRCAvatars3Tools
         private const string RIGHT_EYE_PATH = "Armature/Hips/Spine/Chest/Neck/Head/RightEye";
         private const string EYELIDS_MESH_PATH = "Body";
 
-        // 2.0のAnimatorOverrideControllerと3.0のHandLayerControllerの
-        // AnimationClip設定位置を対応させる
-        // 配列Indexが2.0に対し, 各Valueが3.0
-        private static string[] clipIndexPair = new string[]
+        private readonly static Dictionary<string, string> animationTypes = new Dictionary<string, string>
         {
-            "Fist", "Point", "RockNRoll", "Open", "Thumbs up", "Peace", "Gun"
+            {"7400052", "Fist"},
+            {"7400054", "Point"},
+            {"7400056", "RockNRoll"},
+            {"7400058", "Open"},
+            {"7400060", "Thumbs up"},
+            {"7400062", "Peace"},
+            {"7400064", "Gun"},
+            {"7400006", "Emote1"},
+            {"7400008", "Emote2"},
+            {"7400010", "Emote3"},
+            {"7400012", "Emote4"},
+            {"7400014", "Emote5"},
+            {"7400018", "Emote6"},
         };
 
         private enum AnimationLayerType
@@ -118,6 +127,15 @@ namespace Gatosyocora.VRCAvatars3Tools
                         {
                             EditorGUILayout.LabelField("StandingOverrideController", avatar2Info.standingOverrideControllerPath);
                             EditorGUILayout.LabelField("SittingOverrideController", "<Unimplemented>");
+                        }
+
+                        using (new EditorGUI.IndentLevelScope())
+                        {
+                            foreach (var animationClipInfo in avatar2Info.OverrideAnimationClips)
+                            {
+                                if (animationClipInfo is null) continue;
+                                EditorGUILayout.LabelField(animationClipInfo.Type, animationClipInfo.Path);
+                            }
                         }
                     }
                 }
@@ -234,11 +252,12 @@ namespace Gatosyocora.VRCAvatars3Tools
 
                 for (int i = 0; i < avatar2Info.OverrideAnimationClips.Length; i++)
                 {
-                    var animPath = avatar2Info.OverrideAnimationClips[i];
-                    if (string.IsNullOrEmpty(animPath)) continue;
+                    var animationInfo = avatar2Info.OverrideAnimationClips[i];
+                    if (animationInfo is null || string.IsNullOrEmpty(animationInfo.Path)) continue;
 
-                    var animClip = AssetDatabase.LoadAssetAtPath(animPath, typeof(AnimationClip)) as AnimationClip;
-                    var state = GetAnimatorStateFromStateName(layer.stateMachine, clipIndexPair[i]);
+                    var animClip = AssetDatabase.LoadAssetAtPath(animationInfo.Path, typeof(AnimationClip)) as AnimationClip;
+                    var state = GetAnimatorStateFromStateName(layer.stateMachine, animationInfo.Type);
+                    if (state is null) continue;
                     state.motion = animClip;
                 }
             }
@@ -311,11 +330,13 @@ namespace Gatosyocora.VRCAvatars3Tools
                 var controllerNode = (YamlMappingNode)yaml.Documents[0].RootNode;
                 var overrideController = (YamlMappingNode)controllerNode.Children["AnimatorOverrideController"];
                 var clips = (YamlSequenceNode)overrideController.Children["m_Clips"];
-                avatar2Info.OverrideAnimationClips = new string[clips.Count()];
+                avatar2Info.OverrideAnimationClips = new AnimationClipInfo[clips.Count()];
                 for (int i = 0; i < clips.Count(); i++)
                 {
                     var clip = clips[i];
                     var clipPair = (YamlMappingNode)clip;
+                    var originalClip = (YamlMappingNode)clipPair.Children["m_OriginalClip"];
+                    var originalClipFileID = ((YamlScalarNode)originalClip.Children["fileID"]).Value;
                     var overrideClip = (YamlMappingNode)clipPair.Children["m_OverrideClip"];
 
                     if (!overrideClip.Children.TryGetValue("guid", out YamlNode overrideClipGuidNode))
@@ -323,7 +344,11 @@ namespace Gatosyocora.VRCAvatars3Tools
                         continue;
                     }
                     var overrideClipGuid = ((YamlScalarNode)overrideClipGuidNode).Value;
-                    avatar2Info.OverrideAnimationClips[i] = AssetDatabase.GUIDToAssetPath(overrideClipGuid);
+                    avatar2Info.OverrideAnimationClips[i] = new AnimationClipInfo
+                    {
+                        Type = animationTypes[originalClipFileID],
+                        Path = AssetDatabase.GUIDToAssetPath(overrideClipGuid)
+                    };                                           
                 }
 
                 break;
