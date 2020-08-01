@@ -38,7 +38,9 @@ namespace Gatosyocora.VRCAvatars3Tools
             {"7400010", "Emote3"},
             {"7400012", "Emote4"},
             {"7400014", "Emote5"},
-            {"7400018", "Emote6"},
+            {"7400016", "Emote6"},
+            {"7400018", "Emote7"},
+            {"7400020", "Emote8"},
         };
 
         private enum AnimationLayerType
@@ -235,11 +237,12 @@ namespace Gatosyocora.VRCAvatars3Tools
                 }
             };
 
+            // FaceEmotion
             var originalHandLayerControllerPath = GetAssetPathForSearch("vrc_AvatarV3HandsLayer t:AnimatorController");
-            var fxControllerName = $"{Path.GetFileNameWithoutExtension(originalHandLayerControllerPath)}_{avatarPrefab2.name}.controller";
-            var fxControllerPath = AssetDatabase.GenerateUniqueAssetPath(Path.Combine(Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath), fxControllerName));
-            AssetDatabase.CopyAsset(originalHandLayerControllerPath, fxControllerPath);
-            var fxController = AssetDatabase.LoadAssetAtPath(fxControllerPath, typeof(AnimatorController)) as AnimatorController;
+            var fxController = DuplicateAnimationLayerController(
+                                    originalHandLayerControllerPath, 
+                                    Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath), 
+                                    avatarPrefab2.name);
 
             avatar.baseAnimationLayers[(int)AnimationLayerType.FX].isDefault = false;
             avatar.baseAnimationLayers[(int)AnimationLayerType.FX].isEnabled = true;
@@ -253,13 +256,38 @@ namespace Gatosyocora.VRCAvatars3Tools
                 for (int i = 0; i < avatar2Info.OverrideAnimationClips.Length; i++)
                 {
                     var animationInfo = avatar2Info.OverrideAnimationClips[i];
-                    if (animationInfo is null || string.IsNullOrEmpty(animationInfo.Path)) continue;
+                    if (animationInfo is null || string.IsNullOrEmpty(animationInfo.Path) || animationInfo.Type.StartsWith("Emote")) continue;
 
                     var animClip = AssetDatabase.LoadAssetAtPath(animationInfo.Path, typeof(AnimationClip)) as AnimationClip;
                     var state = GetAnimatorStateFromStateName(layer.stateMachine, animationInfo.Type);
                     if (state is null) continue;
                     state.motion = animClip;
                 }
+            }
+
+            // Emote
+            var originalActionLayerController = Resources.Load<AnimatorController>("Controllers/vrc_AvatarV3ActionLayer_VRCAV3T");
+            var originalActionLayerControllerPath = AssetDatabase.GetAssetPath(originalActionLayerController);
+            var actionController = DuplicateAnimationLayerController(
+                                        originalActionLayerControllerPath,
+                                        Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
+                                        avatarPrefab2.name);
+
+            avatar.baseAnimationLayers[(int)AnimationLayerType.Action].isDefault = false;
+            avatar.baseAnimationLayers[(int)AnimationLayerType.Action].isEnabled = true;
+            avatar.baseAnimationLayers[(int)AnimationLayerType.Action].animatorController = actionController;
+            avatar.baseAnimationLayers[(int)AnimationLayerType.Action].mask = null;
+
+            var actionLayer = actionController.layers[0];
+            for (int i = 0; i < avatar2Info.OverrideAnimationClips.Length; i++)
+            {
+                var animationInfo = avatar2Info.OverrideAnimationClips[i];
+                if (animationInfo is null || string.IsNullOrEmpty(animationInfo.Path) || !animationInfo.Type.StartsWith("Emote")) continue;
+
+                var animClip = AssetDatabase.LoadAssetAtPath(animationInfo.Path, typeof(AnimationClip)) as AnimationClip;
+                var state = GetAnimatorStateFromStateName(actionLayer.stateMachine, animationInfo.Type);
+                if (state is null) continue;
+                state.motion = animClip;
             }
 
             return avatarObj3;
@@ -428,6 +456,14 @@ namespace Gatosyocora.VRCAvatars3Tools
                 .Select(g => AssetDatabase.GUIDToAssetPath(g))
                 .OrderBy(p => Path.GetFileName(p).Count())
                 .First();
+
+        private AnimatorController DuplicateAnimationLayerController(string originalControllerPath, string outputFolderPath, string avatarName)
+        {
+            var controllerName = $"{Path.GetFileNameWithoutExtension(originalControllerPath)}_{avatarName}.controller";
+            var controllerPath = AssetDatabase.GenerateUniqueAssetPath(Path.Combine(outputFolderPath, controllerName));
+            AssetDatabase.CopyAsset(originalControllerPath, controllerPath);
+            return AssetDatabase.LoadAssetAtPath(controllerPath, typeof(AnimatorController)) as AnimatorController;
+        }
     }
 }
 
