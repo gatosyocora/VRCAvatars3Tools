@@ -129,14 +129,14 @@ namespace Gatosyocora.VRCAvatars3Tools
                         {
                             EditorGUILayout.LabelField("StandingOverrideController", avatar2Info.standingOverrideControllerPath);
                             EditorGUILayout.LabelField("SittingOverrideController", "<Unimplemented>");
-                        }
 
-                        using (new EditorGUI.IndentLevelScope())
-                        {
-                            foreach (var animationClipInfo in avatar2Info.OverrideAnimationClips)
+                            using (new EditorGUI.IndentLevelScope())
                             {
-                                if (animationClipInfo is null) continue;
-                                EditorGUILayout.LabelField(animationClipInfo.Type, animationClipInfo.Path);
+                                foreach (var animationClipInfo in avatar2Info.OverrideAnimationClips)
+                                {
+                                    if (animationClipInfo is null) continue;
+                                    EditorGUILayout.LabelField(animationClipInfo.Type, animationClipInfo.Path);
+                                }
                             }
                         }
                     }
