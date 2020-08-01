@@ -301,6 +301,13 @@ namespace Gatosyocora.VRCAvatars3Tools
                                     Path.Combine(
                                         Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
                                         $"ExMenu_{avatarPrefab2.name}.asset")));
+                var subMenuEmotes = CreateInstance<VRCExpressionsMenu>();
+                AssetDatabase.CreateAsset(
+                                subMenuEmotes,
+                                AssetDatabase.GenerateUniqueAssetPath(
+                                    Path.Combine(
+                                        Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
+                                        $"ExMenu_Emotes_{avatarPrefab2.name}.asset")));
                 var exParameters = CreateInstance<VRCExpressionParameters>();
                 AssetDatabase.CreateAsset(
                                 exParameters,
@@ -314,12 +321,20 @@ namespace Gatosyocora.VRCAvatars3Tools
                 var emoteIconPath = GetAssetPathForSearch("person_dance t:texture");
                 var emoteIcon = AssetDatabase.LoadAssetAtPath<Texture2D>(emoteIconPath);
 
+                exMenu.controls.Add(new VRCExpressionsMenu.Control
+                {
+                    name = "Emotes",
+                    icon = emoteIcon,
+                    type = VRCExpressionsMenu.Control.ControlType.SubMenu,
+                    subMenu = subMenuEmotes
+                });
+
                 for (int i = 0; i < avatar2Info.OverrideAnimationClips.Length; i++)
                 {
                     var animationInfo = avatar2Info.OverrideAnimationClips[i];
                     if (animationInfo is null || string.IsNullOrEmpty(animationInfo.Path) || !animationInfo.Type.StartsWith("Emote")) continue;
 
-                    exMenu.controls.Add(new VRCExpressionsMenu.Control
+                    subMenuEmotes.controls.Add(new VRCExpressionsMenu.Control
                     {
                         name = Path.GetFileNameWithoutExtension(animationInfo.Path),
                         icon = emoteIcon,
