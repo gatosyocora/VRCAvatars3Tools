@@ -32,6 +32,15 @@ namespace Gatosyocora.VRCAvatars3Tools
             "Fist", "Point", "RockNRoll", "Open", "Thumbs up", "Peace", "Gun"
         };
 
+        private enum AnimationLayerType
+        {
+            Base = 0,
+            Additive = 1,
+            Gesture = 2,
+            Action = 3,
+            FX = 4
+        }
+
         private bool showViewInfo = true;
         private bool showLipSyncInfo = true;
         private bool showEyeLookInfo = true;
@@ -214,10 +223,10 @@ namespace Gatosyocora.VRCAvatars3Tools
             AssetDatabase.CopyAsset(originalHandLayerControllerPath, fxControllerPath);
             var fxController = AssetDatabase.LoadAssetAtPath(fxControllerPath, typeof(AnimatorController)) as AnimatorController;
 
-            avatar.baseAnimationLayers[4].isDefault = false;
-            avatar.baseAnimationLayers[4].isEnabled = true;
-            avatar.baseAnimationLayers[4].animatorController = fxController;
-            avatar.baseAnimationLayers[4].mask = null;
+            avatar.baseAnimationLayers[(int)AnimationLayerType.FX].isDefault = false;
+            avatar.baseAnimationLayers[(int)AnimationLayerType.FX].isEnabled = true;
+            avatar.baseAnimationLayers[(int)AnimationLayerType.FX].animatorController = fxController;
+            avatar.baseAnimationLayers[(int)AnimationLayerType.FX].mask = null;
 
             foreach (var layer in fxController.layers)
             {
