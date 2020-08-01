@@ -130,7 +130,7 @@ namespace Gatosyocora.VRCAvatars3Tools
         private GameObject ConvertAvatarTo3(GameObject avatarPrefab2, VRCAvatarDescripterDeserializedObject avatar2Info)
         {
             var avatarObj3 = PrefabUtility.InstantiatePrefab(avatarPrefab2) as GameObject;
-            avatarObj3.name += "_3.0";
+            avatarObj3.name = GameObjectUtility.GetUniqueNameForSibling(avatarObj3.transform.parent, $"{ avatarObj3.name}_3.0");
             var avatar = avatarObj3.AddComponent<VRCAvatarDescriptor>();
             avatar.Name = avatar2Info.Name;
             avatar.ViewPosition = avatar2Info.ViewPosition;
