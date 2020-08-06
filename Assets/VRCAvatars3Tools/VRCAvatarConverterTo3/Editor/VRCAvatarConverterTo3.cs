@@ -239,10 +239,12 @@ namespace Gatosyocora.VRCAvatars3Tools
             };
 
             // FaceEmotion
-            var originalHandLayerControllerPath = GetAssetPathForSearch("vrc_AvatarV3HandsLayer t:AnimatorController");
+            var searchTarget = "vrc_AvatarV3HandsLayer t:AnimatorController";
+            if (avatar2Info.DefaultAnimationSet == VRCAvatarDescripterDeserializedObject.AnimationSet.Female) searchTarget = "vrc_AvatarV3HandsLayer2 t:AnimatorController";
+            var originalHandLayerControllerPath = GetAssetPathForSearch(searchTarget);
             var fxController = DuplicateAnimationLayerController(
-                                    originalHandLayerControllerPath, 
-                                    Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath), 
+                                    originalHandLayerControllerPath,
+                                    Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
                                     avatarPrefab2.name);
 
             avatar.baseAnimationLayers[(int)AnimationLayerType.FX].isDefault = false;
@@ -392,6 +394,10 @@ namespace Gatosyocora.VRCAvatars3Tools
                 // ScaleIPD
                 avatar2Info.ScaleIPD = ((YamlScalarNode)vrcAvatarDescripter["ScaleIPD"]).Value == "1";
 
+                // Default Animation Set
+                avatar2Info.DefaultAnimationSet = (VRCAvatarDescripterDeserializedObject.AnimationSet)Enum.Parse(typeof(VRCAvatarDescripterDeserializedObject.AnimationSet),
+                                                    ((YamlScalarNode)vrcAvatarDescripter["Animations"]).Value);
+
                 // [LipSync]
                 // Mode
                 var lipSyncTypeIndex = int.Parse(((YamlScalarNode)vrcAvatarDescripter["lipSync"]).Value);
@@ -439,7 +445,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                     {
                         Type = animationTypes[originalClipFileID],
                         Path = AssetDatabase.GUIDToAssetPath(overrideClipGuid)
-                    };                                           
+                    };
                 }
 
                 break;
@@ -464,7 +470,7 @@ namespace Gatosyocora.VRCAvatars3Tools
             string path = string.Empty;
             var node = GetNodeFromGUID(components, rendererGuid);
             var skinnedMeshRenderer = (YamlMappingNode)((YamlMappingNode)node).Children["SkinnedMeshRenderer"];
-            
+
             var gameObjectGuid = ((YamlScalarNode)((YamlMappingNode)skinnedMeshRenderer["m_GameObject"]).Children["fileID"]).Value;
             node = GetNodeFromGUID(components, gameObjectGuid);
             var gameObjectNode = (YamlMappingNode)((YamlMappingNode)node).Children["GameObject"];
