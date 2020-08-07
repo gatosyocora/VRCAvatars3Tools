@@ -45,6 +45,25 @@ namespace Gatosyocora.VRCAvatars3Tools
             {"7400020", "Emote8"},
         };
 
+        // 簡易的な日本語対応
+        private readonly static string[] textEN = new string[] 
+        {
+            "If use this, change type after convert",
+            "Set LeftEyeBone, RightEyeBone and EyelidsMesh if found them",
+            "Select .fbx. Please select .prefab",
+            "Remove missing component after convert"
+        };
+
+        private readonly static string[] textJP = new string[]
+        {
+            "これを使用する場合、変換後にTypeを切り替えてください。",
+            "もしLeftEyeBoneとRightEyeBoneおよびEyelidsMeshが見つかったら、これらを設定します。",
+            ".fbxを選択しています。.prefabを選択してください。",
+            "変換後にmissingになっているコンポーネントを削除してください",
+        };
+
+        private string[] texts = textEN;
+
         private enum AnimationLayerType
         {
             Base = 0,
@@ -69,6 +88,19 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         private void OnGUI()
         {
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                GUILayout.FlexibleSpace();
+                if (GUILayout.Button("EN"))
+                {
+                    texts = textEN;
+                }
+                if (GUILayout.Button("JP"))
+                {
+                    texts = textJP;
+                }
+            }
+
             using (var check = new EditorGUI.ChangeCheckScope())
             {
                 avatarPrefab = EditorGUILayout.ObjectField("2.0 Avatar Prefab", avatarPrefab, typeof(GameObject), false) as GameObject;
@@ -118,10 +150,10 @@ namespace Gatosyocora.VRCAvatars3Tools
                             EditorGUILayout.LabelField("Eyes.LeftEyeBone", LEFT_EYE_PATH);
                             EditorGUILayout.LabelField("Eyes.RightEyeBone", RIGHT_EYE_PATH);
                             EditorGUILayout.LabelField("EyelidType", "None");
-                            EditorGUILayout.HelpBox("If use this, change type after convert", MessageType.Info);
+                            EditorGUILayout.HelpBox(texts[0], MessageType.Info);
                             EditorGUILayout.LabelField("Eyelids.FyelidsMesh", EYELIDS_MESH_PATH);
                             EditorGUILayout.LabelField("Eyelids.BlendShapeStates", "<Unimplemented>");
-                            EditorGUILayout.HelpBox("Set LeftEyeBone, RightEyeBone and EyelidsMesh if found them", MessageType.Warning);
+                            EditorGUILayout.HelpBox(texts[1], MessageType.Warning);
                         }
                     }
 
@@ -151,7 +183,7 @@ namespace Gatosyocora.VRCAvatars3Tools
 
             if (selectFbx)
             {
-                EditorGUILayout.HelpBox("Select .fbx. Please select .prefab", MessageType.Error);
+                EditorGUILayout.HelpBox(texts[2], MessageType.Error);
             }
 
             using (new EditorGUI.DisabledGroupScope(avatarPrefab is null || avatar2Info is null))
@@ -163,7 +195,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                 }
             }
             EditorGUILayout.Space();
-            EditorGUILayout.HelpBox("Remove missing component after convert", MessageType.Warning);
+            EditorGUILayout.HelpBox(texts[3], MessageType.Warning);
             EditorGUILayout.Space();
         }
 
