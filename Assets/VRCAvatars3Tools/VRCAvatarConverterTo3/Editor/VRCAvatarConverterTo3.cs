@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
@@ -371,9 +372,16 @@ namespace Gatosyocora.VRCAvatars3Tools
             if (Path.GetExtension(filePath).ToLower() == ".fbx") return null;
 
             var yaml = new YamlStream();
-            using (var sr = new StreamReader(filePath, System.Text.Encoding.UTF8))
+            using (var sr = File.OpenText(filePath))
             {
-                yaml.Load(sr);
+                var yamlText = sr.ReadToEnd();
+                // 改変アバターは削除したTransformの部分に謎の文字列が入っており
+                // これがあるとLoadに失敗するので削除する
+                yamlText = yamlText.Replace(" stripped", string.Empty);
+                using (var stream = new StringReader(yamlText))
+                {
+                    yaml.Load(stream);
+                }
             }
 
             // コンポーネントレベルでDocumentが存在する
