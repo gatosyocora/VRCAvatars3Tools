@@ -10,7 +10,7 @@ using VRC.SDK3.Avatars.Components;
 using VRC.SDK3.Avatars.ScriptableObjects;
 using YamlDotNet.RepresentationModel;
 
-// ver 1.1
+// ver 1.2
 // Copyright (c) 2020 gatosyocora
 // MIT License. See LICENSE.txt
 

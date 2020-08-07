@@ -34,7 +34,7 @@ ver1.0
 	* ツールを作成
 
 ----------------------------------------------------
-〇VRCAvatarConverterTo3 (ver 1.1.0.1)
+〇VRCAvatarConverterTo3 (ver 1.2)
 VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変換できます。
 
 「VRCAvatars3Tools > VRCAvatarConverterTo3」で以下の機能を持つウィンドウが開きます
@@ -43,6 +43,8 @@ VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変
 1. 「2.0 Avatar Prefab」の右にある◎を押して変換したいPrefabを選択します。（Avatars2.0のPrefab）
 2. 設定される内容が表示されます。
 3. 「Convert Avatar To 3.0」を選択して変換します。
+
+「EN」「JP」を押すとUIの一部が英語/日本語に切り替わります。
 
 ・注意点
  * EyeLookのEyesにあるRotationStatesは未設定です。必要に応じて各自設定してください。
@@ -64,6 +66,11 @@ VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変
  Copyright (c) 2008, 2009, 2010, 2011, 2012, 2013, 2014 Antoine Aubry
 
  ・更新履歴
+ ver1.2
+	* UIを日本語に切り替えられるように
+    * 一部の改変アバターでPrefabの情報が取得できない不具合を修正
+	* CustomStandingAnimsが未設定のアバターに対応
+	* fbxを選択したときにエラーメッセージがでるように
  ver1.1.0.1
 	* VRCSDK3-AVATAR-2020.08.06.16.30_Public.unitypackageに対応
  ver1.1
