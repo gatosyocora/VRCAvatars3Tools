@@ -59,6 +59,7 @@ namespace Gatosyocora.VRCAvatars3Tools
         private bool showEyeLookInfo = true;
         private bool showAnimationLayersInfo = true;
         private Vector2 scrollPos = Vector2.zero;
+        private bool selectFbx = false;
 
         [MenuItem("VRCAvatars3Tools/VRCAvatarConverterTo3")]
         public static void Open()
@@ -146,6 +147,11 @@ namespace Gatosyocora.VRCAvatars3Tools
                         }
                     }
                 }
+            }
+
+            if (selectFbx)
+            {
+                EditorGUILayout.HelpBox("Select .fbx. Please select .prefab", MessageType.Error);
             }
 
             using (new EditorGUI.DisabledGroupScope(avatarPrefab is null || avatar2Info is null))
@@ -369,7 +375,12 @@ namespace Gatosyocora.VRCAvatars3Tools
             var filePath = AssetDatabase.GetAssetPath(avatarPrefab2);
 
             // fbxが選択されている場合何も返さない
-            if (Path.GetExtension(filePath).ToLower() == ".fbx") return null;
+            if (Path.GetExtension(filePath).ToLower() == ".fbx")
+            {
+                selectFbx = true;
+                return null;
+            }
+            else selectFbx = false;
 
             var yaml = new YamlStream();
             using (var sr = File.OpenText(filePath))
