@@ -536,6 +536,7 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         private bool HasEmoteAnimation(AnimationClipInfo[] infos) =>
             infos
+                .Where(i => i != null)
                 .Select(i => i.Type)
                 .Any(t => t.StartsWith("Emote"));
     }
