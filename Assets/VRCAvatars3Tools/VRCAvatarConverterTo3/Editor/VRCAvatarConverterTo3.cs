@@ -27,6 +27,7 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         private readonly static Dictionary<string, string> animationTypes = new Dictionary<string, string>
         {
+            {"7400002", "Idle"},
             {"7400052", "Fist"},
             {"7400054", "Point"},
             {"7400056", "RockNRoll"},
@@ -265,6 +266,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                     var state = GetAnimatorStateFromStateName(layer.stateMachine, animationInfo.Type);
                     if (state is null) continue;
                     state.motion = animClip;
+                    state.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
                 }
             }
 
