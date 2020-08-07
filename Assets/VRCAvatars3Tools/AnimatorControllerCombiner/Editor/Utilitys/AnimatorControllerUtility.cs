@@ -394,14 +394,14 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
                 locomotionControl.debugString = srcControl.debugString;
                 locomotionControl.disableLocomotion = srcControl.disableLocomotion;
             }
-            else if (dstBehaivour is VRCAnimatorRemeasureAvatar remeasureAvatar)
+            /*else if (dstBehaivour is VRCAnimatorRemeasureAvatar remeasureAvatar)
             {
                 var srcRemeasureAvatar = srcBehaivour as VRCAnimatorRemeasureAvatar;
                 remeasureAvatar.ApplySettings = srcRemeasureAvatar.ApplySettings;
                 remeasureAvatar.debugString = srcRemeasureAvatar.debugString;
                 remeasureAvatar.delayTime = srcRemeasureAvatar.delayTime;
                 remeasureAvatar.fixedDelay = srcRemeasureAvatar.fixedDelay;
-            }
+            }*/
             else if (dstBehaivour is VRCAnimatorTemporaryPoseSpace poseSpace)
             {
                 var srcPoseSpace = srcBehaivour as VRCAnimatorTemporaryPoseSpace;

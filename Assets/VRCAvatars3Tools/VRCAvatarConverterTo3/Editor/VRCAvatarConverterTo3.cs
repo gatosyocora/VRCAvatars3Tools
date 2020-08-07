@@ -443,9 +443,15 @@ namespace Gatosyocora.VRCAvatars3Tools
                         continue;
                     }
                     var overrideClipGuid = ((YamlScalarNode)overrideClipGuidNode).Value;
+                    if (!animationTypes.TryGetValue(originalClipFileID, out string animationType))
+                    {
+                        Debug.Log($"Don't Exist {originalClipFileID}");
+                        continue;
+                    }
+
                     avatar2Info.OverrideAnimationClips[i] = new AnimationClipInfo
                     {
-                        Type = animationTypes[originalClipFileID],
+                        Type = animationType,
                         Path = AssetDatabase.GUIDToAssetPath(overrideClipGuid)
                     };
                 }
@@ -538,6 +544,7 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         private bool HasEmoteAnimation(AnimationClipInfo[] infos) =>
             infos
+                .Where(i => i != null)
                 .Select(i => i.Type)
                 .Any(t => t.StartsWith("Emote"));
     }
