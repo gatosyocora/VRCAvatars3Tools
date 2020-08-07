@@ -54,6 +54,13 @@ namespace Gatosyocora.VRCAvatars3Tools
             FX = 4
         }
 
+        private enum SpecialAnimationLayerType
+        {
+            Sitting = 0,
+            TPose = 1,
+            IKPose = 2
+        }
+
         private bool showViewInfo = true;
         private bool showLipSyncInfo = true;
         private bool showEyeLookInfo = true;
@@ -240,9 +247,9 @@ namespace Gatosyocora.VRCAvatars3Tools
             };
 
             // FaceEmotion
-            var searchTarget = "vrc_AvatarV3HandsLayer t:AnimatorController";
-            if (avatar2Info.DefaultAnimationSet == VRCAvatarDescripterDeserializedObject.AnimationSet.Female) searchTarget = "vrc_AvatarV3HandsLayer2 t:AnimatorController";
-            var originalHandLayerControllerPath = GetAssetPathForSearch(searchTarget);
+            var searchTargetHL = "vrc_AvatarV3HandsLayer t:AnimatorController";
+            if (avatar2Info.DefaultAnimationSet == VRCAvatarDescripterDeserializedObject.AnimationSet.Female) searchTargetHL = "vrc_AvatarV3HandsLayer2 t:AnimatorController";
+            var originalHandLayerControllerPath = GetAssetPathForSearch(searchTargetHL);
             var fxController = DuplicateAnimationLayerController(
                                     originalHandLayerControllerPath,
                                     Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
@@ -353,6 +360,21 @@ namespace Gatosyocora.VRCAvatars3Tools
 
                 Selection.activeObject = exParameters;
             }
+
+            // Sitting Animation
+            var searchTargetSL = "vrc_AvatarV3SittingLayer t:AnimatorController";
+            if (avatar2Info.DefaultAnimationSet == VRCAvatarDescripterDeserializedObject.AnimationSet.Female) searchTargetSL = "vrc_AvatarV3SittingLayer2 t:AnimatorController";
+            var originalSittingLayerControllerPath = GetAssetPathForSearch(searchTargetSL);
+            var sittingController = DuplicateAnimationLayerController(
+                                    originalSittingLayerControllerPath,
+                                    Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
+                                    avatarPrefab2.name);
+
+            avatar.specialAnimationLayers[(int)SpecialAnimationLayerType.Sitting].isDefault = false;
+            avatar.specialAnimationLayers[(int)SpecialAnimationLayerType.Sitting].isEnabled = true;
+            avatar.specialAnimationLayers[(int)SpecialAnimationLayerType.Sitting].animatorController = sittingController;
+            avatar.specialAnimationLayers[(int)SpecialAnimationLayerType.Sitting].mask = null;
+
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
