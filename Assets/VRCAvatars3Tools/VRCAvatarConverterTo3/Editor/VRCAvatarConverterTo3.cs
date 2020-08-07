@@ -366,6 +366,10 @@ namespace Gatosyocora.VRCAvatars3Tools
         {
             var avatar2Info = new VRCAvatarDescripterDeserializedObject();
             var filePath = AssetDatabase.GetAssetPath(avatarPrefab2);
+
+            // fbxが選択されている場合何も返さない
+            if (Path.GetExtension(filePath).ToLower() == ".fbx") return null;
+
             var yaml = new YamlStream();
             using (var sr = new StreamReader(filePath, System.Text.Encoding.UTF8))
             {
