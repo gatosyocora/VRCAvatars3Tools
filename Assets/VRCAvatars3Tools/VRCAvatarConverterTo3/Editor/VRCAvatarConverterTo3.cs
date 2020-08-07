@@ -131,12 +131,15 @@ namespace Gatosyocora.VRCAvatars3Tools
                             EditorGUILayout.LabelField("StandingOverrideController", avatar2Info.standingOverrideControllerPath);
                             EditorGUILayout.LabelField("SittingOverrideController", "<Unimplemented>");
 
-                            using (new EditorGUI.IndentLevelScope())
+                            if (avatar2Info.OverrideAnimationClips != null)
                             {
-                                foreach (var animationClipInfo in avatar2Info.OverrideAnimationClips)
+                                using (new EditorGUI.IndentLevelScope())
                                 {
-                                    if (animationClipInfo is null) continue;
-                                    EditorGUILayout.LabelField(animationClipInfo.Type, animationClipInfo.Path);
+                                    foreach (var animationClipInfo in avatar2Info.OverrideAnimationClips)
+                                    {
+                                        if (animationClipInfo is null) continue;
+                                        EditorGUILayout.LabelField(animationClipInfo.Type, animationClipInfo.Path);
+                                    }
                                 }
                             }
                         }
@@ -237,6 +240,9 @@ namespace Gatosyocora.VRCAvatars3Tools
                     isDefault = true
                 }
             };
+
+            // CustomStandingAnimsが未設定ならPlayableLayerを設定しない
+            if (avatar2Info.OverrideAnimationClips is null) return avatarObj3;
 
             // FaceEmotion
             var originalHandLayerControllerPath = GetAssetPathForSearch("vrc_AvatarV3HandsLayer t:AnimatorController");
@@ -421,6 +427,9 @@ namespace Gatosyocora.VRCAvatars3Tools
                 var controllerNode = (YamlMappingNode)yaml.Documents[0].RootNode;
                 var overrideController = (YamlMappingNode)controllerNode.Children["AnimatorOverrideController"];
                 var clips = (YamlSequenceNode)overrideController.Children["m_Clips"];
+
+                if (!clips.Any()) break;
+
                 avatar2Info.OverrideAnimationClips = new AnimationClipInfo[clips.Count()];
                 for (int i = 0; i < clips.Count(); i++)
                 {
