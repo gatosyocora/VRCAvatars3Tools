@@ -16,6 +16,14 @@ namespace Gatosyocora.VRCAvatars3Tools
         public Vector3 ViewPosition { get; set; }
         public bool ScaleIPD { get; set; }
 
+        public enum AnimationSet
+        {
+            Male = 0,
+            Female = 1,
+            None = 2
+        }
+        public AnimationSet DefaultAnimationSet { get; set; }
+
         // LipSync
         public VRC_AvatarDescriptor.LipSyncStyle lipSync { get; set; }
         public string faceMeshRendererPath { get; set; }
