@@ -57,8 +57,13 @@ VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変
 
 ・Avatars2.0からのアバター変換
 1. Avatars2.0で作成したアバターをPrefabにして、それを含めたunitypackageを作成する
+   * Prefabで右クリックしてExport packageするとよい
+   * Export画面でVRCSDKやEditor拡張などはチェックを外してunitypackageに含まれないようにする
+    (Editor拡張はEditorというフォルダが含まれているのでこれで見分けがつく）
 2. Avatars3.0用に新しくプロジェクトを作成する
 3. 2で作成したプロジェクトにAvatars3.0用のVRCSDKと本ツールと1で作成したunitypackageをインポートする
+　　* 1で作成したunitypackageをインポートする前にアバターに必要なアセットを別途インポートしておく
+   (ShaderやDynamicBoneなど)
 4. 1で作成したunitypackageに含まれるPrefabを本ツールの「2.0 Avatar Prefab」に設定する
 
 ・使用ライブラリ
