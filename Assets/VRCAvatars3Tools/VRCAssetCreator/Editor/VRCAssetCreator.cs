@@ -63,7 +63,7 @@ namespace Gatosyocora.VRCAvatars3Tools
             AssetDatabase.Refresh();
 
             var controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(assetPath);
-            EditorGUIUtility.PingObject(controller);
+            Selection.activeObject = controller;
             return controller;
         }
     }
