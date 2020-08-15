@@ -219,6 +219,7 @@ namespace Gatosyocora.VRCAvatars3Tools
 #endif
         }
 
+#if VRC_SDK_VRCSDK3
         private GameObject ConvertAvatarTo3(GameObject avatarPrefab2, VRCAvatarDescripterDeserializedObject avatar2Info)
         {
             var avatarObj3 = PrefabUtility.InstantiatePrefab(avatarPrefab2) as GameObject;
@@ -633,5 +634,6 @@ namespace Gatosyocora.VRCAvatars3Tools
                 .Select(i => i.Type)
                 .Any(t => t.StartsWith("Emote"));
     }
+#endif
 }
 
