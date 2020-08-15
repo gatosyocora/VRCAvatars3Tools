@@ -70,7 +70,7 @@ namespace Gatosyocora.VRCAvatars3Tools
             "このプロジェクトにVRCSDK3がインポートされていないため使用できません"
         };
 
-        private string[] texts = textEN;
+        private string[] texts = textJP;
 
         private enum AnimationLayerType
         {
