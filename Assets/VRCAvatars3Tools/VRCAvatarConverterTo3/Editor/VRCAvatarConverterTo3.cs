@@ -70,7 +70,7 @@ namespace Gatosyocora.VRCAvatars3Tools
             "このプロジェクトにVRCSDK3がインポートされていないため使用できません"
         };
 
-        private string[] texts = textJP;
+        private string[] texts;
 
         private enum AnimationLayerType
         {
@@ -99,6 +99,11 @@ namespace Gatosyocora.VRCAvatars3Tools
         public static void Open()
         {
             GetWindow<VRCAvatarConverterTo3>(nameof(VRCAvatarConverterTo3));
+        }
+
+        private void OnEnable()
+        {
+            texts = textJP;
         }
 
         private void OnGUI()
