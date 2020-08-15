@@ -7,8 +7,10 @@ using System.Text;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
+#if VRC_SDK_VRCSDK3
 using VRC.SDK3.Avatars.Components;
 using VRC.SDK3.Avatars.ScriptableObjects;
+#endif
 using YamlDotNet.RepresentationModel;
 
 // ver 1.3
@@ -20,8 +22,10 @@ namespace Gatosyocora.VRCAvatars3Tools
     public class VRCAvatarConverterTo3 : EditorWindow
     {
         private GameObject avatarPrefab;
-
+        
+        #if VRC_SDK_VRCSDK3
         private VRCAvatarDescripterDeserializedObject avatar2Info;
+        #endif
 
         private const string LEFT_EYE_PATH = "Armature/Hips/Spine/Chest/Neck/Head/LeftEye";
         private const string RIGHT_EYE_PATH = "Armature/Hips/Spine/Chest/Neck/Head/RightEye";
@@ -53,7 +57,8 @@ namespace Gatosyocora.VRCAvatars3Tools
             "If use this, change type after convert",
             "Set LeftEyeBone, RightEyeBone and EyelidsMesh if found them",
             "Select .fbx. Please select .prefab",
-            "Remove missing component after convert"
+            "Remove missing component after convert",
+            "Can't use because imported no VRCSDK3 in this project"
         };
 
         private readonly static string[] textJP = new string[]
@@ -62,6 +67,7 @@ namespace Gatosyocora.VRCAvatars3Tools
             "もしLeftEyeBoneとRightEyeBoneおよびEyelidsMeshが見つかったら、これらを設定します。",
             ".fbxを選択しています。.prefabを選択してください。",
             "変換後にmissingになっているコンポーネントを削除してください",
+            "このプロジェクトにVRCSDK3がインポートされていないため使用できません"
         };
 
         private string[] texts = textEN;
@@ -109,6 +115,8 @@ namespace Gatosyocora.VRCAvatars3Tools
                     texts = textJP;
                 }
             }
+
+#if VRC_SDK_VRCSDK3
 
             using (var check = new EditorGUI.ChangeCheckScope())
             {
@@ -206,6 +214,9 @@ namespace Gatosyocora.VRCAvatars3Tools
             EditorGUILayout.Space();
             EditorGUILayout.HelpBox(texts[3], MessageType.Warning);
             EditorGUILayout.Space();
+#else
+            EditorGUILayout.HelpBox(texts[4], MessageType.Error);
+#endif
         }
 
         private GameObject ConvertAvatarTo3(GameObject avatarPrefab2, VRCAvatarDescripterDeserializedObject avatar2Info)

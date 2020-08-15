@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+#if VRC_SDK_VRCSDK3
 using VRC.SDKBase;
+#endif
 
 // ver 1.0
 // Copyright (c) 2020 gatosyocora
@@ -24,8 +26,10 @@ namespace Gatosyocora.VRCAvatars3Tools
         }
         public AnimationSet DefaultAnimationSet { get; set; }
 
+        #if VRC_SDK_VRCSDK3
         // LipSync
         public VRC_AvatarDescriptor.LipSyncStyle lipSync { get; set; }
+        #endif
         public string faceMeshRendererPath { get; set; }
         public string[] VisemeBlendShapes { get; set; }
 
