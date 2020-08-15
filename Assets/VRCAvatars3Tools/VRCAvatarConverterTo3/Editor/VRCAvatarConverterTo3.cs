@@ -54,7 +54,7 @@ namespace Gatosyocora.VRCAvatars3Tools
         // 簡易的な日本語対応
         private readonly static string[] textEN = new string[] 
         {
-            "If use this, change type after convert",
+            "If use Eyelids, change type after convert",
             "Set LeftEyeBone, RightEyeBone and EyelidsMesh if found them",
             "Select .fbx. Please select .prefab",
             "Remove missing component after convert",
@@ -63,7 +63,7 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         private readonly static string[] textJP = new string[]
         {
-            "これを使用する場合、変換後にTypeを切り替えてください。",
+            "Eyelidsを使用する場合、変換後にTypeを切り替えてください。",
             "もしLeftEyeBoneとRightEyeBoneおよびEyelidsMeshが見つかったら、これらを設定します。",
             ".fbxを選択しています。.prefabを選択してください。",
             "変換後にmissingになっているコンポーネントを削除してください",
