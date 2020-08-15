@@ -441,9 +441,16 @@ namespace Gatosyocora.VRCAvatars3Tools
             }
 
             // Sitting Animation
-            var searchTargetSL = "vrc_AvatarV3SittingLayer t:AnimatorController";
-            if (avatar2Info.DefaultAnimationSet == VRCAvatarDescripterDeserializedObject.AnimationSet.Female) searchTargetSL = "vrc_AvatarV3SittingLayer2 t:AnimatorController";
-            var originalSittingLayerControllerPath = AssetUtility.GetAssetPathForSearch(searchTargetSL);
+            string searchTargetSittingLayer;
+            if (avatar2Info.DefaultAnimationSet == VRCAvatarDescripterDeserializedObject.AnimationSet.Male)
+            {
+                searchTargetSittingLayer = "vrc_AvatarV3SittingLayer t:AnimatorController";
+            }
+            else
+            {
+                searchTargetSittingLayer = "vrc_AvatarV3SittingLayer2 t:AnimatorController";
+            }
+            var originalSittingLayerControllerPath = AssetUtility.GetAssetPathForSearch(searchTargetSittingLayer);
             var sittingController = AnimatorControllerUtility.DuplicateAnimationLayerController(
                                         originalSittingLayerControllerPath,
                                         Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
