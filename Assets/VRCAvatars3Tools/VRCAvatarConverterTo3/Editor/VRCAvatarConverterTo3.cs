@@ -306,9 +306,18 @@ namespace Gatosyocora.VRCAvatars3Tools
             if (avatar2Info.OverrideAnimationClips is null) return avatarObj3;
 
             // FaceEmotion
-            var searchTargetHL = "vrc_AvatarV3HandsLayer t:AnimatorController";
-            if (avatar2Info.DefaultAnimationSet == VRCAvatarDescripterDeserializedObject.AnimationSet.Female) searchTargetHL = "vrc_AvatarV3HandsLayer2 t:AnimatorController";
-            var originalHandLayerControllerPath = AssetUtility.GetAssetPathForSearch(searchTargetHL);
+            string searchTargetHandsLayer, idleStateName;
+            if (avatar2Info.DefaultAnimationSet == VRCAvatarDescripterDeserializedObject.AnimationSet.Male)
+            {
+                searchTargetHandsLayer = "vrc_AvatarV3HandsLayer t:AnimatorController";
+                idleStateName = "Idle";
+            }
+            else
+            {
+                searchTargetHandsLayer = "vrc_AvatarV3HandsLayer2 t:AnimatorController";
+                idleStateName = "Idle2";
+            }
+            var originalHandLayerControllerPath = AssetUtility.GetAssetPathForSearch(searchTargetHandsLayer);
             var fxController = AnimatorControllerUtility.DuplicateAnimationLayerController(
                                     originalHandLayerControllerPath,
                                     Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
@@ -323,6 +332,14 @@ namespace Gatosyocora.VRCAvatars3Tools
             {
                 if (layer.name != "Left Hand" && layer.name != "Right Hand") continue;
 
+                var idleState = GetAnimatorStateFromStateName(layer.stateMachine, idleStateName);
+                if (idleState != null)
+                {
+                    // まばたき干渉防止
+                    var idleControl = idleState.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
+                    idleControl.trackingEyes = VRC.SDKBase.VRC_AnimatorTrackingControl.TrackingType.Tracking;
+                }
+
                 for (int i = 0; i < avatar2Info.OverrideAnimationClips.Length; i++)
                 {
                     var animationInfo = avatar2Info.OverrideAnimationClips[i];
@@ -332,7 +349,10 @@ namespace Gatosyocora.VRCAvatars3Tools
                     var state = GetAnimatorStateFromStateName(layer.stateMachine, animationInfo.Type);
                     if (state is null) continue;
                     state.motion = animClip;
-                    state.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
+
+                    // まばたき干渉防止
+                    var control = state.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
+                    control.trackingEyes = VRC.SDKBase.VRC_AnimatorTrackingControl.TrackingType.Animation;
                 }
             }
 
