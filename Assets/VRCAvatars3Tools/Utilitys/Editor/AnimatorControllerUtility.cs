@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Linq;
 using System;
+using System.IO;
 #if VRC_SDK_VRCSDK3
 using VRC.SDK3.Avatars.Components;
 using static VRC.SDKBase.VRC_AvatarParameterDriver;
@@ -489,6 +490,14 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
                 }
                 AddObjectsInStateMachineToAnimatorController(SubStateMachine.stateMachine, controllerPath);
             }
+        }
+
+        public static AnimatorController DuplicateAnimationLayerController(string originalControllerPath, string outputFolderPath, string avatarName)
+        {
+            var controllerName = $"{Path.GetFileNameWithoutExtension(originalControllerPath)}_{avatarName}.controller";
+            var controllerPath = AssetDatabase.GenerateUniqueAssetPath(Path.Combine(outputFolderPath, controllerName));
+            AssetDatabase.CopyAsset(originalControllerPath, controllerPath);
+            return AssetDatabase.LoadAssetAtPath(controllerPath, typeof(AnimatorController)) as AnimatorController;
         }
     }
 }

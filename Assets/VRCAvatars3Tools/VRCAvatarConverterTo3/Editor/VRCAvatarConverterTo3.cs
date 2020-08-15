@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gatosyocora.VRCAvatars3Tools.Utilitys;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -294,8 +295,8 @@ namespace Gatosyocora.VRCAvatars3Tools
             // FaceEmotion
             var searchTargetHL = "vrc_AvatarV3HandsLayer t:AnimatorController";
             if (avatar2Info.DefaultAnimationSet == VRCAvatarDescripterDeserializedObject.AnimationSet.Female) searchTargetHL = "vrc_AvatarV3HandsLayer2 t:AnimatorController";
-            var originalHandLayerControllerPath = GetAssetPathForSearch(searchTargetHL);
-            var fxController = DuplicateAnimationLayerController(
+            var originalHandLayerControllerPath = AssetUtility.GetAssetPathForSearch(searchTargetHL);
+            var fxController = AnimatorControllerUtility.DuplicateAnimationLayerController(
                                     originalHandLayerControllerPath,
                                     Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
                                     avatarPrefab2.name);
@@ -327,7 +328,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                 // Emote
                 var originalActionLayerController = Resources.Load<AnimatorController>("Controllers/vrc_AvatarV3ActionLayer_VRCAV3T");
                 var originalActionLayerControllerPath = AssetDatabase.GetAssetPath(originalActionLayerController);
-                var actionController = DuplicateAnimationLayerController(
+                var actionController = AnimatorControllerUtility.DuplicateAnimationLayerController(
                                             originalActionLayerControllerPath,
                                             Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
                                             avatarPrefab2.name);
@@ -374,7 +375,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                 avatar.expressionsMenu = exMenu;
                 avatar.expressionParameters = exParameters;
 
-                var emoteIconPath = GetAssetPathForSearch("person_dance t:texture");
+                var emoteIconPath = AssetUtility.GetAssetPathForSearch("person_dance t:texture");
                 var emoteIcon = AssetDatabase.LoadAssetAtPath<Texture2D>(emoteIconPath);
 
                 exMenu.controls.Add(new VRCExpressionsMenu.Control
@@ -409,11 +410,11 @@ namespace Gatosyocora.VRCAvatars3Tools
             // Sitting Animation
             var searchTargetSL = "vrc_AvatarV3SittingLayer t:AnimatorController";
             if (avatar2Info.DefaultAnimationSet == VRCAvatarDescripterDeserializedObject.AnimationSet.Female) searchTargetSL = "vrc_AvatarV3SittingLayer2 t:AnimatorController";
-            var originalSittingLayerControllerPath = GetAssetPathForSearch(searchTargetSL);
-            var sittingController = DuplicateAnimationLayerController(
-                                    originalSittingLayerControllerPath,
-                                    Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
-                                    avatarPrefab2.name);
+            var originalSittingLayerControllerPath = AssetUtility.GetAssetPathForSearch(searchTargetSL);
+            var sittingController = AnimatorControllerUtility.DuplicateAnimationLayerController(
+                                        originalSittingLayerControllerPath,
+                                        Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
+                                        avatarPrefab2.name);
 
             avatar.specialAnimationLayers[(int)SpecialAnimationLayerType.Sitting].isDefault = false;
             avatar.specialAnimationLayers[(int)SpecialAnimationLayerType.Sitting].isEnabled = true;
@@ -612,20 +613,6 @@ namespace Gatosyocora.VRCAvatars3Tools
                 return state.state;
             }
             return null;
-        }
-
-        private static string GetAssetPathForSearch(string filter) =>
-            AssetDatabase.FindAssets(filter)
-                .Select(g => AssetDatabase.GUIDToAssetPath(g))
-                .OrderBy(p => Path.GetFileName(p).Count())
-                .First();
-
-        private AnimatorController DuplicateAnimationLayerController(string originalControllerPath, string outputFolderPath, string avatarName)
-        {
-            var controllerName = $"{Path.GetFileNameWithoutExtension(originalControllerPath)}_{avatarName}.controller";
-            var controllerPath = AssetDatabase.GenerateUniqueAssetPath(Path.Combine(outputFolderPath, controllerName));
-            AssetDatabase.CopyAsset(originalControllerPath, controllerPath);
-            return AssetDatabase.LoadAssetAtPath(controllerPath, typeof(AnimatorController)) as AnimatorController;
         }
 
         private bool HasEmoteAnimation(AnimationClipInfo[] infos) =>
