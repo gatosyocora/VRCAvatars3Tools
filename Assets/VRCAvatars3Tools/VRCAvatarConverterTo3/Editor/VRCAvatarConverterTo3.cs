@@ -58,7 +58,8 @@ namespace Gatosyocora.VRCAvatars3Tools
             "Set LeftEyeBone, RightEyeBone and EyelidsMesh if found them",
             "Select .fbx. Please select .prefab",
             "Remove missing component after convert",
-            "Can't use because imported no VRCSDK3 in this project"
+            "Can't use because imported no VRCSDK3 in this project",
+            "Disable EyeLook after converting. If use this, press Enable and set Rotation States"
         };
 
         private readonly static string[] textJP = new string[]
@@ -67,7 +68,8 @@ namespace Gatosyocora.VRCAvatars3Tools
             "もしLeftEyeBoneとRightEyeBoneおよびEyelidsMeshが見つかったら、これらを設定します。",
             ".fbxを選択しています。.prefabを選択してください。",
             "変換後にmissingになっているコンポーネントを削除してください",
-            "このプロジェクトにVRCSDK3がインポートされていないため使用できません"
+            "このプロジェクトにVRCSDK3がインポートされていないため使用できません",
+            "変換後、EyeLookは無効になっています。使用する場合はEnableを押してRotationStatesを設定してください"
         };
 
         private string[] texts;
@@ -165,6 +167,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                     }
 
                     showEyeLookInfo = EditorGUILayout.Foldout(showEyeLookInfo, "EyeLook");
+                    EditorGUILayout.HelpBox(texts[5], MessageType.Info);
                     if (showEyeLookInfo)
                     {
                         using (new EditorGUI.IndentLevelScope())
