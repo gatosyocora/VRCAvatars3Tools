@@ -359,8 +359,11 @@ namespace Gatosyocora.VRCAvatars3Tools
                     state.motion = animClip;
 
                     // まばたき干渉防止
-                    var control = state.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
-                    control.trackingEyes = VRC.SDKBase.VRC_AnimatorTrackingControl.TrackingType.Animation;
+                    if (animationInfo.Type != "Idle")
+                    {
+                        var control = state.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
+                        control.trackingEyes = VRC.SDKBase.VRC_AnimatorTrackingControl.TrackingType.Animation;
+                    }
                 }
             }
 
