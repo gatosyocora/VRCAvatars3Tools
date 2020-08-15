@@ -86,6 +86,31 @@ VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変
 	* ツールを作成
 
 ----------------------------------------------------
+〇VRCAssetCreator (ver 1.0)
+VRCSDK3に関連したアセットを作成します。
+
+Projectウィンドウのアセットを作成したいフォルダで右クリックをして
+「Create>VRChat>...」で作成したいものを選択すると作成されます。
+
+VRCSDKに同封されているものを選択したフォルダに複製しています。
+
+現在は以下のものを作成できます。
+「Create>VRChat>Controllers>...」：VRCSDKに同封されたAvatars3.0に関するAnimatorControllerら
+・vrc_AvatarV3ActionLayer.controller : デフォルトでActionに設定されているAnimatorController
+・vrc_AvatarV3FaceLayer.controller : デフォルトでFXに設定されているAnimatorController
+・vrc_AvatarV3HandsLayer.controller : デフォルトでGestureに設定されているAnimatorController
+・vrc_AvatarV3HandsLayer2.controller : Gestureに設定候補のAnimatorController
+・vrc_AvatarV3IdleLayer.controller : デフォルトでAdditiveに設定されているAnimatorController
+・vrc_AvatarV3LocomotionLayer.controller : デフォルトでBaseに設定されているAnimatorController
+・vrc_AvatarV3SittingLayer.controller : デフォルトでSittingに設定されているAnimatorController
+・vrc_AvatarV3SittingLayer2.controller : Sittingに設定候補のAnimatorController
+・vrc_AvatarV3UtilityIKPose.controller : デフォルトでIKPoseに設定されているAnimatorController
+・vrc_AvatarV3UtilityTPose.controller : デフォルトでTPoseに設定されているAnimatorController
+
+ ver1.0
+	* ツールを作成
+
+----------------------------------------------------
 
 ●利用規約
 本規約は本商品に含まれるすべてのスクリプトやファイルに共通で適用されるものとする。
