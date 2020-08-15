@@ -230,7 +230,8 @@ namespace Gatosyocora.VRCAvatars3Tools
             avatar.lipSync = avatar2Info.lipSync;
             avatar.VisemeSkinnedMesh = avatarObj3.transform.Find(avatar2Info.faceMeshRendererPath)?.GetComponent<SkinnedMeshRenderer>() ?? null;
             avatar.VisemeBlendShapes = avatar2Info.VisemeBlendShapes;
-            avatar.enableEyeLook = true;
+
+            // TODO: アバターによってはRotationStatesを設定しないと白目になってしまうのでenableEyeLook=falseにしておく
             avatar.customEyeLookSettings = new VRCAvatarDescriptor.CustomEyeLookSettings
             {
                 leftEye = avatarObj3.transform.Find(LEFT_EYE_PATH),
@@ -245,11 +246,11 @@ namespace Gatosyocora.VRCAvatars3Tools
                 avatar.customEyeLookSettings.eyelidType = VRCAvatarDescriptor.EyelidType.None;
             }
 
-            if (avatar.customEyeLookSettings.leftEye is null && avatar.customEyeLookSettings.rightEye is null &&
-                avatar.customEyeLookSettings.eyelidType == VRCAvatarDescriptor.EyelidType.None)
-            {
-                avatar.enableEyeLook = false;
-            }
+            //if (avatar.customEyeLookSettings.leftEye is null && avatar.customEyeLookSettings.rightEye is null &&
+            //    avatar.customEyeLookSettings.eyelidType == VRCAvatarDescriptor.EyelidType.None)
+            //{
+            //    avatar.enableEyeLook = false;
+            //}
 
             avatar.customizeAnimationLayers = true;
             avatar.baseAnimationLayers = new VRCAvatarDescriptor.CustomAnimLayer[]
