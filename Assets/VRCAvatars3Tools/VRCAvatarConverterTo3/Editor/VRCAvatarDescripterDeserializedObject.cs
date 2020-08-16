@@ -4,7 +4,7 @@ using UnityEngine;
 using VRC.SDKBase;
 #endif
 
-// ver 1.0
+// ver 1.1
 // Copyright (c) 2020 gatosyocora
 // MIT License. See LICENSE.txt
 
