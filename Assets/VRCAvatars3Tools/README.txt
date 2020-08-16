@@ -34,7 +34,7 @@ ver1.0
 	* ツールを作成
 
 ----------------------------------------------------
-〇VRCAvatarConverterTo3 (ver 1.2)
+〇VRCAvatarConverterTo3 (ver 1.3)
 VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変換できます。
 
 「VRCAvatars3Tools > VRCAvatarConverterTo3」で以下の機能を持つウィンドウが開きます
@@ -71,6 +71,12 @@ VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変
  Copyright (c) 2008, 2009, 2010, 2011, 2012, 2013, 2014 Antoine Aubry
 
  ・更新履歴
+ ver1.3
+	* 性別に応じてSittingのアニメーションとHandsLayerのアニメーションを選択するように(PR @skishida)
+	* まばたき干渉防止が設定されるように(PR @skishida)
+	* Idleが設定されている場合はその手の形をデフォルトとして設定するように(PR @skishida)
+	* EyeLookを無効にするように(RotationStatesが未設定だと白目になるアバターがあるため)
+	* デフォルト言語を日本語に
  ver1.2
 	* UIを日本語に切り替えられるように
     * 一部の改変アバターでPrefabの情報が取得できない不具合を修正
