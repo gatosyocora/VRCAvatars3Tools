@@ -314,16 +314,14 @@ namespace Gatosyocora.VRCAvatars3Tools
             if (avatar2Info.OverrideAnimationClips is null) return avatarObj3;
 
             // FaceEmotion
-            string searchTargetHandsLayer, idleStateName;
+            string searchTargetHandsLayer;
             if (avatar2Info.DefaultAnimationSet == VRCAvatarDescripterDeserializedObject.AnimationSet.Male)
             {
                 searchTargetHandsLayer = "vrc_AvatarV3HandsLayer t:AnimatorController";
-                idleStateName = "Idle";
             }
             else
             {
                 searchTargetHandsLayer = "vrc_AvatarV3HandsLayer2 t:AnimatorController";
-                idleStateName = "Idle2";
             }
             var originalHandLayerControllerPath = AssetUtility.GetAssetPathForSearch(searchTargetHandsLayer);
             var fxController = AnimatorControllerUtility.DuplicateAnimationLayerController(
@@ -340,28 +338,29 @@ namespace Gatosyocora.VRCAvatars3Tools
             {
                 if (layer.name != "Left Hand" && layer.name != "Right Hand") continue;
 
-                var idleState = GetAnimatorStateFromStateName(layer.stateMachine, idleStateName);
-                if (idleState != null)
+                foreach (var childState in layer.stateMachine.states)
                 {
-                    // まばたき干渉防止
-                    var idleControl = idleState.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
-                    idleControl.trackingEyes = VRC.SDKBase.VRC_AnimatorTrackingControl.TrackingType.Tracking;
-                }
+                    if (childState.state is null) continue;
 
-                for (int i = 0; i < avatar2Info.OverrideAnimationClips.Length; i++)
-                {
-                    var animationInfo = avatar2Info.OverrideAnimationClips[i];
-                    if (animationInfo is null || string.IsNullOrEmpty(animationInfo.Path) || animationInfo.Type.StartsWith("Emote")) continue;
+                    var animationInfo = avatar2Info.OverrideAnimationClips
+                                            .Where(c => c != null && c.Type == childState.state.name)
+                                            .SingleOrDefault();
 
-                    var animClip = AssetDatabase.LoadAssetAtPath(animationInfo.Path, typeof(AnimationClip)) as AnimationClip;
-                    var state = GetAnimatorStateFromStateName(layer.stateMachine, animationInfo.Type);
-                    if (state is null) continue;
-                    state.motion = animClip;
-
-                    // まばたき干渉防止
-                    if (animationInfo.Type != "Idle")
+                    if (animationInfo != null)
                     {
-                        var control = state.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
+                        var animClip = AssetDatabase.LoadAssetAtPath<AnimationClip>(animationInfo.Path);
+                        if (childState.state != null && animClip != null)
+                            childState.state.motion = animClip;
+                    }
+
+                    // まばたき干渉防止
+                    var control = childState.state.AddStateMachineBehaviour<VRCAnimatorTrackingControl>();
+                    if (childState.state.name.StartsWith("Idle"))
+                    {
+                        control.trackingEyes = VRC.SDKBase.VRC_AnimatorTrackingControl.TrackingType.Tracking;
+                    }
+                    else
+                    {
                         control.trackingEyes = VRC.SDKBase.VRC_AnimatorTrackingControl.TrackingType.Animation;
                     }
                 }
