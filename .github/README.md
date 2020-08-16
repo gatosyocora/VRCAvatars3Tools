@@ -34,7 +34,7 @@ ver1.0
 	* ツールを作成
 
 ----------------------------------------------------  
-〇VRCAvatarConverterTo3 (ver 1.1.0.1)  
+〇VRCAvatarConverterTo3 (ver 1.3)  
 VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変換できます。
 
 「VRCAvatars3Tools > VRCAvatarConverterTo3」で以下の機能を持つウィンドウが開きます
@@ -43,6 +43,8 @@ VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変
 1. 「2.0 Avatar Prefab」の右にある◎を押して変換したいPrefabを選択します。（Avatars2.0のPrefab）  
 2. 設定される内容が表示されます。  
 3. 「Convert Avatar To 3.0」を選択して変換します。
+
+「EN」「JP」を押すとUIの一部が英語/日本語に切り替わります。
 
 ・注意点  
  * EyeLookのEyesにあるRotationStatesは未設定です。必要に応じて各自設定してください。  
@@ -55,8 +57,13 @@ VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変
 
 ・Avatars2.0からのアバター変換  
 1. Avatars2.0で作成したアバターをPrefabにして、それを含めたunitypackageを作成する  
+   * Prefabで右クリックしてExport packageするとよい  
+   * Export画面でVRCSDKやEditor拡張などはチェックを外してunitypackageに含まれないようにする  
+    (Editor拡張はEditorというフォルダが含まれているのでこれで見分けがつく）  
 2. Avatars3.0用に新しくプロジェクトを作成する  
 3. 2で作成したプロジェクトにAvatars3.0用のVRCSDKと本ツールと1で作成したunitypackageをインポートする  
+　　* 1で作成したunitypackageをインポートする前にアバターに必要なアセットを別途インポートしておく  
+   (ShaderやDynamicBoneなど)  
 4. 1で作成したunitypackageに含まれるPrefabを本ツールの「2.0 Avatar Prefab」に設定する
 
 ・使用ライブラリ  
@@ -64,12 +71,70 @@ VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変
  Copyright (c) 2008, 2009, 2010, 2011, 2012, 2013, 2014 Antoine Aubry
 
  ・更新履歴  
+ ver1.3  
+	* 性別に応じてSittingのアニメーションとHandsLayerのアニメーションを選択するように(PR @skishida)  
+	* まばたき干渉防止が設定されるように(PR @skishida)  
+	* Idleが設定されている場合はその手の形をデフォルトとして設定するように(PR @skishida)  
+	* EyeLookを無効にするように(RotationStatesが未設定だと白目になるアバターがあるため)  
+	* デフォルト言語を日本語に  
+ ver1.2  
+	* UIを日本語に切り替えられるように  
+    * 一部の改変アバターでPrefabの情報が取得できない不具合を修正  
+	* CustomStandingAnimsが未設定のアバターに対応  
+	* fbxを選択したときにエラーメッセージがでるように  
  ver1.1.0.1  
 	* VRCSDK3-AVATAR-2020.08.06.16.30_Public.unitypackageに対応  
  ver1.1  
 	* Emoteも変換されるように  
  ver1.0.0.1  
 	* VRCSDK3-AVATAR-2020.07.30.09.18_Public.unitypackageに対応  
+ ver1.0  
+	* ツールを作成
+
+----------------------------------------------------  
+〇VRCAssetCreator (ver 1.0)  
+VRCSDK3に関連したアセットを作成します。
+
+Projectウィンドウのアセットを作成したいフォルダで右クリックをして  
+「Create>VRChat>...」で作成したいものを選択すると作成されます。
+
+VRCSDKに同封されているものを選択したフォルダに複製しています。
+
+現在は以下のものを作成できます。  
+「Create>VRChat>Controllers>...」：VRCSDKに同封されたAvatars3.0に関するAnimatorControllerら
+
+ * vrc_AvatarV3ActionLayer.controller : デフォルトでActionに設定されているAnimatorController  
+ * vrc_AvatarV3FaceLayer.controller : デフォルトでFXに設定されているAnimatorController  
+ * vrc_AvatarV3HandsLayer.controller : デフォルトでGestureに設定されているAnimatorController  
+ * vrc_AvatarV3HandsLayer2.controller : Gestureに設定候補のAnimatorController  
+ * vrc_AvatarV3IdleLayer.controller : デフォルトでAdditiveに設定されているAnimatorController  
+ * vrc_AvatarV3LocomotionLayer.controller : デフォルトでBaseに設定されているAnimatorController  
+ * vrc_AvatarV3SittingLayer.controller : デフォルトでSittingに設定されているAnimatorController  
+ * vrc_AvatarV3SittingLayer2.controller : Sittingに設定候補のAnimatorController  
+ * vrc_AvatarV3UtilityIKPose.controller : デフォルトでIKPoseに設定されているAnimatorController  
+ * vrc_AvatarV3UtilityTPose.controller : デフォルトでTPoseに設定されているAnimatorController
+
+ ver1.0  
+	* ツールを作成
+
+----------------------------------------------------  
+〇AnimationBindingSeparater (ver 1.0)  
+AnimationClipからTransformを変更するキーを別のAnimationClipに分割します。
+
+AnimationClipのInspectorの上部（AnimationClipの名前付近）を右クリックして  
+「Separate the binding that changes Transform」を選択すると実行されます。
+
+以下のようなキーを(使用したAnimationClip名)_Transform.animに移動させます。
+
+* Transformコンポーネントのプロパティを操作するもの（Position, Rotation, Scaleなど）  
+* AnimatorコンポーネントでHumanoidボーンの回転を操作するもの
+
+・注意点  
+これを使用したAnimationClipからTransformを変更するキーを削除して、  
+新しく作成したAnimationClipに追加します。  
+どちらも含まれるAnimationClipが必要な場合は、  
+使用前にAnimationClipを複製して複製したほうに使用してください。
+
  ver1.0  
 	* ツールを作成
 
