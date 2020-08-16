@@ -343,7 +343,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                     if (childState.state is null) continue;
 
                     var animationInfo = avatar2Info.OverrideAnimationClips
-                                            .Where(c => c != null && c.Type == childState.state.name)
+                                            .Where(c => c != null && childState.state.name.Contains(c.Type))
                                             .SingleOrDefault();
 
                     if (animationInfo != null)
