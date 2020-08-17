@@ -34,7 +34,7 @@ ver1.0
 	* ツールを作成
 
 ----------------------------------------------------
-〇VRCAvatarConverterTo3 (ver 1.3)
+〇VRCAvatarConverterTo3 (ver 1.3.1)
 VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変換できます。
 
 「VRCAvatars3Tools > VRCAvatarConverterTo3」で以下の機能を持つウィンドウが開きます
@@ -71,6 +71,8 @@ VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変
  Copyright (c) 2008, 2009, 2010, 2011, 2012, 2013, 2014 Antoine Aubry
 
  ・更新履歴
+ ver1.3.1
+	* 意図してないAnimatorControllerから作成されることがある不具合を修正
  ver1.3
 	* 性別に応じてSittingのアニメーションとHandsLayerのアニメーションを選択するように(PR @skishida)
 	* まばたき干渉防止が設定されるように(PR @skishida)
@@ -92,7 +94,7 @@ VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変
 	* ツールを作成
 
 ----------------------------------------------------
-〇VRCAssetCreator (ver 1.0)
+〇VRCAssetCreator (ver 1.0.1)
 VRCSDK3に関連したアセットを作成します。
 
 Projectウィンドウのアセットを作成したいフォルダで右クリックをして
@@ -114,6 +116,8 @@ VRCSDKに同封されているものを選択したフォルダに複製して�
  * vrc_AvatarV3UtilityIKPose.controller : デフォルトでIKPoseに設定されているAnimatorController
  * vrc_AvatarV3UtilityTPose.controller : デフォルトでTPoseに設定されているAnimatorController
 
+ ver1.0.1
+	* 意図してないAnimatorControllerから作成されることがある不具合を修正
  ver1.0
 	* ツールを作成
 
