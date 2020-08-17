@@ -53,7 +53,7 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         private static AnimatorController CreateVRCController(string controllerName)
         {
-            var controllerPath = AssetUtility.GetAssetPathForSearch($"{controllerName} t:AnimatorController");
+            var controllerPath = VRCAssetUtility.GetVRCAssetPathForSearch($"{controllerName} t:AnimatorController");
 
             var folder = Selection.activeObject;
             var folderPath = AssetDatabase.GetAssetPath(folder);
