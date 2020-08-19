@@ -23,6 +23,9 @@ namespace Gatosyocora.VRCAvatars3Tools
         private bool[] isCopyLayers;
         private bool[] isCopyParameters;
 
+        private Vector2 srcControllerScrollPos = Vector2.zero;
+        private Vector2 dstControllerScrollPos = Vector2.zero;
+
         [MenuItem("VRCAvatars3Tools/AnimatorControllerCombiner")]
         public static void Open()
         {
@@ -50,33 +53,38 @@ namespace Gatosyocora.VRCAvatars3Tools
             if (srcController != null)
             {
                 using (new EditorGUI.IndentLevelScope())
-                using (new EditorGUILayout.HorizontalScope())
+                using (var scroll = new EditorGUILayout.ScrollViewScope(srcControllerScrollPos, new GUIStyle(), new GUIStyle("verticalScrollbar")))
                 {
-                    using (new EditorGUILayout.VerticalScope())
+                    srcControllerScrollPos = scroll.scrollPosition;
+                    using (new EditorGUILayout.HorizontalScope())
                     {
-                        EditorGUILayout.LabelField("Layers", EditorStyles.boldLabel);
-                        for (int i = 0; i < srcController.layers.Length; i++)
+                        using (new EditorGUILayout.VerticalScope())
                         {
-                            var layer = srcController.layers[i];
-                            using (new EditorGUILayout.HorizontalScope())
+                            EditorGUILayout.LabelField("Layers", EditorStyles.boldLabel);
+                            for (int i = 0; i < srcController.layers.Length; i++)
                             {
-                                isCopyLayers[i] = EditorGUILayout.ToggleLeft(layer.name, isCopyLayers[i]);
+                                var layer = srcController.layers[i];
+                                using (new EditorGUILayout.HorizontalScope())
+                                {
+                                    isCopyLayers[i] = EditorGUILayout.ToggleLeft(layer.name, isCopyLayers[i]);
+                                }
+                            }
+                        }
+                        GUILayout.FlexibleSpace();
+                        using (new EditorGUILayout.VerticalScope())
+                        {
+                            EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
+                            for (int i = 0; i < srcController.parameters.Length; i++)
+                            {
+                                var parameter = srcController.parameters[i];
+                                using (new EditorGUILayout.HorizontalScope())
+                                {
+                                    isCopyParameters[i] = EditorGUILayout.ToggleLeft($"[{parameter.type}]{parameter.name}", isCopyParameters[i]);
+                                }
                             }
                         }
                     }
-                    GUILayout.FlexibleSpace();
-                    using (new EditorGUILayout.VerticalScope())
-                    {
-                        EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
-                        for (int i = 0; i < srcController.parameters.Length; i++)
-                        {
-                            var parameter = srcController.parameters[i];
-                            using (new EditorGUILayout.HorizontalScope())
-                            {
-                                isCopyParameters[i] = EditorGUILayout.ToggleLeft($"[{parameter.type}]{parameter.name}", isCopyParameters[i]);
-                            }
-                        }
-                    }
+                    EditorGUILayout.Space();
                 }
             }
 
@@ -94,31 +102,36 @@ namespace Gatosyocora.VRCAvatars3Tools
             if (dstController != null)
             {
                 using (new EditorGUI.IndentLevelScope())
-                using (new EditorGUILayout.HorizontalScope())
+                using (var scroll = new EditorGUILayout.ScrollViewScope(dstControllerScrollPos, new GUIStyle(), new GUIStyle("verticalScrollbar")))
                 {
-                    using (new EditorGUILayout.VerticalScope())
+                    dstControllerScrollPos = scroll.scrollPosition;
+                    using (new EditorGUILayout.HorizontalScope())
                     {
-                        EditorGUILayout.LabelField("Layers", EditorStyles.boldLabel);
-                        foreach (var layer in dstController.layers)
+                        using (new EditorGUILayout.VerticalScope())
                         {
-                            using (new EditorGUILayout.HorizontalScope())
+                            EditorGUILayout.LabelField("Layers", EditorStyles.boldLabel);
+                            foreach (var layer in dstController.layers)
                             {
-                                EditorGUILayout.LabelField(layer.name);
+                                using (new EditorGUILayout.HorizontalScope())
+                                {
+                                    EditorGUILayout.LabelField(layer.name);
+                                }
+                            }
+                        }
+                        GUILayout.FlexibleSpace();
+                        using (new EditorGUILayout.VerticalScope())
+                        {
+                            EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
+                            foreach (var parameter in dstController.parameters)
+                            {
+                                using (new EditorGUILayout.HorizontalScope())
+                                {
+                                    EditorGUILayout.LabelField($"[{parameter.type}]{parameter.name}");
+                                }
                             }
                         }
                     }
-                    GUILayout.FlexibleSpace();
-                    using (new EditorGUILayout.VerticalScope())
-                    {
-                        EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
-                        foreach (var parameter in dstController.parameters)
-                        {
-                            using (new EditorGUILayout.HorizontalScope())
-                            {
-                                EditorGUILayout.LabelField($"[{parameter.type}]{parameter.name}");
-                            }
-                        }
-                    }
+                    EditorGUILayout.Space();
                 }
             }
 
