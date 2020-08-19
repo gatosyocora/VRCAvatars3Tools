@@ -1,7 +1,7 @@
 ﻿本セットに含まれる各種Editor拡張に関しての説明と利用規約を記載しています。
 
 ----------------------------------------------------
-〇AnimatorControllerCombiner (ver 1.0.3.3)
+〇AnimatorControllerCombiner (ver 1.1)
 AnimatorControllerのLayerとParameterを他のAnimatorControllerにコピーすることで合成します
 
 「VRCAvatars3Tools > AnimatorControllerCombiner」で以下の機能を持つウィンドウが開きます
@@ -15,6 +15,8 @@ Dst AnimatorController : コピー先AnimatorController
 StateBehaviourを持つStateを含むLayerをコピーするとエラーが表示されます（動作には問題ない感じがします）
 
 ・更新履歴
+ver1.1
+	* LayerやParameterを選択してコピーできるように
 ver1.0.3.3
 	* VRCSDK3-AVATAR-2020.08.06.16.30_Public.unitypackageに対応
 ver1.0.3.2

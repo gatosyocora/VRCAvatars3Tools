@@ -9,7 +9,7 @@ using Parameter = VRC.SDKBase.VRC_AvatarParameterDriver.Parameter;
 using System.Collections.Generic;
 using Gatosyocora.VRCAvatars3Tools.Utilitys;
 
-// ver 1.0.3.2
+// ver 1.1
 // Copyright (c) 2020 gatosyocora
 // MIT License. See LICENSE.txt
 
