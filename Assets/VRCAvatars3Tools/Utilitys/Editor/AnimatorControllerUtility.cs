@@ -56,7 +56,7 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
         public static AnimatorControllerParameter AddParameter(AnimatorController controller, AnimatorControllerParameter srcParameter)
         {
             // 同じParameterがあれば追加しない
-            if (controller.parameters.Any(p => p.name == srcParameter.name && p.type == srcParameter.type))
+            if (controller.parameters.Any(p => p.name == srcParameter.name))
                 return null;
 
             var parameter = new AnimatorControllerParameter
