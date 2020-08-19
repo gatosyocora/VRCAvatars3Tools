@@ -13,7 +13,7 @@ using VRC.SDK3.Avatars.ScriptableObjects;
 #endif
 using YamlDotNet.RepresentationModel;
 
-// ver 1.3
+// ver 1.3.1
 // Copyright (c) 2020 gatosyocora
 // MIT License. See LICENSE.txt
 
@@ -323,7 +323,7 @@ namespace Gatosyocora.VRCAvatars3Tools
             {
                 searchTargetHandsLayer = "vrc_AvatarV3HandsLayer2 t:AnimatorController";
             }
-            var originalHandLayerControllerPath = AssetUtility.GetAssetPathForSearch(searchTargetHandsLayer);
+            var originalHandLayerControllerPath = VRCAssetUtility.GetVRCAssetPathForSearch(searchTargetHandsLayer);
             var fxController = AnimatorControllerUtility.DuplicateAnimationLayerController(
                                     originalHandLayerControllerPath,
                                     Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
@@ -418,7 +418,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                 avatar.expressionsMenu = exMenu;
                 avatar.expressionParameters = exParameters;
 
-                var emoteIconPath = AssetUtility.GetAssetPathForSearch("person_dance t:texture");
+                var emoteIconPath = VRCAssetUtility.GetVRCAssetPathForSearch("person_dance t:texture");
                 var emoteIcon = AssetDatabase.LoadAssetAtPath<Texture2D>(emoteIconPath);
 
                 exMenu.controls.Add(new VRCExpressionsMenu.Control
@@ -460,7 +460,7 @@ namespace Gatosyocora.VRCAvatars3Tools
             {
                 searchTargetSittingLayer = "vrc_AvatarV3SittingLayer2 t:AnimatorController";
             }
-            var originalSittingLayerControllerPath = AssetUtility.GetAssetPathForSearch(searchTargetSittingLayer);
+            var originalSittingLayerControllerPath = VRCAssetUtility.GetVRCAssetPathForSearch(searchTargetSittingLayer);
             var sittingController = AnimatorControllerUtility.DuplicateAnimationLayerController(
                                         originalSittingLayerControllerPath,
                                         Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),

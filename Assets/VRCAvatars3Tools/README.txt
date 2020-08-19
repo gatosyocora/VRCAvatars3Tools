@@ -1,7 +1,7 @@
 ﻿本セットに含まれる各種Editor拡張に関しての説明と利用規約を記載しています。
 
 ----------------------------------------------------
-〇AnimatorControllerCombiner (ver 1.0.3.3)
+〇AnimatorControllerCombiner (ver 1.1)
 AnimatorControllerのLayerとParameterを他のAnimatorControllerにコピーすることで合成します
 
 「VRCAvatars3Tools > AnimatorControllerCombiner」で以下の機能を持つウィンドウが開きます
@@ -15,6 +15,8 @@ Dst AnimatorController : コピー先AnimatorController
 StateBehaviourを持つStateを含むLayerをコピーするとエラーが表示されます（動作には問題ない感じがします）
 
 ・更新履歴
+ver1.1
+	* LayerやParameterを選択してコピーできるように
 ver1.0.3.3
 	* VRCSDK3-AVATAR-2020.08.06.16.30_Public.unitypackageに対応
 ver1.0.3.2
@@ -34,7 +36,7 @@ ver1.0
 	* ツールを作成
 
 ----------------------------------------------------
-〇VRCAvatarConverterTo3 (ver 1.3)
+〇VRCAvatarConverterTo3 (ver 1.3.1)
 VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変換できます。
 
 「VRCAvatars3Tools > VRCAvatarConverterTo3」で以下の機能を持つウィンドウが開きます
@@ -71,6 +73,8 @@ VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変
  Copyright (c) 2008, 2009, 2010, 2011, 2012, 2013, 2014 Antoine Aubry
 
  ・更新履歴
+ ver1.3.1
+	* 意図してないAnimatorControllerから作成されることがある不具合を修正
  ver1.3
 	* 性別に応じてSittingのアニメーションとHandsLayerのアニメーションを選択するように(PR @skishida)
 	* まばたき干渉防止が設定されるように(PR @skishida)
@@ -92,7 +96,7 @@ VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変
 	* ツールを作成
 
 ----------------------------------------------------
-〇VRCAssetCreator (ver 1.0)
+〇VRCAssetCreator (ver 1.1)
 VRCSDK3に関連したアセットを作成します。
 
 Projectウィンドウのアセットを作成したいフォルダで右クリックをして
@@ -114,6 +118,21 @@ VRCSDKに同封されているものを選択したフォルダに複製して�
  * vrc_AvatarV3UtilityIKPose.controller : デフォルトでIKPoseに設定されているAnimatorController
  * vrc_AvatarV3UtilityTPose.controller : デフォルトでTPoseに設定されているAnimatorController
 
+ 「Create>VRChat>BlendTrees>...」：VRCSDKに同封されたAvatars3.0に関するBlendTreeら
+
+ * New BlendTree : まだ未設定状態のBlendTree
+ * vrc_StandingLocomotion : VRCSDKに同梱されている立ったときのモーションが登録されたBlendTree
+ * vrc_CrouchingLocomotion : VRCSDKに同梱されているしゃがんだときのモーションが登録されたBlendTree
+ * vrc_ProneLocomotion : VRCSDKに同梱されている伏せたときのモーションが登録されたBlendTree
+
+ 作成したBlendTreeを削除したときに以下のようなエラーログが出ることがありますが、  
+ 動作に特に問題はありません。
+ 「MissingReferenceException: The object of type 'BlendTree' has been destroyed but you are still trying to access it.」
+
+ ver1.1
+	* BlendTreeも作成できるように
+ ver1.0.1
+	* 意図してないAnimatorControllerから作成されることがある不具合を修正
  ver1.0
 	* ツールを作成
 

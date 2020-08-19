@@ -29,17 +29,7 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
 
             foreach (var parameter in srcController.parameters)
             {
-                // 同じParameterがあれば追加しない
-                if (dstController.parameters
-                        .Select(x => new
-                        {
-                            Name = x.name,
-                            Type = x.type
-                        })
-                        .Where(x => parameter.name == x.Name && parameter.type == x.Type)
-                        .Any()) continue;
-
-                dstController.AddParameter(parameter);
+                AddParameter(dstController, parameter);
             }
 
             EditorUtility.SetDirty(dstController);
@@ -61,6 +51,25 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
             AddObjectsInStateMachineToAnimatorController(newLayer.stateMachine, controllerPath);
 
             return newLayer;
+        }
+
+        public static AnimatorControllerParameter AddParameter(AnimatorController controller, AnimatorControllerParameter srcParameter)
+        {
+            // 同じParameterがあれば追加しない
+            if (controller.parameters.Any(p => p.name == srcParameter.name))
+                return null;
+
+            var parameter = new AnimatorControllerParameter
+            {
+                defaultBool = srcParameter.defaultBool,
+                defaultFloat = srcParameter.defaultFloat,
+                defaultInt = srcParameter.defaultInt,
+                name = srcParameter.name,
+                type = srcParameter.type
+            };
+
+            controller.AddParameter(parameter);
+            return parameter;
         }
 
         private static AnimatorControllerLayer DuplicateLayer(AnimatorControllerLayer srcLayer, string dstLayerName, bool firstLayer = false)

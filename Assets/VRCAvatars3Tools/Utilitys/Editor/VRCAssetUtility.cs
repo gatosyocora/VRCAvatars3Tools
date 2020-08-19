@@ -7,11 +7,12 @@ using UnityEngine;
 
 namespace Gatosyocora.VRCAvatars3Tools.Utilitys
 {
-    public static class AssetUtility
+    public static class VRCAssetUtility
     {
-        public static string GetAssetPathForSearch(string filter)
+        public static string GetVRCAssetPathForSearch(string filter)
             => AssetDatabase.FindAssets(filter)
                 .Select(g => AssetDatabase.GUIDToAssetPath(g))
+                .Where(p => p.Contains("/VRCSDK/") || p.Contains("\\VRCSDK\\"))
                 .OrderBy(p => Path.GetFileName(p).Count())
                 .FirstOrDefault();
     }
