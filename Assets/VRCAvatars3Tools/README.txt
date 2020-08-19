@@ -94,7 +94,7 @@ VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変
 	* ツールを作成
 
 ----------------------------------------------------
-〇VRCAssetCreator (ver 1.0.1)
+〇VRCAssetCreator (ver 1.1)
 VRCSDK3に関連したアセットを作成します。
 
 Projectウィンドウのアセットを作成したいフォルダで右クリックをして
@@ -116,6 +116,15 @@ VRCSDKに同封されているものを選択したフォルダに複製して�
  * vrc_AvatarV3UtilityIKPose.controller : デフォルトでIKPoseに設定されているAnimatorController
  * vrc_AvatarV3UtilityTPose.controller : デフォルトでTPoseに設定されているAnimatorController
 
+ 「Create>VRChat>BlendTrees>...」：VRCSDKに同封されたAvatars3.0に関するBlendTreeら
+
+ * New BlendTree : まだ未設定状態のBlendTree
+ * vrc_StandingLocomotion : VRCSDKに同梱されている立ったときのモーションが登録されたBlendTree
+ * vrc_CrouchingLocomotion : VRCSDKに同梱されているしゃがんだときのモーションが登録されたBlendTree
+ * vrc_ProneLocomotion : VRCSDKに同梱されている伏せたときのモーションが登録されたBlendTree
+
+ ver1.1
+	* BlendTreeも作成できるように
  ver1.0.1
 	* 意図してないAnimatorControllerから作成されることがある不具合を修正
  ver1.0

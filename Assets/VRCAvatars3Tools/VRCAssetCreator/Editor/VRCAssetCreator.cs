@@ -3,7 +3,7 @@ using UnityEditor;
 using Gatosyocora.VRCAvatars3Tools.Utilitys;
 using UnityEditor.Animations;
 
-// ver 1.0.1
+// ver 1.1
 // Copyright (c) 2020 gatosyocora
 // MIT License. See LICENSE.txt
 
