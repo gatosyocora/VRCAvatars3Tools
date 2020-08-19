@@ -2,8 +2,6 @@
 using UnityEditor;
 using Gatosyocora.VRCAvatars3Tools.Utilitys;
 using UnityEditor.Animations;
-using System.Diagnostics;
-using System.Linq;
 
 // ver 1.0.1
 // Copyright (c) 2020 gatosyocora
@@ -53,6 +51,10 @@ namespace Gatosyocora.VRCAvatars3Tools
         public static AnimatorController CreateUtilityTPose()
             => DuplicateVRCAsset<AnimatorController>("vrc_AvatarV3UtilityTPose");
 
+        [MenuItem("Assets/Create/VRChat/BlendTrees/New BlendTree", priority = 0)]
+        public static BlendTree CreateNewBlendTree()
+            => CreateNewBlendTree("new BlendTree");
+
         [MenuItem("Assets/Create/VRChat/BlendTrees/StandingLocomotion", priority = 1)]
         public static BlendTree CreateStandingLocomotionBlendTree()
             => DuplicateVRCAsset<BlendTree>("vrc_StandingLocomotion");
@@ -61,10 +63,28 @@ namespace Gatosyocora.VRCAvatars3Tools
         public static BlendTree CreateCrouchingLocomotionBlendTree()
             => DuplicateVRCAsset<BlendTree>("vrc_CrouchingLocomotion");
 
-
         [MenuItem("Assets/Create/VRChat/BlendTrees/ProneLocomotion", priority = 3)]
         public static BlendTree CreateProneLocomotionBlendTree()
             => DuplicateVRCAsset<BlendTree>("vrc_ProneLocomotion");
+
+        private static BlendTree CreateNewBlendTree(string assetName)
+        {
+            var folder = Selection.activeObject;
+            var folderPath = AssetDatabase.GetAssetPath(folder);
+            var extention = ".asset";
+            var assetPath = AssetDatabase.GenerateUniqueAssetPath(Path.Combine(folderPath, $"{assetName}{extention}"));
+
+            var asset = new BlendTree 
+            {
+                name = Path.GetFileNameWithoutExtension(assetPath)
+            };
+            AssetDatabase.CreateAsset(asset, assetPath);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            Selection.activeObject = asset;
+            return asset;
+        }
 
         private static T DuplicateVRCAsset<T>(string assetName) where T : UnityEngine.Object
         {
