@@ -73,7 +73,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                             var parameter = srcController.parameters[i];
                             using (new EditorGUILayout.HorizontalScope())
                             {
-                                isCopyParameters[i] = EditorGUILayout.ToggleLeft(parameter.name, isCopyParameters[i]);
+                                isCopyParameters[i] = EditorGUILayout.ToggleLeft($"[{parameter.type}]{parameter.name}", isCopyParameters[i]);
                             }
                         }
                     }
@@ -115,7 +115,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                         {
                             using (new EditorGUILayout.HorizontalScope())
                             {
-                                EditorGUILayout.LabelField(parameter.name);
+                                EditorGUILayout.LabelField($"[{parameter.type}]{parameter.name}");
                             }
                         }
                     }
