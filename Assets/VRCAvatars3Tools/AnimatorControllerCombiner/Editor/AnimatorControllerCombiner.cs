@@ -29,12 +29,80 @@ namespace Gatosyocora.VRCAvatars3Tools
         private void OnGUI()
         {
             srcController = EditorGUILayout.ObjectField("Src AnimatorController", srcController, typeof(AnimatorController), true) as AnimatorController;
-
-            using (new EditorGUI.IndentLevelScope())
+            if (srcController != null)
             {
-                EditorGUILayout.LabelField("Copy ↓");
+                using (new EditorGUI.IndentLevelScope())
+                using (new EditorGUILayout.HorizontalScope())
+                {
+                    using (new EditorGUILayout.VerticalScope())
+                    {
+                        EditorGUILayout.LabelField("Layers", EditorStyles.boldLabel);
+                        foreach (var layer in srcController.layers)
+                        {
+                            using (new EditorGUILayout.HorizontalScope())
+                            {
+                                EditorGUILayout.ToggleLeft(layer.name, true);
+                            }
+                        }
+                    }
+                    GUILayout.FlexibleSpace();
+                    using (new EditorGUILayout.VerticalScope())
+                    {
+                        EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
+                        foreach (var parameter in srcController.parameters)
+                        {
+                            using (new EditorGUILayout.HorizontalScope())
+                            {
+                                EditorGUILayout.ToggleLeft(parameter.name, true);
+                            }
+                        }
+                    }
+                }
             }
+
+            EditorGUILayout.Space();
+            using (new EditorGUI.IndentLevelScope())
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                GUILayout.FlexibleSpace();
+                EditorGUILayout.LabelField("Copy ↓", GUILayout.Width(60f));
+                GUILayout.FlexibleSpace();
+            }
+            EditorGUILayout.Space();
+
             dstController = EditorGUILayout.ObjectField("Dst AnimatorController", dstController, typeof(AnimatorController), true) as AnimatorController;
+            if (dstController != null)
+            {
+                using (new EditorGUI.IndentLevelScope())
+                using (new EditorGUILayout.HorizontalScope())
+                {
+                    using (new EditorGUILayout.VerticalScope())
+                    {
+                        EditorGUILayout.LabelField("Layers", EditorStyles.boldLabel);
+                        foreach (var layer in dstController.layers)
+                        {
+                            using (new EditorGUILayout.HorizontalScope())
+                            {
+                                EditorGUILayout.LabelField(layer.name);
+                            }
+                        }
+                    }
+                    GUILayout.FlexibleSpace();
+                    using (new EditorGUILayout.VerticalScope())
+                    {
+                        EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
+                        foreach (var parameter in dstController.parameters)
+                        {
+                            using (new EditorGUILayout.HorizontalScope())
+                            {
+                                EditorGUILayout.LabelField(parameter.name);
+                            }
+                        }
+                    }
+                }
+            }
+
+            EditorGUILayout.Space();
 
             using (new EditorGUI.DisabledGroupScope(!srcController || !dstController))
             {
