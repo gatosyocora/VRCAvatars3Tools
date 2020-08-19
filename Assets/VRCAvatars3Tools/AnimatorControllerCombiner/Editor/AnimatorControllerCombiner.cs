@@ -20,6 +20,9 @@ namespace Gatosyocora.VRCAvatars3Tools
         private AnimatorController srcController;
         private AnimatorController dstController;
 
+        private bool[] isCopyLayers;
+        private bool[] isCopyParameters;
+
         [MenuItem("VRCAvatars3Tools/AnimatorControllerCombiner")]
         public static void Open()
         {
@@ -28,7 +31,22 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         private void OnGUI()
         {
-            srcController = EditorGUILayout.ObjectField("Src AnimatorController", srcController, typeof(AnimatorController), true) as AnimatorController;
+            using (var check = new EditorGUI.ChangeCheckScope())
+            {
+                srcController = EditorGUILayout.ObjectField("Src AnimatorController", srcController, typeof(AnimatorController), true) as AnimatorController;
+                if (check.changed)
+                {
+                    if (srcController != null)
+                    {
+                        isCopyLayers = Enumerable.Range(1, srcController.layers.Length)
+                                            .Select(i => true)
+                                            .ToArray();
+                        isCopyParameters = Enumerable.Range(1, srcController.parameters.Length)
+                                                .Select(i => true)
+                                                .ToArray();
+                    }
+                }
+            }
             if (srcController != null)
             {
                 using (new EditorGUI.IndentLevelScope())
@@ -37,11 +55,12 @@ namespace Gatosyocora.VRCAvatars3Tools
                     using (new EditorGUILayout.VerticalScope())
                     {
                         EditorGUILayout.LabelField("Layers", EditorStyles.boldLabel);
-                        foreach (var layer in srcController.layers)
+                        for (int i = 0; i < srcController.layers.Length; i++)
                         {
+                            var layer = srcController.layers[i];
                             using (new EditorGUILayout.HorizontalScope())
                             {
-                                EditorGUILayout.ToggleLeft(layer.name, true);
+                                isCopyLayers[i] = EditorGUILayout.ToggleLeft(layer.name, isCopyLayers[i]);
                             }
                         }
                     }
@@ -49,11 +68,12 @@ namespace Gatosyocora.VRCAvatars3Tools
                     using (new EditorGUILayout.VerticalScope())
                     {
                         EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
-                        foreach (var parameter in srcController.parameters)
+                        for (int i = 0; i < srcController.parameters.Length; i++)
                         {
+                            var parameter = srcController.parameters[i];
                             using (new EditorGUILayout.HorizontalScope())
                             {
-                                EditorGUILayout.ToggleLeft(parameter.name, true);
+                                isCopyParameters[i] = EditorGUILayout.ToggleLeft(parameter.name, isCopyParameters[i]);
                             }
                         }
                     }
@@ -108,7 +128,17 @@ namespace Gatosyocora.VRCAvatars3Tools
             {
                 if (GUILayout.Button("Combine"))
                 {
-                    AnimatorControllerUtility.CombineAnimatorController(srcController, dstController);
+                    for (int i = 0; i < srcController.layers.Length; i++)
+                    {
+                        if (!isCopyLayers[i]) continue;
+                        AnimatorControllerUtility.AddLayer(dstController, srcController.layers[i], i == 0);
+                    }
+
+                    for (int i = 0; i < srcController.parameters.Length; i++)
+                    {
+                        if (!isCopyParameters[i]) continue;
+                        AnimatorControllerUtility.AddParameter(dstController, srcController.parameters[i]);
+                    }
                 }
             }
         }
