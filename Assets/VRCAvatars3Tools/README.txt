@@ -123,6 +123,10 @@ VRCSDKに同封されているものを選択したフォルダに複製して�
  * vrc_CrouchingLocomotion : VRCSDKに同梱されているしゃがんだときのモーションが登録されたBlendTree
  * vrc_ProneLocomotion : VRCSDKに同梱されている伏せたときのモーションが登録されたBlendTree
 
+ 作成したBlendTreeを削除したときに以下のようなエラーログが出ることがありますが、  
+ 動作に特に問題はありません。
+ 「MissingReferenceException: The object of type 'BlendTree' has been destroyed but you are still trying to access it.」
+
  ver1.1
 	* BlendTreeも作成できるように
  ver1.0.1
