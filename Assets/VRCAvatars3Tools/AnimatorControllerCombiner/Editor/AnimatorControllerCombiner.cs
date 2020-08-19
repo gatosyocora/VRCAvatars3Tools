@@ -154,6 +154,8 @@ namespace Gatosyocora.VRCAvatars3Tools
                     }
                 }
             }
+
+            EditorGUILayout.Space();
         }
     }
 }
