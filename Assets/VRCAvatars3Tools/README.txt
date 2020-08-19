@@ -10,6 +10,9 @@ Src AnimatorController : コピー元AnimatorController
 Dst AnimatorController : コピー先AnimatorController
 
 「Combine」を押すとSourceAnmatorControllerのLayerとParameterがDestinationAnimatorControllerにコピーされます。
+チェックが入っているLayerやParameterがコピーされます。
+同名のLayerがある場合、Layerが別名でコピーされます。
+同名のParameterがある場合、そのParameterはコピーされません。
 
 ・既知の不具合
 StateBehaviourを持つStateを含むLayerをコピーするとエラーが表示されます（動作には問題ない感じがします）
