@@ -255,6 +255,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                 avatar.customEyeLookSettings.eyelidType = VRCAvatarDescriptor.EyelidType.None;
             }
 
+            // TODO: 足りない場合falseにする（現状必ずfalseなので一旦コメントアウトする）
             //if (avatar.customEyeLookSettings.leftEye is null && avatar.customEyeLookSettings.rightEye is null &&
             //    avatar.customEyeLookSettings.eyelidType == VRCAvatarDescriptor.EyelidType.None)
             //{
