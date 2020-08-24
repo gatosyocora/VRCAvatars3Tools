@@ -472,6 +472,22 @@ namespace Gatosyocora.VRCAvatars3Tools
             avatar.specialAnimationLayers[(int)SpecialAnimationLayerType.Sitting].animatorController = sittingController;
             avatar.specialAnimationLayers[(int)SpecialAnimationLayerType.Sitting].mask = null;
 
+            // 元Avatars2.0のVRCAvatarDescriptorを削除
+            // TODO: とりあえず消えるけど読み込み入ると復活する
+            // TODO: 現状だとMissingなスクリプトすべて消してしまうのでVRCAvatarDescriptorだけ消したい
+            var components = avatar.GetComponents<Component>();
+            int count = 0;
+            for (int i = 0; i < components.Length; i++)
+            {
+                if (components[i] is null)
+                {
+                    var serializedObject = new SerializedObject(avatar.gameObject);
+                    var property = serializedObject.FindProperty("m_Component");
+                    property.DeleteArrayElementAtIndex(i - count);
+                    count++;
+                    serializedObject.ApplyModifiedProperties();
+                }
+            }
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
