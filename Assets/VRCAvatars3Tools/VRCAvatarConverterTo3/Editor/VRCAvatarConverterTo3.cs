@@ -713,17 +713,27 @@ namespace Gatosyocora.VRCAvatars3Tools
         }
 
         private void SetControllerToAnimationLayer(VRCAvatarDescriptor avatar, AnimationLayerType layerType, AnimatorController controller)
-            => SetControllerToAnimationLayer(avatar, (int)layerType, controller);
+            => SetControllerToAnimationLayer(avatar, (int)layerType, controller, false);
 
         private void SetControllerToAnimationLayer(VRCAvatarDescriptor avatar, SpecialAnimationLayerType layerType, AnimatorController controller)
-            => SetControllerToAnimationLayer(avatar, (int)layerType, controller);
+            => SetControllerToAnimationLayer(avatar, (int)layerType, controller, true);
 
-        private void SetControllerToAnimationLayer(VRCAvatarDescriptor avatar, int layerTypeIndex, AnimatorController controller)
+        private void SetControllerToAnimationLayer(VRCAvatarDescriptor avatar, int layerTypeIndex, AnimatorController controller, bool isSpecialLayer)
         {
-            avatar.baseAnimationLayers[layerTypeIndex].isDefault = false;
-            avatar.baseAnimationLayers[layerTypeIndex].isEnabled = true;
-            avatar.baseAnimationLayers[layerTypeIndex].animatorController = controller;
-            avatar.baseAnimationLayers[layerTypeIndex].mask = null;
+            if (!isSpecialLayer)
+            {
+                avatar.baseAnimationLayers[layerTypeIndex].isDefault = false;
+                avatar.baseAnimationLayers[layerTypeIndex].isEnabled = true;
+                avatar.baseAnimationLayers[layerTypeIndex].animatorController = controller;
+                avatar.baseAnimationLayers[layerTypeIndex].mask = null;
+            }
+            else
+            {
+                avatar.specialAnimationLayers[layerTypeIndex].isDefault = false;
+                avatar.specialAnimationLayers[layerTypeIndex].isEnabled = true;
+                avatar.specialAnimationLayers[layerTypeIndex].animatorController = controller;
+                avatar.specialAnimationLayers[layerTypeIndex].mask = null;
+            }
         }
 
         private AnimatorState GetAnimatorStateFromStateName(AnimatorStateMachine stateMachine, string stateName)
