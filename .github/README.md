@@ -39,7 +39,7 @@ ver1.0
 	* ツールを作成
 
 ----------------------------------------------------  
-〇VRCAvatarConverterTo3 (ver 1.3.1)  
+〇VRCAvatarConverterTo3 (ver 1.3.2)  
 VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変換できます。
 
 「VRCAvatars3Tools > VRCAvatarConverterTo3」で以下の機能を持つウィンドウが開きます
@@ -75,7 +75,16 @@ VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変
  * YamlDotNet for Unity  
  Copyright (c) 2008, 2009, 2010, 2011, 2012, 2013, 2014 Antoine Aubry
 
+ ・WriteDefaultsオフでの対応は以下のようなことをやっています  
+ * FX LayerのController(vrc_AvatarV3HandsLayerまたはvrc_AvatarV3HandsLayer2)の2番目に表情をリセットするレイヤー(ResetFace)を追加  
+ * FX LayerのLeft Hand, Right HandレイヤーにあるIdle(Idle 2)ステートに空のAnimationClipを設定  
+ Ryubanさん作成の以下のドキュメントの情報を参考に設定してあります。  
+ https://docs.google.com/document/d/1FNiyIl5RyVdfR3pgCBMoc501sCAHs4ZVCnJ6xpbwf6Q/preview#heading=h.45y4ogqf1vgx
+
  ・更新履歴  
+ ver1.3.2  
+	* WriteDefaultsがOFFのSDK同封のAnimatorControllerに対応  
+	* VRCSDK2のVRCAvatarDescripterだったものを自動で削除するように(暫定対応)  
  ver1.3.1  
 	* 意図してないAnimatorControllerから作成されることがある不具合を修正  
  ver1.3  
