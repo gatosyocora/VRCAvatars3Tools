@@ -233,12 +233,15 @@ namespace Gatosyocora.VRCAvatars3Tools
             var avatarObj3 = PrefabUtility.InstantiatePrefab(avatarPrefab2) as GameObject;
             avatarObj3.name = GameObjectUtility.GetUniqueNameForSibling(avatarObj3.transform.parent, $"{ avatarObj3.name}_3.0");
             var avatar = avatarObj3.AddComponent<VRCAvatarDescriptor>();
-            avatar.Name = avatar2Info.Name;
-            avatar.ViewPosition = avatar2Info.ViewPosition;
-            avatar.ScaleIPD = avatar2Info.ScaleIPD;
-            avatar.lipSync = avatar2Info.lipSync;
-            avatar.VisemeSkinnedMesh = avatarObj3.transform.Find(avatar2Info.faceMeshRendererPath)?.GetComponent<SkinnedMeshRenderer>() ?? null;
-            avatar.VisemeBlendShapes = avatar2Info.VisemeBlendShapes;
+            {
+                avatar.Name = avatar2Info.Name;
+                avatar.ViewPosition = avatar2Info.ViewPosition;
+                avatar.ScaleIPD = avatar2Info.ScaleIPD;
+                avatar.lipSync = avatar2Info.lipSync;
+                avatar.VisemeSkinnedMesh = avatarObj3.transform.Find(avatar2Info.faceMeshRendererPath)?
+                                                .GetComponent<SkinnedMeshRenderer>() ?? null;
+                avatar.VisemeBlendShapes = avatar2Info.VisemeBlendShapes;
+            }
 
             // TODO: アバターによってはRotationStatesを設定しないと白目になってしまうのでenableEyeLook=falseにしておく
             avatar.customEyeLookSettings = new VRCAvatarDescriptor.CustomEyeLookSettings
@@ -247,7 +250,8 @@ namespace Gatosyocora.VRCAvatars3Tools
                 rightEye = avatarObj3.transform.Find(RIGHT_EYE_PATH),
                 // TODO: 設定が未完了なのでアバターが鏡に写らなくなってしまう
                 //eyelidType = VRCAvatarDescriptor.EyelidType.Blendshapes,
-                eyelidsSkinnedMesh = avatarObj3.transform.Find(EYELIDS_MESH_PATH)?.GetComponent<SkinnedMeshRenderer>() ?? null
+                eyelidsSkinnedMesh = avatarObj3.transform.Find(EYELIDS_MESH_PATH)?
+                                        .GetComponent<SkinnedMeshRenderer>() ?? null
             };
 
             if (avatar.customEyeLookSettings.eyelidsSkinnedMesh is null)
@@ -262,60 +266,13 @@ namespace Gatosyocora.VRCAvatars3Tools
             //    avatar.enableEyeLook = false;
             //}
 
-            avatar.customizeAnimationLayers = true;
-            avatar.baseAnimationLayers = new VRCAvatarDescriptor.CustomAnimLayer[]
-            {
-                new VRCAvatarDescriptor.CustomAnimLayer
-                {
-                    type = VRCAvatarDescriptor.AnimLayerType.Base,
-                    isDefault = true
-                },
-                new VRCAvatarDescriptor.CustomAnimLayer
-                {
-                    type = VRCAvatarDescriptor.AnimLayerType.Additive,
-                    isDefault = true
-                },
-                new VRCAvatarDescriptor.CustomAnimLayer
-                {
-                    type = VRCAvatarDescriptor.AnimLayerType.Gesture,
-                    isDefault = true
-                },
-                new VRCAvatarDescriptor.CustomAnimLayer
-                {
-                    type = VRCAvatarDescriptor.AnimLayerType.Action,
-                    isDefault = true
-                },
-                new VRCAvatarDescriptor.CustomAnimLayer
-                {
-                    type = VRCAvatarDescriptor.AnimLayerType.FX,
-                    isDefault = true
-                }
-            };
-
-            avatar.specialAnimationLayers = new VRCAvatarDescriptor.CustomAnimLayer[]
-            {
-                new VRCAvatarDescriptor.CustomAnimLayer
-                {
-                    type = VRCAvatarDescriptor.AnimLayerType.Sitting,
-                    isDefault = true
-                },
-                new VRCAvatarDescriptor.CustomAnimLayer
-                {
-                    type = VRCAvatarDescriptor.AnimLayerType.TPose,
-                    isDefault = true
-                },
-                new VRCAvatarDescriptor.CustomAnimLayer
-                {
-                    type = VRCAvatarDescriptor.AnimLayerType.IKPose,
-                    isDefault = true
-                }
-            };
+            InitializeCusomizeAnimationLayers(avatar);
 
             // CustomStandingAnimsが未設定ならPlayableLayerを設定しない
             if (avatar2Info.OverrideAnimationClips is null) return avatarObj3;
 
             // FaceEmotion
-            List<EditorCurveBinding> faceBlendShapes = new List<EditorCurveBinding>();
+            var faceBlendShapes = new List<EditorCurveBinding>();
             string searchTargetHandsLayer;
             if (avatar2Info.DefaultAnimationSet == VRCAvatarDescripterDeserializedObject.AnimationSet.Male)
             {
@@ -331,10 +288,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                                     Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
                                     avatarPrefab2.name);
 
-            avatar.baseAnimationLayers[(int)AnimationLayerType.FX].isDefault = false;
-            avatar.baseAnimationLayers[(int)AnimationLayerType.FX].isEnabled = true;
-            avatar.baseAnimationLayers[(int)AnimationLayerType.FX].animatorController = fxController;
-            avatar.baseAnimationLayers[(int)AnimationLayerType.FX].mask = null;
+            SetControllerToAnimationLayer(avatar, AnimationLayerType.FX, fxController);
 
             var emptyAnimation = new AnimationClip();
             AssetDatabase.CreateAsset(
@@ -416,12 +370,9 @@ namespace Gatosyocora.VRCAvatars3Tools
                                             Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
                                             avatarPrefab2.name);
 
-                avatar.baseAnimationLayers[(int)AnimationLayerType.Action].isDefault = false;
-                avatar.baseAnimationLayers[(int)AnimationLayerType.Action].isEnabled = true;
-                avatar.baseAnimationLayers[(int)AnimationLayerType.Action].animatorController = actionController;
-                avatar.baseAnimationLayers[(int)AnimationLayerType.Action].mask = null;
+                SetControllerToAnimationLayer(avatar, AnimationLayerType.Action, actionController);
 
-                var actionLayer = actionController.layers[0];
+                var actionLayer = actionController.layers.First();
                 for (int i = 0; i < avatar2Info.OverrideAnimationClips.Length; i++)
                 {
                     var animationInfo = avatar2Info.OverrideAnimationClips[i];
@@ -506,10 +457,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                                         Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
                                         avatarPrefab2.name);
 
-            avatar.specialAnimationLayers[(int)SpecialAnimationLayerType.Sitting].isDefault = false;
-            avatar.specialAnimationLayers[(int)SpecialAnimationLayerType.Sitting].isEnabled = true;
-            avatar.specialAnimationLayers[(int)SpecialAnimationLayerType.Sitting].animatorController = sittingController;
-            avatar.specialAnimationLayers[(int)SpecialAnimationLayerType.Sitting].mask = null;
+            SetControllerToAnimationLayer(avatar, SpecialAnimationLayerType.Sitting, sittingController);
 
             // 元Avatars2.0のVRCAvatarDescriptorを削除
             // TODO: 現状だとMissingなスクリプトすべて消してしまうのでVRCAvatarDescriptorだけ消したい
@@ -709,6 +657,72 @@ namespace Gatosyocora.VRCAvatars3Tools
 
             path = path.Substring(0, path.Length - 1);
             return path;
+        }
+
+        private void InitializeCusomizeAnimationLayers(VRCAvatarDescriptor avatar)
+        {
+            avatar.customizeAnimationLayers = true;
+            avatar.baseAnimationLayers = new VRCAvatarDescriptor.CustomAnimLayer[]
+            {
+                new VRCAvatarDescriptor.CustomAnimLayer
+                {
+                    type = VRCAvatarDescriptor.AnimLayerType.Base,
+                    isDefault = true
+                },
+                new VRCAvatarDescriptor.CustomAnimLayer
+                {
+                    type = VRCAvatarDescriptor.AnimLayerType.Additive,
+                    isDefault = true
+                },
+                new VRCAvatarDescriptor.CustomAnimLayer
+                {
+                    type = VRCAvatarDescriptor.AnimLayerType.Gesture,
+                    isDefault = true
+                },
+                new VRCAvatarDescriptor.CustomAnimLayer
+                {
+                    type = VRCAvatarDescriptor.AnimLayerType.Action,
+                    isDefault = true
+                },
+                new VRCAvatarDescriptor.CustomAnimLayer
+                {
+                    type = VRCAvatarDescriptor.AnimLayerType.FX,
+                    isDefault = true
+                }
+            };
+
+            avatar.specialAnimationLayers = new VRCAvatarDescriptor.CustomAnimLayer[]
+            {
+                new VRCAvatarDescriptor.CustomAnimLayer
+                {
+                    type = VRCAvatarDescriptor.AnimLayerType.Sitting,
+                    isDefault = true
+                },
+                new VRCAvatarDescriptor.CustomAnimLayer
+                {
+                    type = VRCAvatarDescriptor.AnimLayerType.TPose,
+                    isDefault = true
+                },
+                new VRCAvatarDescriptor.CustomAnimLayer
+                {
+                    type = VRCAvatarDescriptor.AnimLayerType.IKPose,
+                    isDefault = true
+                }
+            };
+        }
+
+        private void SetControllerToAnimationLayer(VRCAvatarDescriptor avatar, AnimationLayerType layerType, AnimatorController controller)
+            => SetControllerToAnimationLayer(avatar, (int)layerType, controller);
+
+        private void SetControllerToAnimationLayer(VRCAvatarDescriptor avatar, SpecialAnimationLayerType layerType, AnimatorController controller)
+            => SetControllerToAnimationLayer(avatar, (int)layerType, controller);
+
+        private void SetControllerToAnimationLayer(VRCAvatarDescriptor avatar, int layerTypeIndex, AnimatorController controller)
+        {
+            avatar.baseAnimationLayers[layerTypeIndex].isDefault = false;
+            avatar.baseAnimationLayers[layerTypeIndex].isEnabled = true;
+            avatar.baseAnimationLayers[layerTypeIndex].animatorController = controller;
+            avatar.baseAnimationLayers[layerTypeIndex].mask = null;
         }
 
         private AnimatorState GetAnimatorStateFromStateName(AnimatorStateMachine stateMachine, string stateName)
