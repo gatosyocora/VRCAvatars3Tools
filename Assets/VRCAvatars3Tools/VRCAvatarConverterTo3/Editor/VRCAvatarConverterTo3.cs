@@ -391,7 +391,6 @@ namespace Gatosyocora.VRCAvatars3Tools
                 name = "ResetFace",
                 stateMachine = resetFaceStateMachine
             };
-            fxController.AddLayer(resetFaceLayer);
             InsertLayer(fxController, resetFaceLayer, 1);
 
             if (HasEmoteAnimation(avatar2Info.OverrideAnimationClips))
@@ -732,7 +731,12 @@ namespace Gatosyocora.VRCAvatars3Tools
         private void InsertLayer(AnimatorController controller, AnimatorControllerLayer layer, int toIndex)
         {
             var fromIndex = Array.IndexOf(controller.layers.Select(x => x.name).ToArray(), layer.name);
-            if (fromIndex == -1 || fromIndex == toIndex) return;
+            if (fromIndex == -1)
+            {
+                controller.AddLayer(layer);
+                fromIndex = controller.layers.Length - 1;
+            }
+            if (fromIndex == toIndex) return;
 
             var layers = controller.layers;
 
