@@ -33,7 +33,7 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         private readonly static Dictionary<string, string> animationTypes = new Dictionary<string, string>
         {
-            {"7400002", "Idle"},
+            //{"7400002", "Idle"},
             {"7400052", "Fist"},
             {"7400054", "Point"},
             {"7400056", "RockNRoll"},
@@ -336,6 +336,14 @@ namespace Gatosyocora.VRCAvatars3Tools
             avatar.baseAnimationLayers[(int)AnimationLayerType.FX].animatorController = fxController;
             avatar.baseAnimationLayers[(int)AnimationLayerType.FX].mask = null;
 
+            var emptyAnimation = new AnimationClip();
+            AssetDatabase.CreateAsset(
+                emptyAnimation,
+                Path.Combine(
+                    Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
+                    $"EmptyClip_{avatarPrefab2.name}.anim"));
+            AssetDatabase.SaveAssets();
+
             foreach (var layer in fxController.layers)
             {
                 if (layer.name != "Left Hand" && layer.name != "Right Hand") continue;
@@ -363,6 +371,10 @@ namespace Gatosyocora.VRCAvatars3Tools
                     if (childState.state.name.StartsWith("Idle"))
                     {
                         control.trackingEyes = VRC.SDKBase.VRC_AnimatorTrackingControl.TrackingType.Tracking;
+
+                        // WriteDefaultsオフ対策でResetFaceレイヤーで初期化しているので
+                        // BlendShapeを何も適用しないように空のClipを設定する
+                        childState.state.motion = emptyAnimation;
                     }
                     else
                     {
