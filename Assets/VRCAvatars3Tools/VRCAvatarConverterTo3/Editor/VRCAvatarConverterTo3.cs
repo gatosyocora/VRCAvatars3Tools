@@ -371,8 +371,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                 }
             }
 
-            // 表情をResetするためのLayerを追加
-            // TODO: まだLayerを2番目に移動できていない
+            // 表情をResetするためのLayerを追加(WriteDefaultオフだとIdleで表情が元に戻らない)
             var defaultFaceAnimation = CreateDefaultFaceAnimation(
                                             avatarPrefab2.name, 
                                             faceBlendShapes.Distinct(),
@@ -393,6 +392,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                 stateMachine = resetFaceStateMachine
             };
             fxController.AddLayer(resetFaceLayer);
+            InsertLayer(fxController, resetFaceLayer, 1);
 
             if (HasEmoteAnimation(avatar2Info.OverrideAnimationClips))
             {
@@ -727,6 +727,28 @@ namespace Gatosyocora.VRCAvatars3Tools
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             return clip;
+        }
+
+        private void InsertLayer(AnimatorController controller, AnimatorControllerLayer layer, int toIndex)
+        {
+            var fromIndex = Array.IndexOf(controller.layers.Select(x => x.name).ToArray(), layer.name);
+            if (fromIndex == -1 || fromIndex == toIndex) return;
+
+            var layers = controller.layers;
+
+            var insert = layers[fromIndex];
+            var di = fromIndex > toIndex ? 1 : -1;
+            int i = toIndex;
+            while(i >= 0 && i < layers.Length)
+            {
+                var work = layers[i];
+                layers[i] = insert;
+                insert = work;
+                if (i == fromIndex) break;
+                i += di;
+            }
+            controller.layers = layers;
+            AssetDatabase.SaveAssets();
         }
     }
 #endif
