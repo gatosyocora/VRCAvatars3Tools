@@ -315,6 +315,7 @@ namespace Gatosyocora.VRCAvatars3Tools
             if (avatar2Info.OverrideAnimationClips is null) return avatarObj3;
 
             // FaceEmotion
+            List<EditorCurveBinding> faceBlendShapes = new List<EditorCurveBinding>();
             string searchTargetHandsLayer;
             if (avatar2Info.DefaultAnimationSet == VRCAvatarDescripterDeserializedObject.AnimationSet.Male)
             {
@@ -352,6 +353,9 @@ namespace Gatosyocora.VRCAvatars3Tools
                         var animClip = AssetDatabase.LoadAssetAtPath<AnimationClip>(animationInfo.Path);
                         if (childState.state != null && animClip != null)
                             childState.state.motion = animClip;
+
+                        var bindings = AnimationUtility.GetCurveBindings(animClip);
+                        faceBlendShapes.AddRange(bindings.Where(x => x.type == typeof(SkinnedMeshRenderer)));
                     }
 
                     // まばたき干渉防止
@@ -366,6 +370,29 @@ namespace Gatosyocora.VRCAvatars3Tools
                     }
                 }
             }
+
+            // 表情をResetするためのLayerを追加
+            // TODO: まだLayerを2番目に移動できていない
+            var defaultFaceAnimation = CreateDefaultFaceAnimation(
+                                            avatarPrefab2.name, 
+                                            faceBlendShapes.Distinct(),
+                                            Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath));
+            var resetFaceStateMachine = new AnimatorStateMachine();
+            var resetState = resetFaceStateMachine.AddState("Reset");
+            {
+                resetState.writeDefaultValues = false;
+                resetState.motion = defaultFaceAnimation;
+            }
+            var fxControllerPath = AssetDatabase.GetAssetPath(fxController);
+            AssetDatabase.AddObjectToAsset(resetState, fxControllerPath);
+            AssetDatabase.AddObjectToAsset(resetFaceStateMachine, fxControllerPath);
+            var resetFaceLayer = new AnimatorControllerLayer
+            {
+                defaultWeight = 1,
+                name = "ResetFace",
+                stateMachine = resetFaceStateMachine
+            };
+            fxController.AddLayer(resetFaceLayer);
 
             if (HasEmoteAnimation(avatar2Info.OverrideAnimationClips))
             {
@@ -687,6 +714,20 @@ namespace Gatosyocora.VRCAvatars3Tools
                 .Where(i => i != null)
                 .Select(i => i.Type)
                 .Any(t => t.StartsWith("Emote"));
+
+        // TODO: デフォルトの表情が0以外のときに対応できていない
+        private AnimationClip CreateDefaultFaceAnimation(string avatarName, IEnumerable<EditorCurveBinding> faceBlendShapes, string path)
+        {
+            var clip = new AnimationClip();
+            foreach (var blendShape in faceBlendShapes)
+            {
+                AnimationUtility.SetEditorCurve(clip, blendShape, new AnimationCurve(new Keyframe(0, 0)));
+            }
+            AssetDatabase.CreateAsset(clip, Path.Combine(path, $"DefaultFace_{avatarName}.anim"));
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            return clip;
+        }
     }
 #endif
 }
