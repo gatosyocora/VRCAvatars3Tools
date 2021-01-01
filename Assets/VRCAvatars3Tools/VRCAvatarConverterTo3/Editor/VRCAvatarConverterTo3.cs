@@ -373,6 +373,7 @@ namespace Gatosyocora.VRCAvatars3Tools
 
             // 表情をResetするためのLayerを追加(WriteDefaultオフだとIdleで表情が元に戻らない)
             var defaultFaceAnimation = CreateDefaultFaceAnimation(
+                                            avatarObj3,
                                             avatarPrefab2.name, 
                                             faceBlendShapes.Distinct(),
                                             Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath));
@@ -714,13 +715,15 @@ namespace Gatosyocora.VRCAvatars3Tools
                 .Select(i => i.Type)
                 .Any(t => t.StartsWith("Emote"));
 
-        // TODO: デフォルトの表情が0以外のときに対応できていない
-        private AnimationClip CreateDefaultFaceAnimation(string avatarName, IEnumerable<EditorCurveBinding> faceBlendShapes, string path)
+        private AnimationClip CreateDefaultFaceAnimation(GameObject rootObj, string avatarName, IEnumerable<EditorCurveBinding> faceBlendShapeBindings, string path)
         {
             var clip = new AnimationClip();
-            foreach (var blendShape in faceBlendShapes)
+            foreach (var binding in faceBlendShapeBindings)
             {
-                AnimationUtility.SetEditorCurve(clip, blendShape, new AnimationCurve(new Keyframe(0, 0)));
+                // デフォルト表情のWeightを取得
+                var renderer = rootObj.transform.Find(binding.path)?.GetComponent<SkinnedMeshRenderer>() ?? null;
+                var weight = renderer.GetBlendShapeWeight(renderer.sharedMesh.GetBlendShapeIndex(binding.propertyName.Split('.')[1]));
+                AnimationUtility.SetEditorCurve(clip, binding, new AnimationCurve(new Keyframe(0, weight)));
             }
             AssetDatabase.CreateAsset(clip, Path.Combine(path, $"DefaultFace_{avatarName}.anim"));
             AssetDatabase.SaveAssets();
