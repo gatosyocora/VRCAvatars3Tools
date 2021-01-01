@@ -293,9 +293,10 @@ namespace Gatosyocora.VRCAvatars3Tools
             var emptyAnimation = new AnimationClip();
             AssetDatabase.CreateAsset(
                 emptyAnimation,
-                Path.Combine(
-                    Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
-                    $"EmptyClip_{avatarPrefab2.name}.anim"));
+                AssetDatabase.GenerateUniqueAssetPath(
+                    Path.Combine(
+                        Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
+                        $"EmptyClip_{avatarPrefab2.name}.anim")));
             AssetDatabase.SaveAssets();
 
             foreach (var layer in fxController.layers)
@@ -751,7 +752,10 @@ namespace Gatosyocora.VRCAvatars3Tools
                 var weight = renderer.GetBlendShapeWeight(renderer.sharedMesh.GetBlendShapeIndex(binding.propertyName.Split('.')[1]));
                 AnimationUtility.SetEditorCurve(clip, binding, new AnimationCurve(new Keyframe(0, weight)));
             }
-            AssetDatabase.CreateAsset(clip, Path.Combine(path, $"DefaultFace_{avatarName}.anim"));
+            AssetDatabase.CreateAsset(
+                clip,
+                AssetDatabase.GenerateUniqueAssetPath(
+                    Path.Combine(path, $"DefaultFace_{avatarName}.anim")));
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             return clip;
