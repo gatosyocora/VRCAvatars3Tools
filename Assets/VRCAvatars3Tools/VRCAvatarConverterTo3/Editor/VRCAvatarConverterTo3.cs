@@ -797,7 +797,7 @@ namespace Gatosyocora.VRCAvatars3Tools
             controller.layers = layers;
             AssetDatabase.SaveAssets();
         }
-    }
 #endif
+    }
 }
 
