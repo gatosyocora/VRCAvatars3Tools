@@ -39,7 +39,7 @@ ver1.0
 	* ツールを作成
 
 ----------------------------------------------------
-〇VRCAvatarConverterTo3 (ver 1.3.2)
+〇VRCAvatarConverterTo3 (ver 1.3.3)
 VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変換できます。
 
 「VRCAvatars3Tools > VRCAvatarConverterTo3」で以下の機能を持つウィンドウが開きます
@@ -82,6 +82,8 @@ VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変
  https://docs.google.com/document/d/1FNiyIl5RyVdfR3pgCBMoc501sCAHs4ZVCnJ6xpbwf6Q/preview#heading=h.45y4ogqf1vgx
 
  ・更新履歴
+ ver1.3.3
+	* VRCSDK2のプロジェクトにいれたときにエラーが出る不具合を修正
  ver1.3.2
 	* WriteDefaultsがOFFのSDK同封のAnimatorControllerに対応
 	* VRCSDK2のVRCAvatarDescripterだったものを自動で削除するように(暫定対応)
