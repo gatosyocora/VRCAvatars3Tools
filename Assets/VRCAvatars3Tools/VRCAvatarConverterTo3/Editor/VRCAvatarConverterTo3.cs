@@ -503,6 +503,10 @@ namespace Gatosyocora.VRCAvatars3Tools
                 // 改変アバターは削除したTransformの部分に謎の文字列が入っており
                 // これがあるとLoadに失敗するので削除する
                 yamlText = yamlText.Replace(" stripped", string.Empty);
+
+                // Tabを使っているとうまくいかないのでTabをSpace2つに置き換える
+                yamlText = yamlText.Replace("\t", "  ");
+
                 using (var stream = new StringReader(yamlText))
                 {
                     yaml.Load(stream);
