@@ -12,6 +12,7 @@ namespace Gatosyocora.VRCAvatars3Tools
         private bool[] isCopyParameters;
 
         private Vector2 srcControllerScrollPos = Vector2.zero;
+        private Vector2 dstParametersScrollPos = Vector2.zero;
 
         [MenuItem("VRCAvatars3Tools/ExpressionCombiner")]
         public static void Open()
@@ -60,6 +61,29 @@ namespace Gatosyocora.VRCAvatars3Tools
             }
 
             dstParameters = EditorGUILayout.ObjectField("Dst ExpressionParameters", dstParameters, typeof(VRCExpressionParameters), true) as VRCExpressionParameters;
+            if (dstParameters != null)
+            {
+                using (new EditorGUI.IndentLevelScope())
+                using (var scroll = new EditorGUILayout.ScrollViewScope(dstParametersScrollPos, new GUIStyle(), new GUIStyle("verticalScrollbar")))
+                {
+                    dstParametersScrollPos = scroll.scrollPosition;
+                    using (new EditorGUILayout.HorizontalScope())
+                    {
+                        using (new EditorGUILayout.VerticalScope())
+                        {
+                            EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
+                            foreach (var parameter in dstParameters.parameters)
+                            {
+                                using (new EditorGUILayout.HorizontalScope())
+                                {
+                                    EditorGUILayout.LabelField($"[{parameter.valueType}]{parameter.name}");
+                                }
+                            }
+                        }
+                    }
+                    EditorGUILayout.Space();
+                }
+            }
         }
     }
 }
