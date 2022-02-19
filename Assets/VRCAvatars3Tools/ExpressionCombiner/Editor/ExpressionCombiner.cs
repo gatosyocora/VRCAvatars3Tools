@@ -8,6 +8,7 @@ namespace Gatosyocora.VRCAvatars3Tools
     public class ExpressionCombiner : EditorWindow
     {
         private VRCExpressionParameters srcParameters;
+        private VRCExpressionParameters dstParameters;
         private bool[] isCopyParameters;
 
         private Vector2 srcControllerScrollPos = Vector2.zero;
@@ -57,6 +58,8 @@ namespace Gatosyocora.VRCAvatars3Tools
                     EditorGUILayout.Space();
                 }
             }
+
+            dstParameters = EditorGUILayout.ObjectField("Dst ExpressionParameters", dstParameters, typeof(VRCExpressionParameters), true) as VRCExpressionParameters;
         }
     }
 }
