@@ -60,6 +60,16 @@ namespace Gatosyocora.VRCAvatars3Tools
                 }
             }
 
+            EditorGUILayout.Space();
+            using (new EditorGUI.IndentLevelScope())
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                GUILayout.FlexibleSpace();
+                EditorGUILayout.LabelField("Copy ↓", GUILayout.Width(60f));
+                GUILayout.FlexibleSpace();
+            }
+            EditorGUILayout.Space();
+
             dstParameters = EditorGUILayout.ObjectField("Dst ExpressionParameters", dstParameters, typeof(VRCExpressionParameters), true) as VRCExpressionParameters;
             if (dstParameters != null)
             {
