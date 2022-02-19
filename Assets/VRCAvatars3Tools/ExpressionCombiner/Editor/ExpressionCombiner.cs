@@ -11,7 +11,7 @@ namespace Gatosyocora.VRCAvatars3Tools
         private VRCExpressionParameters dstParameters;
         private bool[] isCopyParameters;
 
-        private Vector2 srcControllerScrollPos = Vector2.zero;
+        private Vector2 srcParametersScrollPos = Vector2.zero;
         private Vector2 dstParametersScrollPos = Vector2.zero;
 
         [MenuItem("VRCAvatars3Tools/ExpressionCombiner")]
@@ -38,9 +38,9 @@ namespace Gatosyocora.VRCAvatars3Tools
             if (srcParameters != null)
             {
                 using (new EditorGUI.IndentLevelScope())
-                using (var scroll = new EditorGUILayout.ScrollViewScope(srcControllerScrollPos, new GUIStyle(), new GUIStyle("verticalScrollbar")))
+                using (var scroll = new EditorGUILayout.ScrollViewScope(srcParametersScrollPos, new GUIStyle(), new GUIStyle("verticalScrollbar")))
                 {
-                    srcControllerScrollPos = scroll.scrollPosition;
+                    srcParametersScrollPos = scroll.scrollPosition;
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         using (new EditorGUILayout.VerticalScope())
