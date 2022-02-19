@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Linq;
+using UnityEditor;
 using VRC.SDK3.Avatars.ScriptableObjects;
 
 namespace Gatosyocora.VRCAvatars3Tools
@@ -6,6 +7,7 @@ namespace Gatosyocora.VRCAvatars3Tools
     public class ExpressionCombiner : EditorWindow
     {
         private VRCExpressionParameters srcParameters;
+        private bool[] isCopyParameters;
 
         [MenuItem("VRCAvatars3Tools/ExpressionCombiner")]
         public static void Open()
@@ -20,6 +22,12 @@ namespace Gatosyocora.VRCAvatars3Tools
                 srcParameters = EditorGUILayout.ObjectField("Src ExpressionParameters", srcParameters, typeof(VRCExpressionParameters), true) as VRCExpressionParameters;
                 if (check.changed)
                 {
+                    if (srcParameters != null)
+                    {
+                        isCopyParameters = srcParameters.parameters
+                                            .Select(_ => true)
+                                            .ToArray();
+                    }
                 }
             }
         }
