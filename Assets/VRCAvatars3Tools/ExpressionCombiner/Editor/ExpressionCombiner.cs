@@ -94,10 +94,23 @@ namespace Gatosyocora.VRCAvatars3Tools
             {
                 if (GUILayout.Button("Combine"))
                 {
+                    Combine();
                 }
             }
 
             EditorGUILayout.Space();
+        }
+
+        private void Combine()
+        {
+            var copiedParameters = srcParameters.parameters
+                                .Where((_, index) => isCopyParameters[index])
+                                .ToArray();
+            dstParameters.parameters = dstParameters.parameters
+                                        .Union(copiedParameters)
+                                        .ToArray();
+            EditorUtility.SetDirty(dstParameters);
+            AssetDatabase.SaveAssets();
         }
 
         private bool CanCombine()
