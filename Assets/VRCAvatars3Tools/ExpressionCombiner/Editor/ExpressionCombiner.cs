@@ -47,7 +47,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                         for (int i = 0; i < srcParameters.parameters.Length; i++)
                         {
                             var parameter = srcParameters.parameters[i];
-                            isCopyParameters[i] = EditorGUILayout.ToggleLeft($"[{parameter.valueType}]{parameter.name}", isCopyParameters[i]);
+                            isCopyParameters[i] = EditorGUILayout.ToggleLeft($"[{parameter.valueType}] {parameter.name}", isCopyParameters[i]);
                         }
                         if (!srcParameters.parameters.Any())
                         {
@@ -78,7 +78,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                     {
                         foreach (var parameter in dstParameters.parameters)
                         {
-                            EditorGUILayout.LabelField($"[{parameter.valueType}]{parameter.name}");
+                            EditorGUILayout.LabelField($"[{parameter.valueType}] {parameter.name}");
                         }
                         if (!dstParameters.parameters.Any())
                         {
