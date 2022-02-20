@@ -42,14 +42,17 @@ namespace Gatosyocora.VRCAvatars3Tools
                 {
                     srcParametersScrollPos = scroll.scrollPosition;
                     EditorGUILayout.LabelField("ExpressionParameters", EditorStyles.boldLabel);
-                    for (int i = 0; i < srcParameters.parameters.Length; i++)
+                    using (new EditorGUI.IndentLevelScope())
                     {
-                        var parameter = srcParameters.parameters[i];
-                        isCopyParameters[i] = EditorGUILayout.ToggleLeft($"[{parameter.valueType}]{parameter.name}", isCopyParameters[i]);
-                    }
-                    if (!srcParameters.parameters.Any())
-                    {
-                        EditorGUILayout.LabelField("Not found parameters");
+                        for (int i = 0; i < srcParameters.parameters.Length; i++)
+                        {
+                            var parameter = srcParameters.parameters[i];
+                            isCopyParameters[i] = EditorGUILayout.ToggleLeft($"[{parameter.valueType}]{parameter.name}", isCopyParameters[i]);
+                        }
+                        if (!srcParameters.parameters.Any())
+                        {
+                            EditorGUILayout.LabelField("Not found parameters");
+                        }
                     }
                 }
             }
@@ -71,13 +74,16 @@ namespace Gatosyocora.VRCAvatars3Tools
                 {
                     dstParametersScrollPos = scroll.scrollPosition;
                     EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
-                    foreach (var parameter in dstParameters.parameters)
+                    using (new EditorGUI.IndentLevelScope())
                     {
-                        EditorGUILayout.LabelField($"[{parameter.valueType}]{parameter.name}");
-                    }
-                    if (!dstParameters.parameters.Any())
-                    {
-                        EditorGUILayout.LabelField("Not found parameters");
+                        foreach (var parameter in dstParameters.parameters)
+                        {
+                            EditorGUILayout.LabelField($"[{parameter.valueType}]{parameter.name}");
+                        }
+                        if (!dstParameters.parameters.Any())
+                        {
+                            EditorGUILayout.LabelField("Not found parameters");
+                        }
                     }
                 }
             }
