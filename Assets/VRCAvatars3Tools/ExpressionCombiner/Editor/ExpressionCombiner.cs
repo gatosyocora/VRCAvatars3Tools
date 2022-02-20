@@ -87,6 +87,22 @@ namespace Gatosyocora.VRCAvatars3Tools
                     }
                 }
             }
+
+            EditorGUILayout.Space();
+
+            using (new EditorGUI.DisabledGroupScope(!CanCombine()))
+            {
+                if (GUILayout.Button("Combine"))
+                {
+                }
+            }
+
+            EditorGUILayout.Space();
+        }
+
+        private bool CanCombine()
+        {
+            return true;
         }
     }
 }
