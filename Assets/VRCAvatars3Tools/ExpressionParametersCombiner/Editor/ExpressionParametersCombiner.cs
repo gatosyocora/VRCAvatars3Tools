@@ -104,8 +104,14 @@ namespace Gatosyocora.VRCAvatars3Tools
                         {
                             EditorGUILayout.LabelField($"    [{parameter.valueType}] {parameter.name}");
                         }
+                        var dstParameterNames = dstParameters.parameters.Select(p => p.name).ToArray();
                         foreach (var copiedParameter in copiedParameters)
                         {
+                            if (dstParameterNames.Contains(copiedParameter.name))
+                            {
+                                continue;
+                            }
+
                             using (new EditorGUILayout.HorizontalScope())
                             {
                                 EditorGUILayout.LabelField($"+ [{copiedParameter.valueType}] {copiedParameter.name}");
