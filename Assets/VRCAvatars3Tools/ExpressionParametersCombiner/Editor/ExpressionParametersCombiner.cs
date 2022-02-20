@@ -126,6 +126,13 @@ namespace Gatosyocora.VRCAvatars3Tools
 
             EditorGUILayout.Space();
 
+            var dstParameterNames = dstParameters.parameters.Select(p => p.name).ToArray();
+            var selectedParameterNames = copiedParameters.Select(p => p.name).ToArray();
+            if (ContainsSameName(dstParameterNames, selectedParameterNames))
+            {
+                EditorGUILayout.HelpBox("Contains same name in selected parameter", MessageType.Error);
+            }
+
             using (new EditorGUI.DisabledGroupScope(!CanCombine()))
             {
                 if (GUILayout.Button("Combine"))
@@ -183,5 +190,8 @@ namespace Gatosyocora.VRCAvatars3Tools
         }
 
         private bool IsOverCost() => totalCost + selectedTotalCost > MAX_TOTAL_COST;
+
+        private bool ContainsSameName(IEnumerable<string> array1, IEnumerable<string> array2)
+            => array1.Union(array2).Count() < array1.Count() + array2.Count();
     }
 }
