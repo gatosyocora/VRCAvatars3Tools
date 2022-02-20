@@ -198,8 +198,5 @@ namespace Gatosyocora.VRCAvatars3Tools
         }
 
         private bool IsOverCost() => totalCost + selectedTotalCost > MAX_TOTAL_COST;
-
-        private bool ContainsSameName(IEnumerable<string> array1, IEnumerable<string> array2)
-            => array1.Union(array2).Count() < array1.Count() + array2.Count();
     }
 }
