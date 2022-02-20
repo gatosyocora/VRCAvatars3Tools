@@ -7,9 +7,14 @@ namespace Gatosyocora.VRCAvatars3Tools
 {
     public class ExpressionCombiner : EditorWindow
     {
+        private const int MAX_TOTAL_COST = 128;
+
         private VRCExpressionParameters srcParameters;
         private VRCExpressionParameters dstParameters;
         private bool[] isCopyParameters;
+
+        private int selectedTotalCost = 0;
+        private int totalCost = 0;
 
         private Vector2 srcParametersScrollPos = Vector2.zero;
         private Vector2 dstParametersScrollPos = Vector2.zero;
@@ -41,7 +46,13 @@ namespace Gatosyocora.VRCAvatars3Tools
                 using (var scroll = new EditorGUILayout.ScrollViewScope(srcParametersScrollPos, new GUIStyle(), new GUIStyle("verticalScrollbar")))
                 {
                     srcParametersScrollPos = scroll.scrollPosition;
-                    EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
+                    // TODO: 実際に選択しているパラメータのコストを計算する
+                    selectedTotalCost = 0;
+                    using (new EditorGUILayout.HorizontalScope())
+                    {
+                        EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
+                        EditorGUILayout.LabelField($"Selected Total Cost: {selectedTotalCost}");
+                    }
                     using (new EditorGUI.IndentLevelScope())
                     {
                         for (int i = 0; i < srcParameters.parameters.Length; i++)
@@ -73,7 +84,12 @@ namespace Gatosyocora.VRCAvatars3Tools
                 using (var scroll = new EditorGUILayout.ScrollViewScope(dstParametersScrollPos, new GUIStyle(), new GUIStyle("verticalScrollbar")))
                 {
                     dstParametersScrollPos = scroll.scrollPosition;
-                    EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
+                    totalCost = dstParameters.CalcTotalCost();
+                    using (new EditorGUILayout.HorizontalScope())
+                    {
+                        EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
+                        EditorGUILayout.LabelField($"Total Cost: {totalCost} -> {totalCost + selectedTotalCost} / {MAX_TOTAL_COST}");
+                    }
                     using (new EditorGUI.IndentLevelScope())
                     {
                         foreach (var parameter in dstParameters.parameters)
