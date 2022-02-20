@@ -116,10 +116,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                                 continue;
                             }
 
-                            using (new EditorGUILayout.HorizontalScope())
-                            {
-                                EditorGUILayout.LabelField($"+ [{copiedParameter.valueType}] {copiedParameter.name}");
-                            }
+                            EditorGUILayout.LabelField($"+ [{copiedParameter.valueType}] {copiedParameter.name}");
                         }
                         if (!dstParameters.parameters.Any() && !copiedParameters.Any())
                         {
