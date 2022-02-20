@@ -6,7 +6,7 @@ using VRC.SDK3.Avatars.ScriptableObjects;
 
 namespace Gatosyocora.VRCAvatars3Tools
 {
-    public class ExpressionCombiner : EditorWindow
+    public class ExpressionParametersCombiner : EditorWindow
     {
         private const int MAX_TOTAL_COST = 128;
         private const int COST_INT = 8;
@@ -23,10 +23,10 @@ namespace Gatosyocora.VRCAvatars3Tools
         private Vector2 srcParametersScrollPos = Vector2.zero;
         private Vector2 dstParametersScrollPos = Vector2.zero;
 
-        [MenuItem("VRCAvatars3Tools/ExpressionCombiner")]
+        [MenuItem("VRCAvatars3Tools/ExpressionParametersCombiner")]
         public static void Open()
         {
-            GetWindow<ExpressionCombiner>("ExpressionCombiner");
+            GetWindow<ExpressionParametersCombiner>("ExpressionParametersCombiner");
         }
 
         public void OnGUI()
