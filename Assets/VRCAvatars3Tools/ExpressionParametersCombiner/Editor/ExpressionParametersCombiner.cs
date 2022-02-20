@@ -130,7 +130,7 @@ namespace Gatosyocora.VRCAvatars3Tools
             var selectedParameterNames = copiedParameters.Select(p => p.name).ToArray();
             if (ContainsSameName(dstParameterNames, selectedParameterNames))
             {
-                EditorGUILayout.HelpBox("Contains same name in selected parameter", MessageType.Error);
+                EditorGUILayout.HelpBox("Contains same name in selected parameter. These parameter is not copied.", MessageType.Warning);
             }
 
             using (new EditorGUI.DisabledGroupScope(!CanCombine()))
