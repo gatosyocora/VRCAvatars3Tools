@@ -47,6 +47,10 @@ namespace Gatosyocora.VRCAvatars3Tools
                         var parameter = srcParameters.parameters[i];
                         isCopyParameters[i] = EditorGUILayout.ToggleLeft($"[{parameter.valueType}]{parameter.name}", isCopyParameters[i]);
                     }
+                    if (!srcParameters.parameters.Any())
+                    {
+                        EditorGUILayout.LabelField("Not found parameters");
+                    }
                 }
             }
 
@@ -70,6 +74,10 @@ namespace Gatosyocora.VRCAvatars3Tools
                     foreach (var parameter in dstParameters.parameters)
                     {
                         EditorGUILayout.LabelField($"[{parameter.valueType}]{parameter.name}");
+                    }
+                    if (!dstParameters.parameters.Any())
+                    {
+                        EditorGUILayout.LabelField("Not found parameters");
                     }
                 }
             }
