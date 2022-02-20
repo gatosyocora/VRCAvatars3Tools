@@ -21,6 +21,8 @@ namespace Gatosyocora.VRCAvatars3Tools
         private int selectedTotalCost = 0;
         private int totalCost = 0;
 
+        private bool containsSameNameParameter = false;
+
         private VRCExpressionParameters.Parameter[] copiedParameters;
 
         private Vector2 srcParametersScrollPos = Vector2.zero;
@@ -105,10 +107,12 @@ namespace Gatosyocora.VRCAvatars3Tools
                             EditorGUILayout.LabelField($"    [{parameter.valueType}] {parameter.name}");
                         }
                         var dstParameterNames = dstParameters.parameters.Select(p => p.name).ToArray();
+                        containsSameNameParameter = false;
                         foreach (var copiedParameter in copiedParameters)
                         {
                             if (dstParameterNames.Contains(copiedParameter.name))
                             {
+                                containsSameNameParameter = true;
                                 continue;
                             }
 
@@ -132,9 +136,7 @@ namespace Gatosyocora.VRCAvatars3Tools
 
             EditorGUILayout.Space();
 
-            var dstParameterNames = dstParameters.parameters.Select(p => p.name).ToArray();
-            var selectedParameterNames = copiedParameters.Select(p => p.name).ToArray();
-            if (ContainsSameName(dstParameterNames, selectedParameterNames))
+            if (containsSameNameParameter)
             {
                 EditorGUILayout.HelpBox("Contains same name in selected parameter. These parameter is not copied.", MessageType.Warning);
             }
