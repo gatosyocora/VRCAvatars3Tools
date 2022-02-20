@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -19,6 +20,8 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         private int selectedTotalCost = 0;
         private int totalCost = 0;
+
+        private VRCExpressionParameters.Parameter[] copiedParameters;
 
         private Vector2 srcParametersScrollPos = Vector2.zero;
         private Vector2 dstParametersScrollPos = Vector2.zero;
@@ -69,6 +72,8 @@ namespace Gatosyocora.VRCAvatars3Tools
                         }
                     }
                 }
+
+                copiedParameters = srcParameters.parameters.Where((_, index) => isCopyParameters[index]).ToArray();
             }
 
             EditorGUILayout.Space();
@@ -88,7 +93,6 @@ namespace Gatosyocora.VRCAvatars3Tools
                 {
                     dstParametersScrollPos = scroll.scrollPosition;
                     totalCost = dstParameters.CalcTotalCost();
-                    var copiedParameters = srcParameters.parameters.Where((_, index) => isCopyParameters[index]).ToArray();
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
