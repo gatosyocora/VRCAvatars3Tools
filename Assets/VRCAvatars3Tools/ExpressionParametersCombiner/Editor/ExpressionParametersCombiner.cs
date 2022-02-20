@@ -88,6 +88,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                 {
                     dstParametersScrollPos = scroll.scrollPosition;
                     totalCost = dstParameters.CalcTotalCost();
+                    var copiedParameters = srcParameters.parameters.Where((_, index) => isCopyParameters[index]).ToArray();
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
@@ -100,6 +101,10 @@ namespace Gatosyocora.VRCAvatars3Tools
                             EditorGUILayout.LabelField($"[{parameter.valueType}] {parameter.name}");
                         }
                         if (!dstParameters.parameters.Any())
+                        foreach (var copiedParameter in copiedParameters)
+                        {
+                            EditorGUILayout.LabelField($"+ [{copiedParameter.valueType}] {copiedParameter.name}");
+                        }
                         {
                             EditorGUILayout.LabelField("Not found parameters");
                         }
