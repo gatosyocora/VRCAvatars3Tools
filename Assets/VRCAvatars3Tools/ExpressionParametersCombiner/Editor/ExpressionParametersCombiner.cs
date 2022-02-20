@@ -130,18 +130,17 @@ namespace Gatosyocora.VRCAvatars3Tools
             {
                 if (GUILayout.Button("Combine"))
                 {
-                    Combine();
+                    Combine(copiedParameters);
                 }
             }
 
             EditorGUILayout.Space();
         }
 
-        private void Combine()
+        private void Combine(VRCExpressionParameters.Parameter[] copiedParameters)
         {
-            var copiedParameters = srcParameters.parameters
-                                .Where((_, index) => isCopyParameters[index])
-                                .ToArray();
+            if (copiedParameters == null || !copiedParameters.Any()) return;
+
             dstParameters.parameters = dstParameters.parameters
                                         .Union(copiedParameters)
                                         .ToArray();
