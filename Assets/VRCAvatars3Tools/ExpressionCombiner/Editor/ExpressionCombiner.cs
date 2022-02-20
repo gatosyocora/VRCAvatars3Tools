@@ -41,27 +41,16 @@ namespace Gatosyocora.VRCAvatars3Tools
                 using (var scroll = new EditorGUILayout.ScrollViewScope(srcParametersScrollPos, new GUIStyle(), new GUIStyle("verticalScrollbar")))
                 {
                     srcParametersScrollPos = scroll.scrollPosition;
-                    using (new EditorGUILayout.HorizontalScope())
+                    EditorGUILayout.LabelField("ExpressionParameters", EditorStyles.boldLabel);
+                    for (int i = 0; i < srcParameters.parameters.Length; i++)
                     {
-                        using (new EditorGUILayout.VerticalScope())
-                        {
-                            EditorGUILayout.LabelField("ExpressionParameters", EditorStyles.boldLabel);
-                            for (int i = 0; i < srcParameters.parameters.Length; i++)
-                            {
-                                var parameter = srcParameters.parameters[i];
-                                using (new EditorGUILayout.HorizontalScope())
-                                {
-                                    isCopyParameters[i] = EditorGUILayout.ToggleLeft($"[{parameter.valueType}]{parameter.name}", isCopyParameters[i]);
-                                }
-                            }
-                        }
+                        var parameter = srcParameters.parameters[i];
+                        isCopyParameters[i] = EditorGUILayout.ToggleLeft($"[{parameter.valueType}]{parameter.name}", isCopyParameters[i]);
                     }
-                    EditorGUILayout.Space();
                 }
             }
 
             EditorGUILayout.Space();
-            using (new EditorGUI.IndentLevelScope())
             using (new EditorGUILayout.HorizontalScope())
             {
                 GUILayout.FlexibleSpace();
@@ -77,21 +66,11 @@ namespace Gatosyocora.VRCAvatars3Tools
                 using (var scroll = new EditorGUILayout.ScrollViewScope(dstParametersScrollPos, new GUIStyle(), new GUIStyle("verticalScrollbar")))
                 {
                     dstParametersScrollPos = scroll.scrollPosition;
-                    using (new EditorGUILayout.HorizontalScope())
+                    EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
+                    foreach (var parameter in dstParameters.parameters)
                     {
-                        using (new EditorGUILayout.VerticalScope())
-                        {
-                            EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
-                            foreach (var parameter in dstParameters.parameters)
-                            {
-                                using (new EditorGUILayout.HorizontalScope())
-                                {
-                                    EditorGUILayout.LabelField($"[{parameter.valueType}]{parameter.name}");
-                                }
-                            }
-                        }
+                        EditorGUILayout.LabelField($"[{parameter.valueType}]{parameter.name}");
                     }
-                    EditorGUILayout.Space();
                 }
             }
         }
