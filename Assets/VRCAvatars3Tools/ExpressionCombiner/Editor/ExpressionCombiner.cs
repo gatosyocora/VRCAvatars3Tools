@@ -136,7 +136,8 @@ namespace Gatosyocora.VRCAvatars3Tools
         {
             return srcParameters != null &&
                 dstParameters != null &&
-                srcParameters.parameters.Any();
+                srcParameters.parameters.Any() &&
+                !IsOverCost();
         }
 
         private int CaluculateSelectedTotalCost(VRCExpressionParameters parameters, bool[] isSelected)
@@ -164,5 +165,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                     })
                     .Sum();
         }
+
+        private bool IsOverCost() => totalCost + selectedTotalCost > MAX_TOTAL_COST;
     }
 }
