@@ -41,7 +41,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                 using (var scroll = new EditorGUILayout.ScrollViewScope(srcParametersScrollPos, new GUIStyle(), new GUIStyle("verticalScrollbar")))
                 {
                     srcParametersScrollPos = scroll.scrollPosition;
-                    EditorGUILayout.LabelField("ExpressionParameters", EditorStyles.boldLabel);
+                    EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
                     using (new EditorGUI.IndentLevelScope())
                     {
                         for (int i = 0; i < srcParameters.parameters.Length; i++)
@@ -73,7 +73,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                 using (var scroll = new EditorGUILayout.ScrollViewScope(dstParametersScrollPos, new GUIStyle(), new GUIStyle("verticalScrollbar")))
                 {
                     dstParametersScrollPos = scroll.scrollPosition;
-                    EditorGUILayout.LabelField("ExpressionParameters", EditorStyles.boldLabel);
+                    EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
                     using (new EditorGUI.IndentLevelScope())
                     {
                         foreach (var parameter in dstParameters.parameters)
