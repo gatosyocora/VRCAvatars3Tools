@@ -100,11 +100,11 @@ namespace Gatosyocora.VRCAvatars3Tools
                         {
                             EditorGUILayout.LabelField($"    [{parameter.valueType}] {parameter.name}");
                         }
-                        if (!dstParameters.parameters.Any())
                         foreach (var copiedParameter in copiedParameters)
                         {
                             EditorGUILayout.LabelField($"+ [{copiedParameter.valueType}] {copiedParameter.name}");
                         }
+                        if (!dstParameters.parameters.Any() && !copiedParameters.Any())
                         {
                             EditorGUILayout.LabelField("Not found parameters");
                         }
