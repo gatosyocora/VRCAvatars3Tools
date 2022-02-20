@@ -98,7 +98,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                     {
                         foreach (var parameter in dstParameters.parameters)
                         {
-                            EditorGUILayout.LabelField($"[{parameter.valueType}] {parameter.name}");
+                            EditorGUILayout.LabelField($"    [{parameter.valueType}] {parameter.name}");
                         }
                         if (!dstParameters.parameters.Any())
                         foreach (var copiedParameter in copiedParameters)
