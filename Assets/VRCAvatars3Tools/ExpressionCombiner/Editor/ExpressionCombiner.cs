@@ -102,7 +102,9 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         private bool CanCombine()
         {
-            return true;
+            return srcParameters != null &&
+                dstParameters != null &&
+                srcParameters.parameters.Any();
         }
     }
 }
