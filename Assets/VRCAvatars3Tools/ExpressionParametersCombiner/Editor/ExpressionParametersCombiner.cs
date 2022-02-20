@@ -23,8 +23,6 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         private bool containsSameNameParameter = false;
 
-        private VRCExpressionParameters.Parameter[] copiedParameters;
-
         private Vector2 srcParametersScrollPos = Vector2.zero;
         private Vector2 dstParametersScrollPos = Vector2.zero;
 
@@ -74,8 +72,6 @@ namespace Gatosyocora.VRCAvatars3Tools
                         }
                     }
                 }
-
-                copiedParameters = srcParameters.parameters.Where((_, index) => isCopyParameters[index]).ToArray();
             }
 
             EditorGUILayout.Space();
@@ -90,6 +86,8 @@ namespace Gatosyocora.VRCAvatars3Tools
             dstParameters = EditorGUILayout.ObjectField("Dst ExpressionParameters", dstParameters, typeof(VRCExpressionParameters), true) as VRCExpressionParameters;
             if (dstParameters != null)
             {
+                var copiedParameters = GetCopiedParameters();
+
                 using (new EditorGUI.IndentLevelScope())
                 using (var scroll = new EditorGUILayout.ScrollViewScope(dstParametersScrollPos, new GUIStyle(), new GUIStyle("verticalScrollbar")))
                 {
@@ -137,7 +135,7 @@ namespace Gatosyocora.VRCAvatars3Tools
             {
                 if (GUILayout.Button("Combine"))
                 {
-                    Combine(copiedParameters);
+                    Combine(GetCopiedParameters());
                 }
             }
 
