@@ -119,11 +119,6 @@ namespace Gatosyocora.VRCAvatars3Tools
                             using (new EditorGUILayout.HorizontalScope())
                             {
                                 EditorGUILayout.LabelField($"+ [{copiedParameter.valueType}] {copiedParameter.name}");
-
-                                if (dstParameters.parameters.Any(p => p.name == copiedParameter.name))
-                                {
-                                    EditorGUILayout.LabelField($"duplicated");
-                                }
                             }
                         }
                         if (!dstParameters.parameters.Any() && !copiedParameters.Any())
