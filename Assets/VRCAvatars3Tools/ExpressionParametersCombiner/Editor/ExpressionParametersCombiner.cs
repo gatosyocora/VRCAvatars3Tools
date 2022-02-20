@@ -163,6 +163,21 @@ namespace Gatosyocora.VRCAvatars3Tools
                 !IsOverCost();
         }
 
+        private VRCExpressionParameters.Parameter[] GetCopiedParameters()
+        {
+            if (srcParameters == null || dstParameters == null)
+            {
+                return Array.Empty<VRCExpressionParameters.Parameter>();
+            }
+
+            var dstParameterNames = dstParameters.parameters.Select(p => p.name).ToArray();
+
+            return srcParameters.parameters
+                    .Where((_, index) => isCopyParameters[index])
+                    .Where(p => !dstParameterNames.Contains(p.name))
+                    .ToArray();
+        }
+
         private int CaluculateSelectedTotalCost(VRCExpressionParameters parameters, bool[] isSelected)
         {
             if (parameters.parameters.Length != isSelected.Length)
