@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using VRC.SDK3.Avatars.ScriptableObjects;
@@ -8,6 +9,9 @@ namespace Gatosyocora.VRCAvatars3Tools
     public class ExpressionCombiner : EditorWindow
     {
         private const int MAX_TOTAL_COST = 128;
+        private const int COST_INT = 8;
+        private const int COST_FLOAT = 8;
+        private const int COST_BOOL = 1;
 
         private VRCExpressionParameters srcParameters;
         private VRCExpressionParameters dstParameters;
@@ -46,8 +50,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                 using (var scroll = new EditorGUILayout.ScrollViewScope(srcParametersScrollPos, new GUIStyle(), new GUIStyle("verticalScrollbar")))
                 {
                     srcParametersScrollPos = scroll.scrollPosition;
-                    // TODO: 実際に選択しているパラメータのコストを計算する
-                    selectedTotalCost = 0;
+                    selectedTotalCost = CaluculateSelectedTotalCost(srcParameters, isCopyParameters);
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
@@ -134,6 +137,32 @@ namespace Gatosyocora.VRCAvatars3Tools
             return srcParameters != null &&
                 dstParameters != null &&
                 srcParameters.parameters.Any();
+        }
+
+        private int CaluculateSelectedTotalCost(VRCExpressionParameters parameters, bool[] isSelected)
+        {
+            if (parameters.parameters.Length != isSelected.Length)
+            {
+                throw new Exception("no match array size");
+            }
+
+            return parameters.parameters
+                    .Where((_, index) => isSelected[index])
+                    .Select(parameter =>
+                    {
+                        switch (parameter.valueType)
+                        {
+                            case VRCExpressionParameters.ValueType.Int:
+                                return COST_INT;
+                            case VRCExpressionParameters.ValueType.Float:
+                                return COST_FLOAT;
+                            case VRCExpressionParameters.ValueType.Bool:
+                                return COST_BOOL;
+                            default:
+                                throw new Exception("Undefined parameter");
+                        }
+                    })
+                    .Sum();
         }
     }
 }
