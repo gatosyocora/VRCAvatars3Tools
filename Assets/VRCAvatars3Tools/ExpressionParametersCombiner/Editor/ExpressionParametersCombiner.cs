@@ -38,6 +38,18 @@ namespace Gatosyocora.VRCAvatars3Tools
             "Combine",
         };
 
+        private readonly static string[] textJA = new string[]
+        {
+            "コピー元のExpressionParameters",
+            "選択中の総コスト",
+            "パラメータが見つかりませんでした",
+            "コピー",
+            "コピー先のExpressionParameters",
+            "総コスト",
+            "選択中のものにコピー先と同じ名前のパラメータが含まれています。このパラメータはコピーされません",
+            "コピー開始",
+        };
+
         private string[] texts = textEN;
 
         [MenuItem("VRCAvatars3Tools/ExpressionParametersCombiner")]
