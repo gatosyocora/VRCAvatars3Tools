@@ -25,6 +25,21 @@ namespace Gatosyocora.VRCAvatars3Tools
         private Vector2 srcParametersScrollPos = Vector2.zero;
         private Vector2 dstParametersScrollPos = Vector2.zero;
 
+        // 簡易的な日本語対応
+        private readonly static string[] textEN = new string[]
+        {
+            "Src ExpressionParameters",
+            "Selected Total Cost",
+            "Not found parameters",
+            "Copy",
+            "Dst ExpressionParameters",
+            "Total Cost",
+            "Contains same name in selected parameter. These parameter is not copied.",
+            "Combine",
+        };
+
+        private string[] texts = textEN;
+
         [MenuItem("VRCAvatars3Tools/ExpressionParametersCombiner")]
         public static void Open()
         {
@@ -35,7 +50,7 @@ namespace Gatosyocora.VRCAvatars3Tools
         {
             using (var check = new EditorGUI.ChangeCheckScope())
             {
-                srcParameters = EditorGUILayout.ObjectField("Src ExpressionParameters", srcParameters, typeof(VRCExpressionParameters), true) as VRCExpressionParameters;
+                srcParameters = EditorGUILayout.ObjectField($"{texts[0]}", srcParameters, typeof(VRCExpressionParameters), true) as VRCExpressionParameters;
                 if (check.changed)
                 {
                     if (srcParameters != null)
@@ -56,7 +71,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
-                        EditorGUILayout.LabelField($"Selected Total Cost: {selectedTotalCost}");
+                        EditorGUILayout.LabelField($"{texts[1]}: {selectedTotalCost}");
                     }
                     using (new EditorGUI.IndentLevelScope())
                     {
@@ -67,7 +82,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                         }
                         if (!srcParameters.parameters.Any())
                         {
-                            EditorGUILayout.LabelField("Not found parameters");
+                            EditorGUILayout.LabelField($"{texts[2]}");
                         }
                     }
                 }
@@ -77,12 +92,12 @@ namespace Gatosyocora.VRCAvatars3Tools
             using (new EditorGUILayout.HorizontalScope())
             {
                 GUILayout.FlexibleSpace();
-                EditorGUILayout.LabelField("Copy ↓", GUILayout.Width(60f));
+                EditorGUILayout.LabelField($"{texts[3]} ↓", GUILayout.Width(60f));
                 GUILayout.FlexibleSpace();
             }
             EditorGUILayout.Space();
 
-            dstParameters = EditorGUILayout.ObjectField("Dst ExpressionParameters", dstParameters, typeof(VRCExpressionParameters), true) as VRCExpressionParameters;
+            dstParameters = EditorGUILayout.ObjectField($"{texts[4]}", dstParameters, typeof(VRCExpressionParameters), true) as VRCExpressionParameters;
             if (dstParameters != null)
             {
                 var copiedParameters = GetCopiedParameters();
@@ -96,7 +111,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
-                        EditorGUILayout.LabelField($"Total Cost: {totalCost} -> {totalCost + copiedTotalCost} / {MAX_TOTAL_COST}");
+                        EditorGUILayout.LabelField($"{texts[5]}: {totalCost} -> {totalCost + copiedTotalCost} / {MAX_TOTAL_COST}");
                     }
                     using (new EditorGUI.IndentLevelScope())
                     {
@@ -111,7 +126,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                         }
                         if (!dstParameters.parameters.Any() && !copiedParameters.Any())
                         {
-                            EditorGUILayout.LabelField("Not found parameters");
+                            EditorGUILayout.LabelField($"{texts[2]}");
                         }
                     }
                 }
@@ -121,12 +136,12 @@ namespace Gatosyocora.VRCAvatars3Tools
 
             if (ContainsSameNameParameter())
             {
-                EditorGUILayout.HelpBox("Contains same name in selected parameter. These parameter is not copied.", MessageType.Warning);
+                EditorGUILayout.HelpBox($"{texts[6]}", MessageType.Warning);
             }
 
             using (new EditorGUI.DisabledGroupScope(!CanCombine()))
             {
-                if (GUILayout.Button("Combine"))
+                if (GUILayout.Button($"{texts[7]}"))
                 {
                     Combine(GetCopiedParameters());
                 }
