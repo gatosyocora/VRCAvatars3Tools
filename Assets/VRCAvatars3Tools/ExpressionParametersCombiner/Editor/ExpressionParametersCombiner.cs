@@ -35,6 +35,7 @@ namespace Gatosyocora.VRCAvatars3Tools
             "Total Cost",
             "Contains same name in selected parameter. These parameter is not copied.",
             "Combine",
+            "The cost is over the limit."
         };
 
         private readonly static string[] textJA = new string[]
@@ -47,6 +48,7 @@ namespace Gatosyocora.VRCAvatars3Tools
             "総コスト",
             "選択中のものにコピー先と同じ名前のパラメータが含まれています。このパラメータはコピーされません",
             "コピー開始",
+            "コストが上限を超えています"
         };
 
         private string[] texts = textEN;
@@ -162,6 +164,11 @@ namespace Gatosyocora.VRCAvatars3Tools
             if (ContainsSameNameParameter())
             {
                 EditorGUILayout.HelpBox($"{texts[6]}", MessageType.Warning);
+            }
+
+            if (IsOverCost())
+            {
+                EditorGUILayout.HelpBox($"{texts[8]}", MessageType.Error);
             }
 
             using (new EditorGUI.DisabledGroupScope(!CanCombine()))
