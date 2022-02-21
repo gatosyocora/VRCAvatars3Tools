@@ -109,12 +109,6 @@ namespace Gatosyocora.VRCAvatars3Tools
                         containsSameNameParameter = false;
                         foreach (var copiedParameter in copiedParameters)
                         {
-                            if (dstParameterNames.Contains(copiedParameter.name))
-                            {
-                                containsSameNameParameter = true;
-                                continue;
-                            }
-
                             EditorGUILayout.LabelField($"+ [{copiedParameter.valueType}] {copiedParameter.name}");
                         }
                         if (!dstParameters.parameters.Any() && !copiedParameters.Any())
