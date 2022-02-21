@@ -4,6 +4,10 @@ using UnityEditor;
 using UnityEngine;
 using VRC.SDK3.Avatars.ScriptableObjects;
 
+// ver 1.0
+// Copyright (c) 2022 gatosyocora
+// MIT License. See LICENSE.txt
+
 namespace Gatosyocora.VRCAvatars3Tools
 {
     public class ExpressionParametersCombiner : EditorWindow
