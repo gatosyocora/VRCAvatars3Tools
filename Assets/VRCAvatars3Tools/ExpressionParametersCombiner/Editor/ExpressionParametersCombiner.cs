@@ -18,6 +18,7 @@ namespace Gatosyocora.VRCAvatars3Tools
         private VRCExpressionParameters dstParameters;
         private bool[] isCopyParameters;
 
+        private int selectedTotalCost = 0;
         private int copiedTotalCost = 0;
         private int totalCost = 0;
 
@@ -53,7 +54,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                 using (var scroll = new EditorGUILayout.ScrollViewScope(srcParametersScrollPos, new GUIStyle(), new GUIStyle("verticalScrollbar")))
                 {
                     srcParametersScrollPos = scroll.scrollPosition;
-                    var selectedTotalCost = CaluculateSelectedTotalCost(srcParameters, isCopyParameters);
+                    selectedTotalCost = CaluculateSelectedTotalCost(srcParameters, isCopyParameters);
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
@@ -121,7 +122,7 @@ namespace Gatosyocora.VRCAvatars3Tools
 
             EditorGUILayout.Space();
 
-            if (containsSameNameParameter)
+            if (ContainsSameNameParameter())
             {
                 EditorGUILayout.HelpBox("Contains same name in selected parameter. These parameter is not copied.", MessageType.Warning);
             }
@@ -203,5 +204,7 @@ namespace Gatosyocora.VRCAvatars3Tools
         }
 
         private bool IsOverCost() => totalCost + copiedTotalCost > MAX_TOTAL_COST;
+
+        private bool ContainsSameNameParameter() => copiedTotalCost < selectedTotalCost;
     }
 }
