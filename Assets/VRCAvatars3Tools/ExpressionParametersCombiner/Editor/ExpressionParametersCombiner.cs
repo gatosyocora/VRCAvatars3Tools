@@ -22,8 +22,6 @@ namespace Gatosyocora.VRCAvatars3Tools
         private int copiedTotalCost = 0;
         private int totalCost = 0;
 
-        private bool containsSameNameParameter = false;
-
         private Vector2 srcParametersScrollPos = Vector2.zero;
         private Vector2 dstParametersScrollPos = Vector2.zero;
 
@@ -107,7 +105,6 @@ namespace Gatosyocora.VRCAvatars3Tools
                             EditorGUILayout.LabelField($"    [{parameter.valueType}] {parameter.name}");
                         }
                         var dstParameterNames = dstParameters.parameters.Select(p => p.name).ToArray();
-                        containsSameNameParameter = false;
                         foreach (var copiedParameter in copiedParameters)
                         {
                             EditorGUILayout.LabelField($"+ [{copiedParameter.valueType}] {copiedParameter.name}");
