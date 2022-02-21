@@ -93,10 +93,11 @@ namespace Gatosyocora.VRCAvatars3Tools
                 {
                     dstParametersScrollPos = scroll.scrollPosition;
                     totalCost = dstParameters.CalcTotalCost();
+                    var copiedTotalCost = CaluculateTotalCost(copiedParameters);
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
-                        EditorGUILayout.LabelField($"Total Cost: {totalCost} -> {totalCost + selectedTotalCost} / {MAX_TOTAL_COST}");
+                        EditorGUILayout.LabelField($"Total Cost: {totalCost} -> {totalCost + copiedTotalCost} / {MAX_TOTAL_COST}");
                     }
                     using (new EditorGUI.IndentLevelScope())
                     {
@@ -183,8 +184,13 @@ namespace Gatosyocora.VRCAvatars3Tools
                 throw new Exception("no match array size");
             }
 
-            return parameters.parameters
-                    .Where((_, index) => isSelected[index])
+            return CaluculateTotalCost(parameters.parameters
+                    .Where((_, index) => isSelected[index]).ToArray());
+        }
+
+        private int CaluculateTotalCost(VRCExpressionParameters.Parameter[] parameters)
+        {
+            return parameters
                     .Select(parameter =>
                     {
                         switch (parameter.valueType)
