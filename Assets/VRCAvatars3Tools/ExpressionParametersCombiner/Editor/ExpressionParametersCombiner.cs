@@ -18,7 +18,7 @@ namespace Gatosyocora.VRCAvatars3Tools
         private VRCExpressionParameters dstParameters;
         private bool[] isCopyParameters;
 
-        private int selectedTotalCost = 0;
+        private int copiedTotalCost = 0;
         private int totalCost = 0;
 
         private bool containsSameNameParameter = false;
@@ -53,7 +53,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                 using (var scroll = new EditorGUILayout.ScrollViewScope(srcParametersScrollPos, new GUIStyle(), new GUIStyle("verticalScrollbar")))
                 {
                     srcParametersScrollPos = scroll.scrollPosition;
-                    selectedTotalCost = CaluculateSelectedTotalCost(srcParameters, isCopyParameters);
+                    var selectedTotalCost = CaluculateSelectedTotalCost(srcParameters, isCopyParameters);
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
@@ -93,7 +93,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                 {
                     dstParametersScrollPos = scroll.scrollPosition;
                     totalCost = dstParameters.CalcTotalCost();
-                    var copiedTotalCost = CaluculateTotalCost(copiedParameters);
+                    copiedTotalCost = CaluculateTotalCost(copiedParameters);
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
@@ -208,6 +208,6 @@ namespace Gatosyocora.VRCAvatars3Tools
                     .Sum();
         }
 
-        private bool IsOverCost() => totalCost + selectedTotalCost > MAX_TOTAL_COST;
+        private bool IsOverCost() => totalCost + copiedTotalCost > MAX_TOTAL_COST;
     }
 }
