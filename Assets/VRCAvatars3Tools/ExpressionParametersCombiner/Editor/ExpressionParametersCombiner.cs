@@ -60,6 +60,20 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         public void OnGUI()
         {
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                GUILayout.FlexibleSpace();
+                if (GUILayout.Button("EN"))
+                {
+                    texts = textEN;
+                }
+                if (GUILayout.Button("JA"))
+                {
+                    texts = textJA;
+                }
+            }
+            EditorGUILayout.Space();
+
             using (var check = new EditorGUI.ChangeCheckScope())
             {
                 srcParameters = EditorGUILayout.ObjectField($"{texts[0]}", srcParameters, typeof(VRCExpressionParameters), true) as VRCExpressionParameters;
