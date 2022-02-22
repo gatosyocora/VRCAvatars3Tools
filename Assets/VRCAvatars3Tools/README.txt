@@ -42,6 +42,25 @@ StateBehaviourを持つStateを含むLayerをコピーするとエラーが表�
   * ツールを作成
 
 ----------------------------------------------------
+# ExpressionParametersCombiner (ver 1.0)
+
+ExpressionParametersのParameterを他のExpressionParametersにコピーすることで合成します
+
+「VRCAvatars3Tools > ExpressionParametersCombiner」で以下の機能を持つウィンドウが開きます
+
+* Src ExpressionParameters : コピー元ExpressionParameters  
+* Dst ExpressionParameters : コピー先ExpressionParameters  
+
+「Combine」を押すとSrc ExpressionParametersのParameterがDst ExpressionParametersにコピーされます。  
+チェックが入っているParameterがコピーされます。  
+同名のParameterがある場合、そのParameterはコピーされません。  
+
+## 更新履歴
+
+### 1.0
+  * ツールを作成
+
+----------------------------------------------------
 # VRCAvatarConverterTo3 (ver 1.3.3)
 
 VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変換できます。
