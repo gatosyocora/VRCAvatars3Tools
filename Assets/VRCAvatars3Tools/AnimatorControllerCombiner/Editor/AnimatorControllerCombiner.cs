@@ -1,12 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using UnityEditor.Animations;
 using System.Linq;
-using System;
-using AnimatorControllerLayer = UnityEditor.Animations.AnimatorControllerLayer;
 using AnimatorController = UnityEditor.Animations.AnimatorController;
-using Parameter = VRC.SDKBase.VRC_AvatarParameterDriver.Parameter;
-using System.Collections.Generic;
 using Gatosyocora.VRCAvatars3Tools.Utilitys;
 
 // ver 1.1

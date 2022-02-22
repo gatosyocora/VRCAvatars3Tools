@@ -13,7 +13,7 @@ using VRC.SDK3.Avatars.ScriptableObjects;
 #endif
 using YamlDotNet.RepresentationModel;
 
-// ver 1.3.2
+// ver 1.3.3
 // Copyright (c) 2020 gatosyocora
 // MIT License. See LICENSE.txt
 
@@ -503,6 +503,10 @@ namespace Gatosyocora.VRCAvatars3Tools
                 // 改変アバターは削除したTransformの部分に謎の文字列が入っており
                 // これがあるとLoadに失敗するので削除する
                 yamlText = yamlText.Replace(" stripped", string.Empty);
+
+                // Tabを使っているとうまくいかないのでTabをSpace2つに置き換える
+                yamlText = yamlText.Replace("\t", "  ");
+
                 using (var stream = new StringReader(yamlText))
                 {
                     yaml.Load(stream);
@@ -797,7 +801,7 @@ namespace Gatosyocora.VRCAvatars3Tools
             controller.layers = layers;
             AssetDatabase.SaveAssets();
         }
-    }
 #endif
+    }
 }
 
