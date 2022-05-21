@@ -442,12 +442,17 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
                 var srcDriver = srcBehaivour as VRCAvatarParameterDriver;
                 parameterDriver.ApplySettings = srcDriver.ApplySettings;
                 parameterDriver.debugString = srcDriver.debugString;
+                parameterDriver.localOnly = srcDriver.localOnly;
                 parameterDriver.parameters = srcDriver.parameters
                                                 .Select(p =>
                                                 new Parameter
                                                 {
                                                     name = p.name,
-                                                    value = p.value
+                                                    value = p.value,
+                                                    valueMin = p.valueMin,
+                                                    valueMax = p.valueMax,
+                                                    chance = p.chance,
+                                                    type = p.type,
                                                 })
                                                 .ToList();
             }
