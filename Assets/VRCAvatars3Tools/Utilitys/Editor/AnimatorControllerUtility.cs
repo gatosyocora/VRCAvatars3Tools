@@ -452,6 +452,12 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
                                                     valueMax = p.valueMax,
                                                     chance = p.chance,
                                                     type = p.type,
+                                                    source = p.source,
+                                                    sourceMin = p.sourceMin,
+                                                    sourceMax = p.sourceMax,
+                                                    destMin = p.destMin,
+                                                    destMax = p.destMax,
+                                                    convertRange = p.convertRange,
                                                 })
                                                 .ToList();
             }
