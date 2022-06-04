@@ -5,10 +5,6 @@ using UnityEditor;
 using System.Linq;
 using System;
 using System.IO;
-#if VRC_SDK_VRCSDK3
-using VRC.SDK3.Avatars.Components;
-using static VRC.SDKBase.VRC_AvatarParameterDriver;
-#endif
 
 // ver 1.0.2
 // Copyright (c) 2020 gatosyocora
@@ -123,7 +119,7 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
             foreach (var srcBehaivour in srcStateMachine.behaviours)
             {
                 var behaivour = dstStateMachine.AddStateMachineBehaviour(srcBehaivour.GetType());
-                CopyBehaivourParameters(srcBehaivour, behaivour);
+                DeepCopy(srcBehaivour, behaivour);
             }
 
             // defaultStateの設定
@@ -156,7 +152,7 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
                 foreach (var srcBehaivour in srcChildStates[i].state.behaviours)
                 {
                     var behaivour = dstStates[i].state.AddStateMachineBehaviour(srcBehaivour.GetType());
-                    CopyBehaivourParameters(srcBehaivour, behaivour);
+                    DeepCopy(srcBehaivour, behaivour);
                 }
             }
 
@@ -377,16 +373,6 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
                 dstTransition.AddCondition(srcCondition.mode, srcCondition.threshold, srcCondition.parameter);
             }
 
-        }
-
-        private static void CopyBehaivourParameters(StateMachineBehaviour srcBehaivour, StateMachineBehaviour dstBehaivour)
-        {
-            if (srcBehaivour.GetType() != dstBehaivour.GetType())
-            {
-                throw new ArgumentException("Should be same type");
-            }
-
-            DeepCopy(srcBehaivour, dstBehaivour);
         }
 
         private static void AddObjectsInStateMachineToAnimatorController(AnimatorStateMachine stateMachine, string controllerPath)
