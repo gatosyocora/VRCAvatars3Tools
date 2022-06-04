@@ -440,7 +440,6 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
             else if (dstBehaivour is VRCAvatarParameterDriver parameterDriver)
             {
                 var srcDriver = srcBehaivour as VRCAvatarParameterDriver;
-                parameterDriver.ApplySettings = srcDriver.ApplySettings;
                 parameterDriver.debugString = srcDriver.debugString;
                 parameterDriver.localOnly = srcDriver.localOnly;
                 parameterDriver.parameters = srcDriver.parameters
