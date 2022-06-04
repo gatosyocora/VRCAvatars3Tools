@@ -385,93 +385,8 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
             {
                 throw new ArgumentException("Should be same type");
             }
-#if VRC_SDK_VRCSDK3
 
-            if (dstBehaivour is VRCAnimatorLayerControl layerControl)
-            {
-                var srcControl = srcBehaivour as VRCAnimatorLayerControl;
-                layerControl.ApplySettings = srcControl.ApplySettings;
-                layerControl.blendDuration = srcControl.blendDuration;
-                layerControl.debugString = srcControl.debugString;
-                layerControl.goalWeight = srcControl.goalWeight;
-                layerControl.layer = srcControl.layer;
-                layerControl.playable = srcControl.playable;
-            }
-            else if (dstBehaivour is VRCAnimatorLocomotionControl locomotionControl)
-            {
-                var srcControl = srcBehaivour as VRCAnimatorLocomotionControl;
-                locomotionControl.ApplySettings = srcControl.ApplySettings;
-                locomotionControl.debugString = srcControl.debugString;
-                locomotionControl.disableLocomotion = srcControl.disableLocomotion;
-            }
-            /*else if (dstBehaivour is VRCAnimatorRemeasureAvatar remeasureAvatar)
-            {
-                var srcRemeasureAvatar = srcBehaivour as VRCAnimatorRemeasureAvatar;
-                remeasureAvatar.ApplySettings = srcRemeasureAvatar.ApplySettings;
-                remeasureAvatar.debugString = srcRemeasureAvatar.debugString;
-                remeasureAvatar.delayTime = srcRemeasureAvatar.delayTime;
-                remeasureAvatar.fixedDelay = srcRemeasureAvatar.fixedDelay;
-            }*/
-            else if (dstBehaivour is VRCAnimatorTemporaryPoseSpace poseSpace)
-            {
-                var srcPoseSpace = srcBehaivour as VRCAnimatorTemporaryPoseSpace;
-                poseSpace.ApplySettings = srcPoseSpace.ApplySettings;
-                poseSpace.debugString = srcPoseSpace.debugString;
-                poseSpace.delayTime = srcPoseSpace.delayTime;
-                poseSpace.enterPoseSpace = srcPoseSpace.enterPoseSpace;
-                poseSpace.fixedDelay = srcPoseSpace.fixedDelay;
-            }
-            else if (dstBehaivour is VRCAnimatorTrackingControl trackingControl)
-            {
-                var srcControl = srcBehaivour as VRCAnimatorTrackingControl;
-                trackingControl.ApplySettings = srcControl.ApplySettings;
-                trackingControl.debugString = srcControl.debugString;
-                trackingControl.trackingEyes = srcControl.trackingEyes;
-                trackingControl.trackingHead = srcControl.trackingHead;
-                trackingControl.trackingHip = srcControl.trackingHip;
-                trackingControl.trackingLeftFingers = srcControl.trackingLeftFingers;
-                trackingControl.trackingLeftFoot = srcControl.trackingLeftFoot;
-                trackingControl.trackingLeftHand = srcControl.trackingLeftHand;
-                trackingControl.trackingMouth = srcControl.trackingMouth;
-                trackingControl.trackingRightFingers = srcControl.trackingRightFingers;
-                trackingControl.trackingRightFoot = srcControl.trackingRightFoot;
-                trackingControl.trackingRightHand = srcControl.trackingRightHand;
-            }
-            else if (dstBehaivour is VRCAvatarParameterDriver parameterDriver)
-            {
-                var srcDriver = srcBehaivour as VRCAvatarParameterDriver;
-                parameterDriver.debugString = srcDriver.debugString;
-                parameterDriver.localOnly = srcDriver.localOnly;
-                parameterDriver.parameters = srcDriver.parameters
-                                                .Select(p =>
-                                                new Parameter
-                                                {
-                                                    name = p.name,
-                                                    value = p.value,
-                                                    valueMin = p.valueMin,
-                                                    valueMax = p.valueMax,
-                                                    chance = p.chance,
-                                                    type = p.type,
-                                                    source = p.source,
-                                                    sourceMin = p.sourceMin,
-                                                    sourceMax = p.sourceMax,
-                                                    destMin = p.destMin,
-                                                    destMax = p.destMax,
-                                                    convertRange = p.convertRange,
-                                                })
-                                                .ToList();
-            }
-            else if (dstBehaivour is VRCPlayableLayerControl playableLayerControl)
-            {
-                var srcControl = srcBehaivour as VRCPlayableLayerControl;
-                playableLayerControl.ApplySettings = srcControl.ApplySettings;
-                playableLayerControl.blendDuration = srcControl.blendDuration;
-                playableLayerControl.debugString = srcControl.debugString;
-                playableLayerControl.goalWeight = srcControl.goalWeight;
-                playableLayerControl.layer = srcControl.layer;
-                playableLayerControl.outputParamHash = srcControl.outputParamHash;
-            }
-#endif
+            DeepCopy(srcBehaivour, dstBehaivour);
         }
 
         private static void AddObjectsInStateMachineToAnimatorController(AnimatorStateMachine stateMachine, string controllerPath)
@@ -517,6 +432,30 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
             var controllerPath = AssetDatabase.GenerateUniqueAssetPath(Path.Combine(outputFolderPath, controllerName));
             AssetDatabase.CopyAsset(originalControllerPath, controllerPath);
             return AssetDatabase.LoadAssetAtPath(controllerPath, typeof(AnimatorController)) as AnimatorController;
+        }
+
+        private static T DeepCopy<T>(T src, T dst)
+        {
+            foreach (var srcField in src.GetType().GetFields())
+            {
+                foreach (var dstField in dst.GetType().GetFields())
+                {
+                    if (srcField.Name != dstField.Name || srcField.FieldType != dstField.FieldType) continue;
+                    dstField.SetValue(dst, srcField.GetValue(src));
+                    break;
+                }
+            }
+
+            foreach (var srcProperty in src.GetType().GetProperties())
+            {
+                foreach (var dstProperty in dst.GetType().GetProperties())
+                {
+                    if (srcProperty.Name != dstProperty.Name || srcProperty.PropertyType != dstProperty.PropertyType) continue;
+                    dstProperty.SetValue(dst, srcProperty.GetValue(src));
+                    break;
+                }
+            }
+            return src;
         }
     }
 }
