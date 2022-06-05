@@ -4,7 +4,7 @@ using System.Linq;
 using AnimatorController = UnityEditor.Animations.AnimatorController;
 using Gatosyocora.VRCAvatars3Tools.Utilitys;
 
-// ver 1.1
+// ver 1.1.1
 // Copyright (c) 2020 gatosyocora
 // MIT License. See LICENSE.txt
 

@@ -1,7 +1,7 @@
 ﻿本セットに含まれる各種Editor拡張に関しての説明と利用規約を記載しています。
 
 ----------------------------------------------------
-# AnimatorControllerCombiner (ver 1.1)
+# AnimatorControllerCombiner (ver 1.1.1)
 
 AnimatorControllerのLayerとParameterを他のAnimatorControllerにコピーすることで合成します
 
@@ -15,12 +15,10 @@ Dst AnimatorController : コピー先AnimatorController
 同名のLayerがある場合、Layerが別名でコピーされます。
 同名のParameterがある場合、そのParameterはコピーされません。
 
-## 既知の不具合
-
-StateBehaviourを持つStateを含むLayerをコピーするとエラーが表示されます（動作には問題ない感じがします）
-
 ## 更新履歴
 
+### 1.1.1
+  * VRCSDK3-AVATAR-2022.06.03.00.04_Public.unitypackageに対応
 ### 1.1
   * LayerやParameterを選択してコピーできるように
 ### 1.0.3.3

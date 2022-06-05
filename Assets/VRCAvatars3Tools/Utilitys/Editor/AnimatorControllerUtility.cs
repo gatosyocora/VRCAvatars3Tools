@@ -6,7 +6,7 @@ using System.Linq;
 using System;
 using System.IO;
 
-// ver 1.0.2
+// ver 1.0.3
 // Copyright (c) 2020 gatosyocora
 // MIT License. See LICENSE.txt
 
