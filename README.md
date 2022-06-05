@@ -1,7 +1,7 @@
 ﻿本セットに含まれる各種Editor拡張に関しての説明と利用規約を記載しています。
 
 ----------------------------------------------------
-# AnimatorControllerCombiner (ver 1.1.1)
+# AnimatorControllerCombiner (ver 1.1.2)
 
 AnimatorControllerのLayerとParameterを他のAnimatorControllerにコピーすることで合成します
 
@@ -17,6 +17,8 @@ Dst AnimatorController : コピー先AnimatorController
 
 ## 更新履歴
 
+### 1.1.2
+  * 内部的な軽微な変更
 ### 1.1.1
   * VRCSDK3-AVATAR-2022.06.03.00.04_Public.unitypackageに対応
 ### 1.1
@@ -40,7 +42,7 @@ Dst AnimatorController : コピー先AnimatorController
   * ツールを作成
 
 ----------------------------------------------------
-# ExpressionParametersCombiner (ver 1.0)
+# ExpressionParametersCombiner (ver 1.0.1)
 
 ExpressionParametersのParameterを他のExpressionParametersにコピーすることで合成します
 
@@ -55,6 +57,8 @@ ExpressionParametersのParameterを他のExpressionParametersにコピーする�
 
 ## 更新履歴
 
+### 1.0.1
+  * パラメータ設定可能上限値を256bitに変更
 ### 1.0
   * ツールを作成
 
