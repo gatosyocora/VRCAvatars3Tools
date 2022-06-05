@@ -35,13 +35,13 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
 
         public static AnimatorControllerLayer AddLayer(AnimatorController controller, AnimatorControllerLayer srcLayer, bool setWeightTo1 = false, string controllerPath = "")
         {
-            var newLayer = DuplicateLayer(srcLayer, controller.MakeUniqueLayerName(srcLayer.name), setWeightTo1);
-            controller.AddLayer(newLayer);
-
             if (string.IsNullOrEmpty(controllerPath))
             {
                 controllerPath = AssetDatabase.GetAssetPath(controller);
             }
+
+            var newLayer = DuplicateLayer(srcLayer, controller.MakeUniqueLayerName(srcLayer.name), controllerPath, setWeightTo1);
+            controller.AddLayer(newLayer);
 
             // Unity再起動後も保持するためにアセットにオブジェクトを追加する必要がある
             AddObjectsInStateMachineToAnimatorController(newLayer.stateMachine, controllerPath);
@@ -68,7 +68,7 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
             return parameter;
         }
 
-        private static AnimatorControllerLayer DuplicateLayer(AnimatorControllerLayer srcLayer, string dstLayerName, bool firstLayer = false)
+        private static AnimatorControllerLayer DuplicateLayer(AnimatorControllerLayer srcLayer, string dstLayerName, string controllerPath, bool firstLayer = false)
         {
             var newLayer = new AnimatorControllerLayer()
             {
@@ -78,7 +78,7 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
                 iKPass = srcLayer.iKPass,
                 name = dstLayerName,
                 // 新しく作らないとLayer削除時にコピー元LayerのStateが消える
-                stateMachine = DuplicateStateMachine(srcLayer.stateMachine),
+                stateMachine = DuplicateStateMachine(srcLayer.stateMachine, controllerPath),
                 syncedLayerAffectsTiming = srcLayer.syncedLayerAffectsTiming,
                 syncedLayerIndex = srcLayer.syncedLayerIndex
             };
@@ -94,7 +94,7 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
             return newLayer;
         }
 
-        private static AnimatorStateMachine DuplicateStateMachine(AnimatorStateMachine srcStateMachine)
+        private static AnimatorStateMachine DuplicateStateMachine(AnimatorStateMachine srcStateMachine, string controllerPath)
         {
             var dstStateMachine = new AnimatorStateMachine
             {
@@ -109,10 +109,10 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
                                         new ChildAnimatorStateMachine
                                         {
                                             position = cs.position,
-                                            stateMachine = DuplicateStateMachine(cs.stateMachine)
+                                            stateMachine = DuplicateStateMachine(cs.stateMachine, controllerPath)
                                         })
                                     .ToArray(),
-                states = DuplicateChildStates(srcStateMachine.states),
+                states = DuplicateChildStates(srcStateMachine.states, controllerPath),
             };
 
             // behaivoursを設定
@@ -135,7 +135,7 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
             return dstStateMachine;
         }
 
-        private static ChildAnimatorState[] DuplicateChildStates(ChildAnimatorState[] srcChildStates)
+        private static ChildAnimatorState[] DuplicateChildStates(ChildAnimatorState[] srcChildStates, string controllerPath)
         {
             var dstStates = new ChildAnimatorState[srcChildStates.Length];
 
@@ -147,6 +147,8 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
                     position = srcChildStates[i].position,
                     state = DuplicateAnimatorState(srcState)
                 };
+
+                AssetDatabase.AddObjectToAsset(dstStates[i].state, controllerPath);
 
                 // behavioursを設定
                 foreach (var srcBehaivour in srcChildStates[i].state.behaviours)
@@ -380,7 +382,6 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
             AssetDatabase.AddObjectToAsset(stateMachine, controllerPath);
             foreach (var childState in stateMachine.states)
             {
-                AssetDatabase.AddObjectToAsset(childState.state, controllerPath);
                 foreach (var transition in childState.state.transitions)
                 {
                     AssetDatabase.AddObjectToAsset(transition, controllerPath);
