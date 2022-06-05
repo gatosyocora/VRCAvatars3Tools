@@ -413,9 +413,11 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
 
         private static T DeepCopy<T>(T src, T dst)
         {
-            foreach (var srcField in src.GetType().GetFields())
+            var srcFields = src.GetType().GetFields();
+            var dstFields = dst.GetType().GetFields();
+            foreach (var srcField in srcFields)
             {
-                foreach (var dstField in dst.GetType().GetFields())
+                foreach (var dstField in dstFields)
                 {
                     if (srcField.Name != dstField.Name || srcField.FieldType != dstField.FieldType) continue;
                     dstField.SetValue(dst, srcField.GetValue(src));
@@ -423,9 +425,11 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
                 }
             }
 
-            foreach (var srcProperty in src.GetType().GetProperties())
+            var srcProperties = src.GetType().GetProperties();
+            var dstProperties = dst.GetType().GetProperties();
+            foreach (var srcProperty in srcProperties)
             {
-                foreach (var dstProperty in dst.GetType().GetProperties())
+                foreach (var dstProperty in dstProperties)
                 {
                     if (srcProperty.Name != dstProperty.Name || srcProperty.PropertyType != dstProperty.PropertyType) continue;
                     dstProperty.SetValue(dst, srcProperty.GetValue(src));
