@@ -380,17 +380,7 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
         private static void AddObjectsInStateMachineToAnimatorController(AnimatorStateMachine stateMachine, string controllerPath)
         {
             AssetDatabase.AddObjectToAsset(stateMachine, controllerPath);
-            foreach (var childState in stateMachine.states)
-            {
-                foreach (var transition in childState.state.transitions)
-                {
-                    AssetDatabase.AddObjectToAsset(transition, controllerPath);
-                }
-                foreach (var behaviour in childState.state.behaviours)
-                {
-                    AssetDatabase.AddObjectToAsset(behaviour, controllerPath);
-                }
-            }
+
             foreach (var transition in stateMachine.anyStateTransitions)
             {
                 AssetDatabase.AddObjectToAsset(transition, controllerPath);
