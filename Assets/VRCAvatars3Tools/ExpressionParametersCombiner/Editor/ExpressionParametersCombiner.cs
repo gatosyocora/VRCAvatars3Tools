@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using VRC.SDK3.Avatars.ScriptableObjects;
 
-// ver 1.0
+// ver 1.0.1
 // Copyright (c) 2022 gatosyocora
 // MIT License. See LICENSE.txt
 
