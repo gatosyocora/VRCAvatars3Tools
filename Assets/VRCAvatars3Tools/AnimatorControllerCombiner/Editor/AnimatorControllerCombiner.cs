@@ -136,21 +136,26 @@ namespace Gatosyocora.VRCAvatars3Tools
             {
                 if (GUILayout.Button("Combine"))
                 {
-                    for (int i = 0; i < srcController.layers.Length; i++)
-                    {
-                        if (!isCopyLayers[i]) continue;
-                        AnimatorControllerUtility.AddLayer(dstController, srcController.layers[i], i == 0);
-                    }
-
-                    for (int i = 0; i < srcController.parameters.Length; i++)
-                    {
-                        if (!isCopyParameters[i]) continue;
-                        AnimatorControllerUtility.AddParameter(dstController, srcController.parameters[i]);
-                    }
+                    CombineAnimatorControllers(srcController, dstController, isCopyLayers, isCopyParameters);
                 }
             }
 
             EditorGUILayout.Space();
+        }
+
+        public static void CombineAnimatorControllers(AnimatorController srcController, AnimatorController dstController, bool[] isCopyLayers, bool[] isCopyParameters)
+        {
+            for (int i = 0; i < srcController.layers.Length; i++)
+            {
+                if (!isCopyLayers[i]) continue;
+                AnimatorControllerUtility.AddLayer(dstController, srcController.layers[i], i == 0);
+            }
+
+            for (int i = 0; i < srcController.parameters.Length; i++)
+            {
+                if (!isCopyParameters[i]) continue;
+                AnimatorControllerUtility.AddParameter(dstController, srcController.parameters[i]);
+            }
         }
     }
 }

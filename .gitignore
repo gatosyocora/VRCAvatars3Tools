@@ -60,3 +60,4 @@ crashlytics-build.properties
 
 Assets/*
 !Assets/VRCAvatars3Tools
+!Assets/VRCAvatars3ToolsTest
