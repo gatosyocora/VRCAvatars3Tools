@@ -12,7 +12,6 @@ namespace Gatosyocora.VRCAvatars3Tools
 {
     public class ExpressionParametersCombiner : EditorWindow
     {
-        private const int MAX_TOTAL_COST = 256;
         private const int COST_INT = 8;
         private const int COST_FLOAT = 8;
         private const int COST_BOOL = 1;
@@ -142,7 +141,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUILayout.LabelField("Parameters", EditorStyles.boldLabel);
-                        EditorGUILayout.LabelField($"{texts[5]}: {totalCost} -> {totalCost + copiedTotalCost} / {MAX_TOTAL_COST}");
+                        EditorGUILayout.LabelField($"{texts[5]}: {totalCost} -> {totalCost + copiedTotalCost} / {VRCExpressionParameters.MAX_PARAMETER_COST}");
                     }
                     using (new EditorGUI.IndentLevelScope())
                     {
@@ -251,7 +250,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                     .Sum();
         }
 
-        private bool IsOverCost() => totalCost + copiedTotalCost > MAX_TOTAL_COST;
+        private bool IsOverCost() => totalCost + copiedTotalCost > VRCExpressionParameters.MAX_PARAMETER_COST;
 
         private bool ContainsSameNameParameter() => copiedTotalCost < selectedTotalCost;
     }
