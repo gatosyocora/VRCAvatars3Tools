@@ -12,7 +12,7 @@ namespace Gatosyocora.VRCAvatars3Tools
 {
     public class ExpressionParametersCombiner : EditorWindow
     {
-        private const int MAX_TOTAL_COST = 128;
+        private const int MAX_TOTAL_COST = 256;
         private const int COST_INT = 8;
         private const int COST_FLOAT = 8;
         private const int COST_BOOL = 1;
