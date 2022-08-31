@@ -282,7 +282,7 @@ namespace Gatosyocora.VRCAvatars3Tools
             {
                 handLayerControllerPath = "Controllers/vrc_AvatarV3HandsLayer2.controller";
             }
-            var originalHandLayerControllerPath = Path.Combine(VRCConsts.ASSET_FOLDER_PATH, handLayerControllerPath);
+            var originalHandLayerControllerPath = Path.Combine(VRCConsts.ANIMATION_ASSET_FOLDER_PATH, handLayerControllerPath);
             var fxController = AnimatorControllerUtility.DuplicateAnimationLayerController(
                                     originalHandLayerControllerPath,
                                     Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
@@ -452,7 +452,7 @@ namespace Gatosyocora.VRCAvatars3Tools
             {
                 sittingLayerControllerPath = "Controllers/vrc_AvatarV3SittingLayer2.controller";
             }
-            var originalSittingLayerControllerPath = Path.Combine(VRCConsts.ASSET_FOLDER_PATH, sittingLayerControllerPath);
+            var originalSittingLayerControllerPath = Path.Combine(VRCConsts.ANIMATION_ASSET_FOLDER_PATH, sittingLayerControllerPath);
             var sittingController = AnimatorControllerUtility.DuplicateAnimationLayerController(
                                         originalSittingLayerControllerPath,
                                         Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),

@@ -88,7 +88,7 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         private static T DuplicateVRCAsset<T>(string assetPath) where T : UnityEngine.Object
         {
-            var baseAssetPath = Path.Combine(VRCConsts.ASSET_FOLDER_PATH, assetPath);
+            var baseAssetPath = Path.Combine(VRCConsts.ANIMATION_ASSET_FOLDER_PATH, assetPath);
 
             var folder = Selection.activeObject;
             var folderPath = AssetDatabase.GetAssetPath(folder);
