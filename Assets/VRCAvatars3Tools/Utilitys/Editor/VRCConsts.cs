@@ -10,5 +10,6 @@ namespace Gatosyocora.VRCAvatars3Tools.Utilitys
     public static class VRCConsts
     {
         public const string ANIMATION_ASSET_FOLDER_PATH = "Packages/com.vrchat.avatars/Samples/AV3 Demo Assets/Animation/";
+        public const string EXPRESSIONS_MENU_ASSET_FOLDER_PATH = "Packages/com.vrchat.avatars/Samples/AV3 Demo Assets/Expressions Menu/";
     }
 }

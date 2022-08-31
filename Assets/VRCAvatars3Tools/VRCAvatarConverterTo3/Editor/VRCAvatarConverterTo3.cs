@@ -410,7 +410,7 @@ namespace Gatosyocora.VRCAvatars3Tools
                 avatar.expressionsMenu = exMenu;
                 avatar.expressionParameters = exParameters;
 
-                var emoteIconPath = VRCAssetUtility.GetVRCAssetPathForSearch("person_dance t:texture");
+                var emoteIconPath = Path.Combine(VRCConsts.EXPRESSIONS_MENU_ASSET_FOLDER_PATH, "Icons/person_dance.png");
                 var emoteIcon = AssetDatabase.LoadAssetAtPath<Texture2D>(emoteIconPath);
 
                 exMenu.controls.Add(new VRCExpressionsMenu.Control
