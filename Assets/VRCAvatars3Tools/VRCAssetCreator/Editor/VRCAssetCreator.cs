@@ -13,43 +13,43 @@ namespace Gatosyocora.VRCAvatars3Tools
     {
         [MenuItem("Assets/Create/VRChat/Controllers/ActionLayer", priority = 4)]
         public static AnimatorController CreateActionLayer()
-             => DuplicateVRCAsset<AnimatorController>("vrc_AvatarV3ActionLayer");
+             => DuplicateVRCAsset<AnimatorController>("Controllers/vrc_AvatarV3ActionLayer.controller");
 
         [MenuItem("Assets/Create/VRChat/Controllers/FaceLayer", priority = 4)]
         public static AnimatorController CreateFaceLayer()
-            => DuplicateVRCAsset<AnimatorController>("vrc_AvatarV3FaceLayer");
+            => DuplicateVRCAsset<AnimatorController>("Controllers/vrc_AvatarV3FaceLayer.controller");
 
         [MenuItem("Assets/Create/VRChat/Controllers/HandsLayer", priority = 5)]
         public static AnimatorController CreateHandsLayer()
-            => DuplicateVRCAsset<AnimatorController>("vrc_AvatarV3HandsLayer");
+            => DuplicateVRCAsset<AnimatorController>("Controllers/vrc_AvatarV3HandsLayer.controller");
 
         [MenuItem("Assets/Create/VRChat/Controllers/HandsLayer2", priority = 5)]
         public static AnimatorController CreateHandsLayer2()
-            => DuplicateVRCAsset<AnimatorController>("vrc_AvatarV3HandsLayer2");
+            => DuplicateVRCAsset<AnimatorController>("Controllers/vrc_AvatarV3HandsLayer2.controller");
 
         [MenuItem("Assets/Create/VRChat/Controllers/IdleLayer", priority = 2)]
         public static AnimatorController CreateIdleLayer()
-            => DuplicateVRCAsset<AnimatorController>("vrc_AvatarV3IdleLayer");
+            => DuplicateVRCAsset<AnimatorController>("Controllers/vrc_AvatarV3IdleLayer.controller");
 
         [MenuItem("Assets/Create/VRChat/Controllers/LocomotionLayer", priority = 1)]
         public static AnimatorController CreateLocomotionLayer()
-            => DuplicateVRCAsset<AnimatorController>("vrc_AvatarV3LocomotionLayer");
+            => DuplicateVRCAsset<AnimatorController>("Controllers/vrc_AvatarV3LocomotionLayer.controller");
 
         [MenuItem("Assets/Create/VRChat/Controllers/SittingLayer", priority = 16)]
         public static AnimatorController CreateSittingLayer()
-            => DuplicateVRCAsset<AnimatorController>("vrc_AvatarV3SittingLayer");
+            => DuplicateVRCAsset<AnimatorController>("Controllers/vrc_AvatarV3SittingLayer.controller");
 
         [MenuItem("Assets/Create/VRChat/Controllers/SittingLayer2", priority = 16)]
         public static AnimatorController CreateSittingLayer2()
-            => DuplicateVRCAsset<AnimatorController>("vrc_AvatarV3SittingLayer2");
+            => DuplicateVRCAsset<AnimatorController>("Controllers/vrc_AvatarV3SittingLayer2.controller");
 
         [MenuItem("Assets/Create/VRChat/Controllers/UtilityIKPose", priority = 18)]
         public static AnimatorController CreateUtilityIKPose()
-            => DuplicateVRCAsset<AnimatorController>("vrc_AvatarV3UtilityIKPose");
+            => DuplicateVRCAsset<AnimatorController>("Controllers/vrc_AvatarV3UtilityIKPose.controller");
 
         [MenuItem("Assets/Create/VRChat/Controllers/UtilityTPose", priority = 17)]
         public static AnimatorController CreateUtilityTPose()
-            => DuplicateVRCAsset<AnimatorController>("vrc_AvatarV3UtilityTPose");
+            => DuplicateVRCAsset<AnimatorController>("Controllers/vrc_AvatarV3UtilityTPose.controller");
 
         [MenuItem("Assets/Create/VRChat/BlendTrees/New BlendTree", priority = 0)]
         public static BlendTree CreateNewBlendTree()
@@ -57,15 +57,17 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         [MenuItem("Assets/Create/VRChat/BlendTrees/StandingLocomotion", priority = 1)]
         public static BlendTree CreateStandingLocomotionBlendTree()
-            => DuplicateVRCAsset<BlendTree>("vrc_StandingLocomotion");
+            => DuplicateVRCAsset<BlendTree>("BlendTrees/vrc_StandingLocomotion.asset");
 
         [MenuItem("Assets/Create/VRChat/BlendTrees/CrouchingLocomotion", priority = 2)]
         public static BlendTree CreateCrouchingLocomotionBlendTree()
-            => DuplicateVRCAsset<BlendTree>("vrc_CrouchingLocomotion");
+            => DuplicateVRCAsset<BlendTree>("BlendTrees/vrc_CrouchingLocomotion.asset");
 
         [MenuItem("Assets/Create/VRChat/BlendTrees/ProneLocomotion", priority = 3)]
         public static BlendTree CreateProneLocomotionBlendTree()
-            => DuplicateVRCAsset<BlendTree>("vrc_ProneLocomotion");
+            => DuplicateVRCAsset<BlendTree>("BlendTrees/vrc_ProneLocomotion.asset");
+
+        private const string ASSET_FOLDER_PATH = "Packages/com.vrchat.avatars/Samples/AV3 Demo Assets/Animation/";
 
         private static BlendTree CreateNewBlendTree(string assetName)
         {
@@ -86,14 +88,14 @@ namespace Gatosyocora.VRCAvatars3Tools
             return asset;
         }
 
-        private static T DuplicateVRCAsset<T>(string assetName) where T : UnityEngine.Object
+        private static T DuplicateVRCAsset<T>(string assetPath) where T : UnityEngine.Object
         {
-            var baseAssetPath = VRCAssetUtility.GetVRCAssetPathForSearch($"{assetName} t:{typeof(T).Name}");
+            var baseAssetPath = Path.Combine(ASSET_FOLDER_PATH, assetPath);
 
             var folder = Selection.activeObject;
             var folderPath = AssetDatabase.GetAssetPath(folder);
-            var extention = Path.GetExtension(baseAssetPath);
-            var assetFullPath = AssetDatabase.GenerateUniqueAssetPath(Path.Combine(folderPath, $"{assetName}{extention}"));
+            var assetName = Path.GetFileName(assetPath);
+            var assetFullPath = AssetDatabase.GenerateUniqueAssetPath(Path.Combine(folderPath, assetName));
             AssetDatabase.CopyAsset(baseAssetPath, assetFullPath);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
