@@ -67,8 +67,6 @@ namespace Gatosyocora.VRCAvatars3Tools
         public static BlendTree CreateProneLocomotionBlendTree()
             => DuplicateVRCAsset<BlendTree>("BlendTrees/vrc_ProneLocomotion.asset");
 
-        private const string ASSET_FOLDER_PATH = "Packages/com.vrchat.avatars/Samples/AV3 Demo Assets/Animation/";
-
         private static BlendTree CreateNewBlendTree(string assetName)
         {
             var folder = Selection.activeObject;
@@ -90,7 +88,7 @@ namespace Gatosyocora.VRCAvatars3Tools
 
         private static T DuplicateVRCAsset<T>(string assetPath) where T : UnityEngine.Object
         {
-            var baseAssetPath = Path.Combine(ASSET_FOLDER_PATH, assetPath);
+            var baseAssetPath = Path.Combine(VRCConsts.ASSET_FOLDER_PATH, assetPath);
 
             var folder = Selection.activeObject;
             var folderPath = AssetDatabase.GetAssetPath(folder);
