@@ -273,16 +273,16 @@ namespace Gatosyocora.VRCAvatars3Tools
 
             // FaceEmotion
             var faceBlendShapes = new List<EditorCurveBinding>();
-            string searchTargetHandsLayer;
+            string handLayerControllerPath;
             if (avatar2Info.DefaultAnimationSet == VRCAvatarDescripterDeserializedObject.AnimationSet.Male)
             {
-                searchTargetHandsLayer = "vrc_AvatarV3HandsLayer t:AnimatorController";
+                handLayerControllerPath = "Controllers/vrc_AvatarV3HandsLayer.controller";
             }
             else
             {
-                searchTargetHandsLayer = "vrc_AvatarV3HandsLayer2 t:AnimatorController";
+                handLayerControllerPath = "Controllers/vrc_AvatarV3HandsLayer2.controller";
             }
-            var originalHandLayerControllerPath = VRCAssetUtility.GetVRCAssetPathForSearch(searchTargetHandsLayer);
+            var originalHandLayerControllerPath = Path.Combine(VRCConsts.ASSET_FOLDER_PATH, handLayerControllerPath);
             var fxController = AnimatorControllerUtility.DuplicateAnimationLayerController(
                                     originalHandLayerControllerPath,
                                     Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
@@ -443,16 +443,16 @@ namespace Gatosyocora.VRCAvatars3Tools
             }
 
             // Sitting Animation
-            string searchTargetSittingLayer;
+            string sittingLayerControllerPath;
             if (avatar2Info.DefaultAnimationSet == VRCAvatarDescripterDeserializedObject.AnimationSet.Male)
             {
-                searchTargetSittingLayer = "vrc_AvatarV3SittingLayer t:AnimatorController";
+                sittingLayerControllerPath = "Controllers/vrc_AvatarV3SittingLayer.controller";
             }
             else
             {
-                searchTargetSittingLayer = "vrc_AvatarV3SittingLayer2 t:AnimatorController";
+                sittingLayerControllerPath = "Controllers/vrc_AvatarV3SittingLayer2.controller";
             }
-            var originalSittingLayerControllerPath = VRCAssetUtility.GetVRCAssetPathForSearch(searchTargetSittingLayer);
+            var originalSittingLayerControllerPath = Path.Combine(VRCConsts.ASSET_FOLDER_PATH, sittingLayerControllerPath);
             var sittingController = AnimatorControllerUtility.DuplicateAnimationLayerController(
                                         originalSittingLayerControllerPath,
                                         Path.GetDirectoryName(avatar2Info.standingOverrideControllerPath),
