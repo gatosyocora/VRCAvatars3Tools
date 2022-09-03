@@ -141,7 +141,7 @@ VRCSDK2で作成したアバター(Avatars2.0)をAvatars3.0のアバターに変
   * ツールを作成
 
 ----------------------------------------------------
-# VRCAssetCreator (ver 1.1)
+# VRCAssetCreator (ver 1.1.1)
 
 VRCSDK3に関連したアセットを作成します。
 
@@ -177,6 +177,8 @@ VRCSDKに同封されているものを選択したフォルダに複製して�
 
 ## 更新履歴
 
+### 1.1.1
+  * VRChat Creator Companionに対応
 ### 1.1
   * BlendTreeも作成できるように
 ### 1.0.1
