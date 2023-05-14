@@ -215,6 +215,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "net.gatosyocora.vrcavatars3tools.bom": {
+      "version": "file:net.gatosyocora.vrcavatars3tools.bom",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "net.gatosyocora.vrcavatars3tools.expressionparameterscombiner": {
       "version": "file:net.gatosyocora.vrcavatars3tools.expressionparameterscombiner",
       "depth": 0,

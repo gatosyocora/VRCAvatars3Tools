@@ -1,0 +1,23 @@
+{
+  "name": "net.gatosyocora.vrcavatars3tools.bom",
+  "displayName": "VRCAvatars3Tools",
+  "version": "1.0.0",
+  "description": "Unity Editor extensions for VRChat Avatars3.0",
+  "author": {
+    "name": "gatosyocora",
+    "email": "gatosyocora36@gmail.com",
+    "url": "https://github.com/gatosyocora"
+  },
+  "dependencies": {},
+  "gitDependencies": {},
+  "vpmDependencies": {
+    "net.gatosyocora.vrcavatars3tools.animatorbindingseparater": "1.1.0",
+    "net.gatosyocora.vrcavatars3tools.animatorcontrollercombiner": "1.2.0",
+    "net.gatosyocora.vrcavatars3tools.expressionparameterscombiner": "1.1.0",
+    "net.gatosyocora.vrcavatars3tools.vrcassetcreator": "1.2.0",
+    "net.gatosyocora.vrcavatars3tools.vrcavatarconverterto3": "1.4.0"
+  },
+  "legacyFolders": {},
+  "legacyFiles": {},
+  "url": "https://github.com/gatosyocora/VRCAvatars3Tools/releases/download/vrcavatars3toolsbom-1.0.0/net.gatosyocora.vrcavatars3tools.bom-1.0.0.zip"
+}
