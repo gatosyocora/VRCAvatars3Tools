@@ -1,0 +1,22 @@
+{
+  "name": "net.gatosyocora.vrcavatars3tools.animatorcontrollercombiner",
+  "displayName": "AnimatorControllerCombiner",
+  "version": "1.2.0",
+  "description": "Unity Editor Extension for combine AnimationClip",
+  "license": "MIT",
+  "author": {
+    "name": "gatosyocora",
+    "email": "gatosyocora36@gmail.com",
+    "url": "https://github.com/gatosyocora"
+  },
+  "dependencies": {},
+  "gitDependencies": {},
+  "vpmDependencies": {
+    "net.gatosyocora.vrcavatars3tools.utilities" : "1.0.0"
+  },
+  "legacyFolders": {
+    "Assets\\VRCAvatars3Tools\\AnimatorControllerCombiner" : "f13b587839a4d5c439be7d49b649e419"
+  },
+  "legacyFiles": {},
+  "url": ""
+}
