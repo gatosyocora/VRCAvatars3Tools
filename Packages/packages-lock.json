@@ -203,6 +203,42 @@
         "com.unity.nuget.newtonsoft-json": "2.0.2"
       }
     },
+    "net.gatosyocora.vrcavatars3tools.animatorbindingseparater": {
+      "version": "file:net.gatosyocora.vrcavatars3tools.animationbindingseparator",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "net.gatosyocora.vrcavatars3tools.animatorcontrollercombiner": {
+      "version": "file:net.gatosyocora.vrcavatars3tools.animatorcontrollercombiner",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "net.gatosyocora.vrcavatars3tools.expressionparameterscombiner": {
+      "version": "file:net.gatosyocora.vrcavatars3tools.expressionparameterscombiner",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "net.gatosyocora.vrcavatars3tools.utilities": {
+      "version": "file:net.gatosyocora.vrcavatars3tools.utilities",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "net.gatosyocora.vrcavatars3tools.vrcassetcreator": {
+      "version": "file:net.gatosyocora.vrcavatars3tools.vrcassetcreator",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "net.gatosyocora.vrcavatars3tools.vrcavatarconverterto3": {
+      "version": "file:net.gatosyocora.vrcavatars3tools.vrcavatarconverterto3",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "nuget.mono-cecil": {
       "version": "0.1.6-preview",
       "depth": 1,
