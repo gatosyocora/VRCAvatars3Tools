@@ -1,0 +1,22 @@
+{
+  "name": "net.gatosyocora.vrcavatars3tools.expressionparameterscombiner",
+  "displayName": "ExpressionParametersCombiner",
+  "version": "1.1.0",
+  "description": "Unity Editor Extension for combining Expression Parameters",
+  "license": "MIT",
+  "author": {
+    "name": "gatosyocora",
+    "email": "gatosyocora36@gmail.com",
+    "url": "https://github.com/gatosyocora"
+  },
+  "dependencies": {},
+  "gitDependencies": {},
+  "vpmDependencies": {
+    "com.vrchat.avatars" : "3.1.6"
+  },
+  "legacyFolders": {
+    "Assets\\VRCAvatars3Tools\\ExpressionParametersCombiner" : "151252fe1d2d05843b2caf25c99f3a3f"
+  },
+  "legacyFiles": {},
+  "url": ""
+}
