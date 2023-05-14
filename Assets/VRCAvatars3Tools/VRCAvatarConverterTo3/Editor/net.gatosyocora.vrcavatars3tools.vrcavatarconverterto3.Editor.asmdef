@@ -1,0 +1,18 @@
+{
+    "name": "net.gatosyocora.vrcavatars3tools.vrcavatarconverterto3.Editor",
+    "references": [
+        "VRC.SDK3A.Editor",
+        "net.gatosyocora.vrcvatars3tools.utilities"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
