@@ -1,0 +1,20 @@
+{
+  "name": "net.gatosyocora.vrcavatars3tools.utilities",
+  "displayName": "VRCAvatars3Tools Utilities",
+  "version": "1.0.0",
+  "description": "Utilities for VRCAvatars3Tools",
+  "license": "MIT",
+  "author": {
+    "name": "gatosyocora",
+    "email": "gatosyocora36@gmail.com",
+    "url": "https://github.com/gatosyocora"
+  },
+  "dependencies": {},
+  "gitDependencies": {},
+  "vpmDependencies": {},
+  "legacyFolders": {
+    "Assets\\VRCAvatars3Tools\\Utilitiys" : "f14bc625eff39e443b22fddde23723d5"
+  },
+  "legacyFiles": {},
+  "url": ""
+}
