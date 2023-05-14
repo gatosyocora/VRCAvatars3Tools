@@ -11,7 +11,9 @@
   },
   "dependencies": {},
   "gitDependencies": {},
-  "vpmDependencies": {},
+  "vpmDependencies": {
+    "com.vrchat.avatars" : "3.1.6"
+  },
   "legacyFolders": {
     "Assets\\VRCAvatars3Tools\\AnimatorBindingSeparater" : "f5b360238e54c4344bd44c4671f33c10"
   },
