@@ -1,30 +1,30 @@
-// This file is part of YamlDotNet - A .NET library for YAML.
-// Copyright (c) Antoine Aubry
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-// 
+﻿// This file is part of YamlDotNet - A .NET library for YAML.
+// Copyright (c) Antoine Aubry and contributors
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of
+// this software and associated documentation files (the "Software"), to deal in
+// the Software without restriction, including without limitation the rights to
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+// of the Software, and to permit persons to whom the Software is furnished to do
+// so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 using System;
 using System.Globalization;
-using System.Text;
 using System.Text.RegularExpressions;
 using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
+using YamlDotNet.Helpers;
 using YamlDotNet.Serialization.Utilities;
 
 namespace YamlDotNet.Serialization.NodeDeserializers
@@ -33,77 +33,100 @@ namespace YamlDotNet.Serialization.NodeDeserializers
     {
         private const string BooleanTruePattern = "^(true|y|yes|on)$";
         private const string BooleanFalsePattern = "^(false|n|no|off)$";
+        private readonly bool attemptUnknownTypeDeserialization;
+        private readonly ITypeConverter typeConverter;
+        private readonly YamlFormatter formatter;
 
-        bool INodeDeserializer.Deserialize(IParser parser, Type expectedType, Func<IParser, Type, object> nestedObjectDeserializer, out object value)
+        public ScalarNodeDeserializer(bool attemptUnknownTypeDeserialization, ITypeConverter typeConverter, YamlFormatter formatter)
         {
-            var scalar = parser.Allow<Scalar>();
-            if (scalar == null)
+            this.attemptUnknownTypeDeserialization = attemptUnknownTypeDeserialization;
+            this.typeConverter = typeConverter ?? throw new ArgumentNullException(nameof(typeConverter));
+            this.formatter = formatter;
+        }
+
+        //public ScalarNodeDeserializer(bool attemptUnknownTypeDeserialization, ITypeConverter typeConverter)
+        //    : this(attemptUnknownTypeDeserialization, typeConverter, YamlFormatter.Default)
+        //{
+        //}
+
+        public bool Deserialize(IParser parser, Type expectedType, Func<IParser, Type, object?> nestedObjectDeserializer, out object? value)
+        {
+            if (!parser.TryConsume<Scalar>(out var scalar))
             {
                 value = null;
                 return false;
             }
 
-            if (expectedType.IsEnum())
+            // Strip off the nullable type, if present
+            var underlyingType = Nullable.GetUnderlyingType(expectedType) ?? expectedType;
+
+            if (underlyingType.IsEnum())
             {
-                value = Enum.Parse(expectedType, scalar.Value, true);
+                value = Enum.Parse(underlyingType, scalar.Value, true);
+                return true;
             }
-            else
+
+            var typeCode = underlyingType.GetTypeCode();
+            switch (typeCode)
             {
-                var typeCode = expectedType.GetTypeCode();
-                switch (typeCode)
-                {
-                    case TypeCode.Boolean:
-                        value = DeserializeBooleanHelper(scalar.Value);
-                        break;
+                case TypeCode.Boolean:
+                    value = DeserializeBooleanHelper(scalar.Value);
+                    break;
 
-                    case TypeCode.Byte:
-                    case TypeCode.Int16:
-                    case TypeCode.Int32:
-                    case TypeCode.Int64:
-                    case TypeCode.SByte:
-                    case TypeCode.UInt16:
-                    case TypeCode.UInt32:
-                    case TypeCode.UInt64:
-                        value = DeserializeIntegerHelper(typeCode, scalar.Value);
-                        break;
+                case TypeCode.Byte:
+                case TypeCode.Int16:
+                case TypeCode.Int32:
+                case TypeCode.Int64:
+                case TypeCode.SByte:
+                case TypeCode.UInt16:
+                case TypeCode.UInt32:
+                case TypeCode.UInt64:
+                    value = DeserializeIntegerHelper(typeCode, scalar.Value);
+                    break;
 
-                    case TypeCode.Single:
-                        value = Single.Parse(scalar.Value, YamlFormatter.NumberFormat);
-                        break;
+                case TypeCode.Single:
+                    value = float.Parse(scalar.Value, formatter.NumberFormat);
+                    break;
 
-                    case TypeCode.Double:
-                        value = Double.Parse(scalar.Value, YamlFormatter.NumberFormat);
-                        break;
+                case TypeCode.Double:
+                    value = double.Parse(scalar.Value, formatter.NumberFormat);
+                    break;
 
-                    case TypeCode.Decimal:
-                        value = Decimal.Parse(scalar.Value, YamlFormatter.NumberFormat);
-                        break;
+                case TypeCode.Decimal:
+                    value = decimal.Parse(scalar.Value, formatter.NumberFormat);
+                    break;
 
-                    case TypeCode.String:
-                        value = scalar.Value;
-                        break;
+                case TypeCode.String:
+                    value = scalar.Value;
+                    break;
 
-                    case TypeCode.Char:
-                        value = scalar.Value[0];
-                        break;
+                case TypeCode.Char:
+                    value = scalar.Value[0];
+                    break;
 
-                    case TypeCode.DateTime:
-                        // TODO: This is probably incorrect. Use the correct regular expression.
-                        value = DateTime.Parse(scalar.Value, CultureInfo.InvariantCulture);
-                        break;
+                case TypeCode.DateTime:
+                    // TODO: This is probably incorrect. Use the correct regular expression.
+                    value = DateTime.Parse(scalar.Value, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+                    break;
 
-                    default:
-                        if (expectedType == typeof(object))
+                default:
+                    if (expectedType == typeof(object))
+                    {
+                        if (!scalar.IsKey && attemptUnknownTypeDeserialization)
+                        {
+                            value = AttemptUnknownTypeDeserialization(scalar);
+                        }
+                        else
                         {
                             // Default to string
                             value = scalar.Value;
                         }
-                        else
-                        {
-                            value = TypeConverter.ChangeType(scalar.Value, expectedType);
-                        }
-                        break;
-                }
+                    }
+                    else
+                    {
+                        value = typeConverter.ChangeType(scalar.Value, expectedType);
+                    }
+                    break;
             }
             return true;
         }
@@ -112,17 +135,17 @@ namespace YamlDotNet.Serialization.NodeDeserializers
         {
             bool result;
 
-            if (Regex.IsMatch(value, ScalarNodeDeserializer.BooleanTruePattern, RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(value, BooleanTruePattern, RegexOptions.IgnoreCase))
             {
                 result = true;
             }
-            else if (Regex.IsMatch(value, ScalarNodeDeserializer.BooleanFalsePattern, RegexOptions.IgnoreCase))
+            else if (Regex.IsMatch(value, BooleanFalsePattern, RegexOptions.IgnoreCase))
             {
                 result = false;
             }
             else
             {
-                throw new FormatException(String.Format("The value \"{0}\" is not a valid YAML Boolean", value));
+                throw new FormatException($"The value \"{value}\" is not a valid YAML Boolean");
             }
 
             return result;
@@ -130,10 +153,11 @@ namespace YamlDotNet.Serialization.NodeDeserializers
 
         private object DeserializeIntegerHelper(TypeCode typeCode, string value)
         {
-            var numberBuilder = new StringBuilder();
-            int currentIndex = 0;
-            bool isNegative = false;
-            int numberBase = 0;
+            using var numberBuilderStringBuilder = StringBuilderPool.Rent();
+            var numberBuilder = numberBuilderStringBuilder.Builder;
+            var currentIndex = 0;
+            var isNegative = false;
+            int numberBase;
             ulong result = 0;
 
             if (value[0] == '-')
@@ -206,7 +230,7 @@ namespace YamlDotNet.Serialization.NodeDeserializers
                         break;
 
                     case 16:
-                        result = ulong.Parse(numberBuilder.ToString(), NumberStyles.HexNumber, YamlFormatter.NumberFormat);
+                        result = ulong.Parse(numberBuilder.ToString(), NumberStyles.HexNumber, formatter.NumberFormat);
                         break;
 
                     case 10:
@@ -221,7 +245,7 @@ namespace YamlDotNet.Serialization.NodeDeserializers
                 var chunks = value.Substring(currentIndex).Split(':');
                 result = 0;
 
-                for (int chunkIndex = 0; chunkIndex < chunks.Length; chunkIndex++)
+                for (var chunkIndex = 0; chunkIndex < chunks.Length; chunkIndex++)
                 {
                     result *= 60;
 
@@ -232,7 +256,20 @@ namespace YamlDotNet.Serialization.NodeDeserializers
 
             if (isNegative)
             {
-                return CastInteger(checked(-(long)result), typeCode);
+                long toCast;
+
+                // we do this because abs(long.minvalue) is 1 more than long.maxvalue.
+                if (result == 9223372036854775808) // abs(long.minvalue) => ulong
+                {
+                    toCast = long.MinValue;
+                }
+                else
+                {
+                    // this will throw if it's too big.
+                    toCast = checked(-(long)result);
+                }
+
+                return CastInteger(toCast, typeCode);
             }
             else
             {
@@ -244,35 +281,18 @@ namespace YamlDotNet.Serialization.NodeDeserializers
         {
             checked
             {
-                switch (typeCode)
+                return typeCode switch
                 {
-                    case TypeCode.Byte:
-                        return (byte)number;
-
-                    case TypeCode.Int16:
-                        return (short)number;
-
-                    case TypeCode.Int32:
-                        return (int)number;
-
-                    case TypeCode.Int64:
-                        return number;
-
-                    case TypeCode.SByte:
-                        return (sbyte)number;
-
-                    case TypeCode.UInt16:
-                        return (ushort)number;
-
-                    case TypeCode.UInt32:
-                        return (uint)number;
-
-                    case TypeCode.UInt64:
-                        return (ulong)number;
-
-                    default:
-                        return number;
-                }
+                    TypeCode.Byte => (byte)number,
+                    TypeCode.Int16 => (short)number,
+                    TypeCode.Int32 => (int)number,
+                    TypeCode.Int64 => number,
+                    TypeCode.SByte => (sbyte)number,
+                    TypeCode.UInt16 => (ushort)number,
+                    TypeCode.UInt32 => (uint)number,
+                    TypeCode.UInt64 => (ulong)number,
+                    _ => number,
+                };
             }
         }
 
@@ -280,35 +300,127 @@ namespace YamlDotNet.Serialization.NodeDeserializers
         {
             checked
             {
-                switch (typeCode)
+                return typeCode switch
                 {
-                    case TypeCode.Byte:
-                        return (byte)number;
+                    TypeCode.Byte => (byte)number,
+                    TypeCode.Int16 => (short)number,
+                    TypeCode.Int32 => (int)number,
+                    TypeCode.Int64 => (long)number,
+                    TypeCode.SByte => (sbyte)number,
+                    TypeCode.UInt16 => (ushort)number,
+                    TypeCode.UInt32 => (uint)number,
+                    TypeCode.UInt64 => number,
+                    _ => number,
+                };
+            }
+        }
 
-                    case TypeCode.Int16:
-                        return (short)number;
+        private object? AttemptUnknownTypeDeserialization(Scalar value)
+        {
+            if (value.Style == ScalarStyle.SingleQuoted ||
+                value.Style == ScalarStyle.DoubleQuoted ||
+                value.Style == ScalarStyle.Folded)
+            {
+                return value.Value;
+            }
+            var v = value.Value;
+            object? result;
 
-                    case TypeCode.Int32:
-                        return (int)number;
+            switch (v)
+            {
+                case "":
+                case "~":
+                case "null":
+                case "Null":
+                case "NULL":
+                    return null;
+                case "true":
+                case "True":
+                case "TRUE":
+                    return true;
+                case "false":
+                case "False":
+                case "FALSE":
+                    return false;
+                default:
+                    if (Regex.IsMatch(v, "0x[0-9a-fA-F]+")) //base16 number
+                    {
+                        if (TryAndSwallow(() => Convert.ToByte(v, 16), out result)) { }
+                        else if (TryAndSwallow(() => Convert.ToInt16(v, 16), out result)) { }
+                        else if (TryAndSwallow(() => Convert.ToInt32(v, 16), out result)) { }
+                        else if (TryAndSwallow(() => Convert.ToInt64(v, 16), out result)) { }
+                        else if (TryAndSwallow(() => Convert.ToUInt64(v, 16), out result)) { }
+                        else
+                        {
+                            //we couldn't parse it, default to a string. It's probably to big.
+                            result = v;
+                        }
+                    }
+                    else if (Regex.IsMatch(v, "0o[0-9a-fA-F]+")) //base8 number
+                    {
+                        if (TryAndSwallow(() => Convert.ToByte(v, 8), out result)) { }
+                        else if (TryAndSwallow(() => Convert.ToInt16(v, 8), out result)) { }
+                        else if (TryAndSwallow(() => Convert.ToInt32(v, 8), out result)) { }
+                        else if (TryAndSwallow(() => Convert.ToInt64(v, 8), out result)) { }
+                        else if (TryAndSwallow(() => Convert.ToUInt64(v, 8), out result)) { }
+                        else
+                        {
+                            //we couldn't parse it, default to a string. It's probably to big.
+                            result = v;
+                        }
+                    }
+                    else if (Regex.IsMatch(v, @"[-+]?(\.[0-9]+|[0-9]+(\.[0-9]*)?)([eE][-+]?[0-9]+)?")) //regular number
+                    {
+                        if (TryAndSwallow(() => byte.Parse(v, formatter.NumberFormat), out result)) { }
+                        else if (TryAndSwallow(() => short.Parse(v, formatter.NumberFormat), out result)) { }
+                        else if (TryAndSwallow(() => int.Parse(v, formatter.NumberFormat), out result)) { }
+                        else if (TryAndSwallow(() => long.Parse(v, formatter.NumberFormat), out result)) { }
+                        else if (TryAndSwallow(() => ulong.Parse(v, formatter.NumberFormat), out result)) { }
+                        else if (TryAndSwallow(() => float.Parse(v, formatter.NumberFormat), out result)) { }
+                        else if (TryAndSwallow(() => double.Parse(v, formatter.NumberFormat), out result)) { }
+                        else
+                        {
+                            //we couldn't parse it, default to string, It's probably too big
+                            result = v;
+                        }
+                    }
+                    else if (Regex.IsMatch(v, @"^[-+]?(\.inf|\.Inf|\.INF)$")) //infinities
+                    {
+                        if (v.StartsWith("-"))
+                        {
+                            result = float.NegativeInfinity;
+                        }
+                        else
+                        {
+                            result = float.PositiveInfinity;
+                        }
+                    }
+                    else if (Regex.IsMatch(v, @"^(\.nan|\.NaN|\.NAN)$")) //not a number
+                    {
+                        result = float.NaN;
+                    }
+                    else
+                    {
+                        // not a known type, so make it a string.
+                        result = v;
+                    }
+                    break;
+            }
 
-                    case TypeCode.Int64:
-                        return (long)number;
+            return result;
+        }
 
-                    case TypeCode.SByte:
-                        return (sbyte)number;
-
-                    case TypeCode.UInt16:
-                        return (ushort)number;
-
-                    case TypeCode.UInt32:
-                        return (uint)number;
-
-                    case TypeCode.UInt64:
-                        return number;
-
-                    default:
-                        return number;
-                }
+        private static bool TryAndSwallow(Func<object> attempt, out object? value)
+        {
+            try
+            {
+                value = attempt();
+                return true;
+            }
+            catch
+            {
+                value = null;
+                return false;
             }
         }
     }
