@@ -1,6 +1,6 @@
 {
-    "name": "Utility",
-    "rootNamespace": "VRCAvatars3Tools",
+    "name": "VRCAvatars3Tools_Utilitys",
+    "rootNamespace": "",
     "references": [],
     "includePlatforms": [
         "Editor"

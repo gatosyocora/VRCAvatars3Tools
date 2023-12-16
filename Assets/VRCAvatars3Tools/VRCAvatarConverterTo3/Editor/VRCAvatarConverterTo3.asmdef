@@ -2,8 +2,8 @@
     "name": "VRCAvatarConverterTo3.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:4710d8de9da6a2141bd7a61f1090d485",
-        "GUID:a819a111ce282184d81f48e6fd2021be"
+        "GUID:79fef78aab6d2414a9bf79a9b00cba6a",
+        "GUID:9d5529d109743204bbf541138db03011"
     ],
     "includePlatforms": [
         "Editor"
@@ -15,7 +15,7 @@
         "VRCSDK3A.dll",
         "VRCSDKBase.dll"
     ],
-    "autoReferenced": true,
+    "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
