@@ -1,6 +1,6 @@
 {
     "name": "VRCAvatarConverterTo3.Editor",
-    "rootNamespace": "",
+    "rootNamespace": "VRCAvatars3Tools",
     "references": [
         "GUID:79fef78aab6d2414a9bf79a9b00cba6a",
         "GUID:9d5529d109743204bbf541138db03011"
@@ -15,7 +15,7 @@
         "VRCSDK3A.dll",
         "VRCSDKBase.dll"
     ],
-    "autoReferenced": false,
+    "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

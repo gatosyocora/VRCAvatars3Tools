@@ -1,13 +1,13 @@
 {
     "name": "VRCAvatars3Tools_YamlDotNet",
-    "rootNamespace": "",
+    "rootNamespace": "VRCAvatars3Tools",
     "references": [],
     "includePlatforms": [
         "Editor"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": true,
+    "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": false,
     "defineConstraints": [],
