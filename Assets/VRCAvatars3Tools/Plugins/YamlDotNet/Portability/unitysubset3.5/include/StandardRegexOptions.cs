@@ -21,7 +21,7 @@
 
 using System.Text.RegularExpressions;
 
-namespace YamlDotNet
+namespace VRCAvatars3Tools.Plugins.YamlDotNet
 {
     internal static class StandardRegexOptions
     {

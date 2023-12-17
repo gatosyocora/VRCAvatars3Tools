@@ -22,7 +22,7 @@
 using System;
 using System.Globalization;
 
-namespace YamlDotNet
+namespace VRCAvatars3Tools.Plugins.YamlDotNet
 {
     internal sealed class CultureInfoAdapter : CultureInfo
     {
