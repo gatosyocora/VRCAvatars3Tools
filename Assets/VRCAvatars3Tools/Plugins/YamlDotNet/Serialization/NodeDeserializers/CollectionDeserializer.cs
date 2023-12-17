@@ -23,11 +23,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
-using YamlDotNet.Serialization.Utilities;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core.Events;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.Utilities;
 
-namespace YamlDotNet.Serialization.NodeDeserializers
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.NodeDeserializers
 {
     public abstract class CollectionDeserializer
     {

@@ -22,13 +22,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.Schemas;
-using static YamlDotNet.Core.HashCode;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core.Events;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.Schemas;
+using static VRCAvatars3Tools.Plugins.YamlDotNet.Core.HashCode;
 
-namespace YamlDotNet.RepresentationModel
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.RepresentationModel
 {
     /// <summary>
     /// Represents a scalar node in the YAML document.

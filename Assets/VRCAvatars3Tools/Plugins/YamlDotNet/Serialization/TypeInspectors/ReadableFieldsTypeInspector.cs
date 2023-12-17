@@ -23,9 +23,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
 
-namespace YamlDotNet.Serialization.TypeInspectors
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.TypeInspectors
 {
     /// <summary>
     /// Returns the properties and fields of a type that are readable.

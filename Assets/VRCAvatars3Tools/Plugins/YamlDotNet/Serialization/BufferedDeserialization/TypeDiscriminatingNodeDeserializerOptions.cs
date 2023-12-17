@@ -21,12 +21,12 @@
 
 using System;
 using System.Collections.Generic;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
-using YamlDotNet.Serialization.NodeDeserializers;
-using YamlDotNet.Serialization.BufferedDeserialization.TypeDiscriminators;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.NamingConventions;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.NodeDeserializers;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.BufferedDeserialization.TypeDiscriminators;
 
-namespace YamlDotNet.Serialization.BufferedDeserialization
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.BufferedDeserialization
 {
     public class TypeDiscriminatingNodeDeserializerOptions : ITypeDiscriminatingNodeDeserializerOptions
     {

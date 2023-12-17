@@ -23,7 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace YamlDotNet.Serialization
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization
 {
     /// <summary>
     /// Provides access to the properties of a type.

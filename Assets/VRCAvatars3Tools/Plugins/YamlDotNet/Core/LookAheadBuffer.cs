@@ -22,9 +22,9 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using YamlDotNet.Helpers;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Helpers;
 
-namespace YamlDotNet.Core
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Core
 {
     /// <summary>
     /// Provides access to a stream and allows to peek at the next characters,

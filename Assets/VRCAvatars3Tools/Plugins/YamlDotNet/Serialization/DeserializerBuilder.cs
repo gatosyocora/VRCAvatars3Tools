@@ -24,19 +24,19 @@ using System.Collections.Generic;
 #if NET7_0_OR_GREATER
 using System.Diagnostics.CodeAnalysis;
 #endif
-using YamlDotNet.Core;
-using YamlDotNet.Serialization.BufferedDeserialization;
-using YamlDotNet.Serialization.NamingConventions;
-using YamlDotNet.Serialization.NodeDeserializers;
-using YamlDotNet.Serialization.NodeTypeResolvers;
-using YamlDotNet.Serialization.ObjectFactories;
-using YamlDotNet.Serialization.Schemas;
-using YamlDotNet.Serialization.TypeInspectors;
-using YamlDotNet.Serialization.TypeResolvers;
-using YamlDotNet.Serialization.Utilities;
-using YamlDotNet.Serialization.ValueDeserializers;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.BufferedDeserialization;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.NamingConventions;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.NodeDeserializers;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.NodeTypeResolvers;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.ObjectFactories;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.Schemas;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.TypeInspectors;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.TypeResolvers;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.Utilities;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.ValueDeserializers;
 
-namespace YamlDotNet.Serialization
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization
 {
     /// <summary>
     /// Creates and configures instances of <see cref="Deserializer" />.

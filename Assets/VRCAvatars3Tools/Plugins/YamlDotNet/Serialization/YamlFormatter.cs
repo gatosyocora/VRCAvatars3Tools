@@ -22,7 +22,7 @@
 using System;
 using System.Globalization;
 
-namespace YamlDotNet.Serialization
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization
 {
     public class YamlFormatter
     {

@@ -24,7 +24,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace YamlDotNet.Serialization.TypeInspectors
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.TypeInspectors
 {
     /// <summary>
     /// Wraps another <see cref="ITypeInspector"/> and applies caching.

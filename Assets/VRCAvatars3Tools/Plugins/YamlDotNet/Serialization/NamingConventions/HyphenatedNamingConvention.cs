@@ -20,9 +20,9 @@
 // SOFTWARE.
 
 using System;
-using YamlDotNet.Serialization.Utilities;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.Utilities;
 
-namespace YamlDotNet.Serialization.NamingConventions
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.NamingConventions
 {
     /// <summary>
     /// Convert the string from camelcase (thisIsATest) to a hyphenated (this-is-a-test) string

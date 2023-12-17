@@ -21,9 +21,9 @@
 
 using System;
 using System.Collections.Generic;
-using YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
 
-namespace YamlDotNet.RepresentationModel
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.RepresentationModel
 {
     /// <summary>
     /// Represents an alias node in the YAML document.

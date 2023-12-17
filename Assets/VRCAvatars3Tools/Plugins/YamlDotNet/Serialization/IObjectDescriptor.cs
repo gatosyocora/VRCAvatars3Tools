@@ -20,9 +20,9 @@
 // SOFTWARE.
 
 using System;
-using YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
 
-namespace YamlDotNet.Serialization
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization
 {
     /// <summary>
     /// Represents an object along with its type.
@@ -61,7 +61,7 @@ namespace YamlDotNet.Serialization
         /// <returns></returns>
         public static object NonNullValue(this IObjectDescriptor objectDescriptor)
         {
-            return objectDescriptor.Value ?? throw new InvalidOperationException($"Attempted to use a IObjectDescriptor of type '{objectDescriptor.Type.FullName}' whose Value is null at a point whete it is invalid to do so. This may indicate a bug in YamlDotNet.");
+            return objectDescriptor.Value ?? throw new InvalidOperationException($"Attempted to use a IObjectDescriptor of type '{objectDescriptor.Type.FullName}' whose Value is null at a point whete it is invalid to do so. This may indicate a bug in VRCAvatars3Tools.Plugins.YamlDotNet.");
         }
     }
 }

@@ -21,10 +21,10 @@
 
 using System;
 using System.Collections;
-using YamlDotNet.Core;
-using YamlDotNet.Serialization.ObjectFactories;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.ObjectFactories;
 
-namespace YamlDotNet.Serialization.NodeDeserializers
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.NodeDeserializers
 {
     public sealed class StaticArrayNodeDeserializer : INodeDeserializer
     {

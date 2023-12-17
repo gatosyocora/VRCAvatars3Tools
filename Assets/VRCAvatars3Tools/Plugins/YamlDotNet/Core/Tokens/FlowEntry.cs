@@ -19,7 +19,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-namespace YamlDotNet.Core.Tokens
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Core.Tokens
 {
     /// <summary>
     /// Represents a flow entry event.

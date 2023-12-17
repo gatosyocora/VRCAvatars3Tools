@@ -19,9 +19,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using YamlDotNet.Core.Events;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core.Events;
 
-namespace YamlDotNet.Core
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Core
 {
     /// <summary>
     /// Represents a YAML stream emitter.

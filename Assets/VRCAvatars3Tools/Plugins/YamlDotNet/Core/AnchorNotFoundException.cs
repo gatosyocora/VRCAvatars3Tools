@@ -21,7 +21,7 @@
 
 using System;
 
-namespace YamlDotNet.Core
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Core
 {
     /// <summary>
     /// The exception that is thrown when an alias references an anchor that does not exist.

@@ -21,10 +21,10 @@
 
 using System;
 using System.Collections.Generic;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core.Events;
 
-namespace YamlDotNet.Serialization.BufferedDeserialization
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.BufferedDeserialization
 {
     /// <summary>
     /// Wraps a <see cref="IParser"/> instance and allows it to be buffered as a LinkedList in memory and replayed.

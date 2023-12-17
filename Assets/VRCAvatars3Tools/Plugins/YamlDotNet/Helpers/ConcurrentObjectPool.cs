@@ -28,7 +28,7 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 
-namespace YamlDotNet.Helpers
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Helpers
 {
     /// <summary>
     /// Generic implementation of object pooling pattern with predefined pool size limit. The main

@@ -23,7 +23,7 @@ using System;
 using System.Diagnostics;
 using System.Text;
 
-namespace YamlDotNet.Helpers
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Helpers
 {
     /// <summary>
     /// Pooling of StringBuilder instances.

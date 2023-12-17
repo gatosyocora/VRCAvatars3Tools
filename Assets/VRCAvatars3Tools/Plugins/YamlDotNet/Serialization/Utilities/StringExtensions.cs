@@ -22,7 +22,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace YamlDotNet.Serialization.Utilities
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.Utilities
 {
     /// <summary>
     /// Various string extension methods

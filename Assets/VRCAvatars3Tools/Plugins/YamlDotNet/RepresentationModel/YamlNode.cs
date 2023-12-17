@@ -22,10 +22,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core.Events;
 
-namespace YamlDotNet.RepresentationModel
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.RepresentationModel
 {
     /// <summary>
     /// Represents a single node in the YAML document.

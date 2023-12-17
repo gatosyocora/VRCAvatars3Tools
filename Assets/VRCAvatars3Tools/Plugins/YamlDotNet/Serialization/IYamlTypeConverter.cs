@@ -20,9 +20,9 @@
 // SOFTWARE.
 
 using System;
-using YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
 
-namespace YamlDotNet.Serialization
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization
 {
     /// <summary>
     /// Allows to customize how a type is serialized and deserialized.

@@ -24,10 +24,10 @@ using System;
 using System.Globalization;
 using System.Linq;
 
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core.Events;
 
-namespace YamlDotNet.Serialization.Converters
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.Converters
 {
     /// <summary>
     /// This represents the YAML converter entity for <see cref="DateOnly"/>.

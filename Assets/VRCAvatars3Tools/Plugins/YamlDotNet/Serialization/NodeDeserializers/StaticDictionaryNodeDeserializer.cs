@@ -21,9 +21,9 @@
 
 using System;
 using System.Collections;
-using YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
 
-namespace YamlDotNet.Serialization.NodeDeserializers
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.NodeDeserializers
 {
     public class StaticDictionaryNodeDeserializer : DictionaryDeserializer, INodeDeserializer
     {

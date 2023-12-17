@@ -22,12 +22,12 @@
 using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
-using YamlDotNet.Helpers;
-using YamlDotNet.Serialization.Utilities;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core.Events;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Helpers;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.Utilities;
 
-namespace YamlDotNet.Serialization.NodeDeserializers
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.NodeDeserializers
 {
     public sealed class ScalarNodeDeserializer : INodeDeserializer
     {

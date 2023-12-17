@@ -20,9 +20,9 @@
 // SOFTWARE.
 
 using System;
-using YamlDotNet.Helpers;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Helpers;
 
-namespace YamlDotNet.Core
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Core
 {
     /// <summary>
     /// Represents a location inside a file

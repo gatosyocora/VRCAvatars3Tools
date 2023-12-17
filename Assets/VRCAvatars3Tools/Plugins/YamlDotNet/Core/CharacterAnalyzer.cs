@@ -22,7 +22,7 @@
 using System;
 using System.Diagnostics;
 
-namespace YamlDotNet.Core
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Core
 {
     [DebuggerStepThrough]
     internal sealed class CharacterAnalyzer<TBuffer> where TBuffer : class, ILookAheadBuffer

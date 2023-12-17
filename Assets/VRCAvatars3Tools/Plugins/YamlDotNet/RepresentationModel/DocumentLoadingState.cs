@@ -22,9 +22,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
 
-namespace YamlDotNet.RepresentationModel
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.RepresentationModel
 {
     /// <summary>
     /// Manages the state of a <see cref="YamlDocument" /> while it is loading.

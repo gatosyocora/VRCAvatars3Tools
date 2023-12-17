@@ -22,7 +22,7 @@
 
 using System;
 
-namespace YamlDotNet.Serialization.NamingConventions
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.NamingConventions
 {
     /// <summary>
     /// Performs no naming conversion.

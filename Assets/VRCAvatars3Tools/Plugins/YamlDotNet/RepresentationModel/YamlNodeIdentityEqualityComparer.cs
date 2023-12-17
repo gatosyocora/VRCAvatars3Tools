@@ -22,7 +22,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace YamlDotNet.RepresentationModel
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.RepresentationModel
 {
     /// <summary>
     /// Comparer that is based on identity comparisons.

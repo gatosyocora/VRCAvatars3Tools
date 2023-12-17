@@ -23,9 +23,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using YamlDotNet.Helpers;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Helpers;
 
-namespace YamlDotNet.Core
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Core
 {
     /// <summary>
     /// Generic queue on which items may be inserted

@@ -23,9 +23,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using HashCode = YamlDotNet.Core.HashCode;
+using HashCode = VRCAvatars3Tools.Plugins.YamlDotNet.Core.HashCode;
 
-namespace YamlDotNet.Serialization
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization
 {
     /// <summary>
     /// Define a collection of YamlAttribute Overrides for pre-defined object types.
@@ -178,10 +178,10 @@ namespace YamlDotNet.Serialization
 }
 
 #if !NET20
-namespace YamlDotNet.Serialization
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization
 {
     using System.Linq.Expressions;
-    using YamlDotNet.Helpers;
+    using VRCAvatars3Tools.Plugins.YamlDotNet.Helpers;
 
     partial class YamlAttributeOverrides
     {

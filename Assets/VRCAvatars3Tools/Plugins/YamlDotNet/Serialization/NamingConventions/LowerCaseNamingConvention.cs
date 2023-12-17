@@ -19,9 +19,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using YamlDotNet.Serialization.Utilities;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.Utilities;
 
-namespace YamlDotNet.Serialization.NamingConventions
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.NamingConventions
 {
     /// <summary>
     /// Convert the string with underscores (this_is_a_test) or hyphens (this-is-a-test) to 

@@ -24,18 +24,18 @@ using System.Collections.Generic;
 #if NET7_0_OR_GREATER
 using System.Diagnostics.CodeAnalysis;
 #endif
-using YamlDotNet.Core;
-using YamlDotNet.Helpers;
-using YamlDotNet.Serialization.Converters;
-using YamlDotNet.Serialization.EventEmitters;
-using YamlDotNet.Serialization.NamingConventions;
-using YamlDotNet.Serialization.ObjectFactories;
-using YamlDotNet.Serialization.ObjectGraphTraversalStrategies;
-using YamlDotNet.Serialization.ObjectGraphVisitors;
-using YamlDotNet.Serialization.TypeInspectors;
-using YamlDotNet.Serialization.TypeResolvers;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Helpers;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.Converters;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.EventEmitters;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.NamingConventions;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.ObjectFactories;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.ObjectGraphTraversalStrategies;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.ObjectGraphVisitors;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.TypeInspectors;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.TypeResolvers;
 
-namespace YamlDotNet.Serialization
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization
 {
 
     /// <summary>

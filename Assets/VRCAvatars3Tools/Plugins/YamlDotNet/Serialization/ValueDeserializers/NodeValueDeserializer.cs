@@ -21,11 +21,11 @@
 
 using System;
 using System.Collections.Generic;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
-using YamlDotNet.Serialization.Utilities;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core.Events;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.Utilities;
 
-namespace YamlDotNet.Serialization.ValueDeserializers
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.ValueDeserializers
 {
     public sealed class NodeValueDeserializer : IValueDeserializer
     {

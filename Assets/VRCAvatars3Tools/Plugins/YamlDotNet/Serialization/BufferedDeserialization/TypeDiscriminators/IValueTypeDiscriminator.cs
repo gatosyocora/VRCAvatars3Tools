@@ -20,9 +20,9 @@
 // SOFTWARE.
 
 using System;
-using YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
 
-namespace YamlDotNet.Serialization.BufferedDeserialization.TypeDiscriminators
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.BufferedDeserialization.TypeDiscriminators
 {
     /// <summary>
     /// An ITypeDiscriminator provides an interface for discriminating which dotnet type to deserialize a yaml

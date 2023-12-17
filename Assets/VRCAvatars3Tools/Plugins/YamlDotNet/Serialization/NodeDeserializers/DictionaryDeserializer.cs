@@ -21,10 +21,10 @@
 
 using System;
 using System.Collections;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core.Events;
 
-namespace YamlDotNet.Serialization.NodeDeserializers
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.NodeDeserializers
 {
     public abstract class DictionaryDeserializer
     {

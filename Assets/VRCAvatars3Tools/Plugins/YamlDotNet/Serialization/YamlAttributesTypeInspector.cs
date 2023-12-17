@@ -22,9 +22,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using YamlDotNet.Serialization.TypeInspectors;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.TypeInspectors;
 
-namespace YamlDotNet.Serialization
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization
 {
     /// <summary>
     /// Applies the Yaml* attributes to another <see cref="ITypeInspector"/>.

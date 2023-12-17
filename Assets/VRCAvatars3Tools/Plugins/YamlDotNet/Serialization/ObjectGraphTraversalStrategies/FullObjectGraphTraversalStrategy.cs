@@ -23,11 +23,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using YamlDotNet.Core;
-using YamlDotNet.Helpers;
-using YamlDotNet.Serialization.Utilities;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Helpers;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.Utilities;
 
-namespace YamlDotNet.Serialization.ObjectGraphTraversalStrategies
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.ObjectGraphTraversalStrategies
 {
     /// <summary>
     /// An implementation of <see cref="IObjectGraphTraversalStrategy"/> that traverses

@@ -22,10 +22,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using YamlDotNet.Helpers;
-using YamlDotNet.Serialization.Utilities;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Helpers;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.Utilities;
 
-namespace YamlDotNet.Serialization.ObjectFactories
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.ObjectFactories
 {
     public abstract class ObjectFactoryBase : IObjectFactory
     {

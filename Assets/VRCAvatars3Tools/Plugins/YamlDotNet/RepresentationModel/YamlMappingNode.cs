@@ -21,13 +21,13 @@
 
 using System;
 using System.Collections.Generic;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
-using YamlDotNet.Helpers;
-using YamlDotNet.Serialization;
-using static YamlDotNet.Core.HashCode;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core.Events;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Helpers;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization;
+using static VRCAvatars3Tools.Plugins.YamlDotNet.Core.HashCode;
 
-namespace YamlDotNet.RepresentationModel
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.RepresentationModel
 {
     /// <summary>
     /// Represents a mapping node in the YAML document.

@@ -22,9 +22,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using YamlDotNet.Core.Events;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core.Events;
 
-namespace YamlDotNet.Core
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Core
 {
     /// <summary>
     /// Extension methods that provide useful abstractions over <see cref="IParser"/>.

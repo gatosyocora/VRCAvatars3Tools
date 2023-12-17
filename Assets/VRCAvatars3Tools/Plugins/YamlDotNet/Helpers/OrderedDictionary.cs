@@ -26,7 +26,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace YamlDotNet.Helpers
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Helpers
 {
     [Serializable]
     internal sealed class OrderedDictionary<TKey, TValue> : IOrderedDictionary<TKey, TValue>

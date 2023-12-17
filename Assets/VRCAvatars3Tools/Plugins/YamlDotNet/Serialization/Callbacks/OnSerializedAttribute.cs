@@ -21,7 +21,7 @@
 
 using System;
 
-namespace YamlDotNet.Serialization.Callbacks
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.Callbacks
 {
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class OnSerializedAttribute : Attribute

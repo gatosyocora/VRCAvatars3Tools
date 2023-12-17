@@ -21,7 +21,7 @@
 
 using System.Collections.Generic;
 
-namespace YamlDotNet.Helpers
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Helpers
 {
     internal static class ReadOnlyCollectionExtensions
     {

@@ -21,7 +21,7 @@
 
 using System;
 
-namespace YamlDotNet.Serialization.TypeResolvers
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.TypeResolvers
 {
     /// <summary>
     /// The type returned will be the actual type of the value, if available.

@@ -20,9 +20,9 @@
 // SOFTWARE.
 
 using System.Collections.Generic;
-using YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
 
-namespace YamlDotNet.RepresentationModel
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.RepresentationModel
 {
     /// <summary>
     /// Holds state that is used when emitting a stream.

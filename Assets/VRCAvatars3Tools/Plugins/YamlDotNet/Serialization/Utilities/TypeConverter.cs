@@ -21,14 +21,14 @@
 
 // Remarks: This file is imported from the SixPack library. This is ok because
 // the copyright holder has agreed to redistribute this file under the license
-// used in YamlDotNet.
+// used in VRCAvatars3Tools.Plugins.YamlDotNet.
 
 using System;
 using System.Globalization;
 using System.Reflection;
 using System.ComponentModel;
 
-namespace YamlDotNet.Serialization.Utilities
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.Utilities
 {
     /// <summary>
     /// Performs type conversions using every standard provided by the .NET library.
@@ -236,7 +236,7 @@ namespace YamlDotNet.Serialization.Utilities
 }
 
 #if !(NETSTANDARD1_3 || UNITY)
-namespace YamlDotNet.Serialization.Utilities
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.Utilities
 {
     using System.Linq;
 

@@ -22,7 +22,7 @@
 using System;
 using System.Collections;
 
-namespace YamlDotNet.Serialization.ObjectFactories
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.ObjectFactories
 {
     /// <summary>
     /// Gets information about and creates statically known, serializable, types.

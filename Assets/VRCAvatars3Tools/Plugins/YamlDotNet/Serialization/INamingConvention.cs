@@ -20,7 +20,7 @@
 // SOFTWARE.
 
 
-namespace YamlDotNet.Serialization
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization
 {
     /// <summary>
     /// Translates property names according to a specific convention.

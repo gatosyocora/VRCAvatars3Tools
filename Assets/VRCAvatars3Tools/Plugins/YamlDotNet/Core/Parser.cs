@@ -23,12 +23,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using YamlDotNet.Core.Tokens;
-using MappingStyle = YamlDotNet.Core.Events.MappingStyle;
-using ParsingEvent = YamlDotNet.Core.Events.ParsingEvent;
-using SequenceStyle = YamlDotNet.Core.Events.SequenceStyle;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core.Tokens;
+using MappingStyle = VRCAvatars3Tools.Plugins.YamlDotNet.Core.Events.MappingStyle;
+using ParsingEvent = VRCAvatars3Tools.Plugins.YamlDotNet.Core.Events.ParsingEvent;
+using SequenceStyle = VRCAvatars3Tools.Plugins.YamlDotNet.Core.Events.SequenceStyle;
 
-namespace YamlDotNet.Core
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Core
 {
     /// <summary>
     /// Parses YAML streams.

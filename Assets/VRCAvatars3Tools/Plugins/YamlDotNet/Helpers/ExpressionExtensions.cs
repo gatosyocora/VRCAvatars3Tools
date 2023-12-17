@@ -26,7 +26,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace YamlDotNet.Helpers
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Helpers
 {
     public static class ExpressionExtensions
     {

@@ -21,10 +21,10 @@
 
 using System;
 using System.Collections.Generic;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core.Events;
 
-namespace YamlDotNet.Serialization.NodeTypeResolvers
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.NodeTypeResolvers
 {
     public sealed class TagNodeTypeResolver : INodeTypeResolver
     {

@@ -24,10 +24,10 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
-using YamlDotNet.Core;
-using YamlDotNet.Serialization.Schemas;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.Schemas;
 
-namespace YamlDotNet.Serialization.EventEmitters
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.EventEmitters
 {
     public sealed class TypeAssigningEventEmitter : ChainedEventEmitter
     {

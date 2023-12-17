@@ -25,7 +25,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace YamlDotNet.Serialization.TypeInspectors
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.TypeInspectors
 {
     public abstract class TypeInspectorSkeleton : ITypeInspector
     {

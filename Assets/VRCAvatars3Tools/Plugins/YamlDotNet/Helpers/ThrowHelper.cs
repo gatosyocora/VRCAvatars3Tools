@@ -22,7 +22,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace YamlDotNet.Helpers
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Helpers
 {
     internal static class ThrowHelper
     {

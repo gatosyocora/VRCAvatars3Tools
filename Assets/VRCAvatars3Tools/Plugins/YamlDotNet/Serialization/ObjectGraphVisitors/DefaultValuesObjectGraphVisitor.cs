@@ -22,9 +22,9 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
-using YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
 
-namespace YamlDotNet.Serialization.ObjectGraphVisitors
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.ObjectGraphVisitors
 {
     public sealed class DefaultValuesObjectGraphVisitor : ChainedObjectGraphVisitor
     {

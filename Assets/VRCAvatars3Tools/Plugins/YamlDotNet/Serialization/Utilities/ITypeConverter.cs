@@ -21,7 +21,7 @@
 
 using System;
 
-namespace YamlDotNet.Serialization.Utilities
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.Utilities
 {
     public interface ITypeConverter
     {

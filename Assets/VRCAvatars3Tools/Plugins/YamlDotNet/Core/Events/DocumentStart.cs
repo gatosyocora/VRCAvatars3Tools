@@ -19,9 +19,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using YamlDotNet.Core.Tokens;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core.Tokens;
 
-namespace YamlDotNet.Core.Events
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Core.Events
 {
     /// <summary>
     /// Represents a document start event.

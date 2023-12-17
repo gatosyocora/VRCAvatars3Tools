@@ -23,7 +23,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace YamlDotNet.Helpers
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Helpers
 {
     /// <summary>
     /// Adapts an <see cref="System.Collections.Generic.ICollection{T}" /> to <see cref="IList" />

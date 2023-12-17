@@ -24,9 +24,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using YamlDotNet.Serialization.Callbacks;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.Callbacks;
 
-namespace YamlDotNet.Serialization.ObjectFactories
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.ObjectFactories
 {
     /// <summary>
     /// Creates objects using Activator.CreateInstance.

@@ -23,7 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace YamlDotNet.Serialization.ObjectGraphVisitors
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.ObjectGraphVisitors
 {
     /// <summary>
     /// A base class that simplifies the correct implementation of <see cref="IObjectGraphVisitor{Nothing}" />.

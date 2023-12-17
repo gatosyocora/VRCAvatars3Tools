@@ -22,9 +22,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using YamlDotNet.Helpers;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Helpers;
 
-namespace YamlDotNet.Serialization.ObjectGraphTraversalStrategies
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.ObjectGraphTraversalStrategies
 {
     /// <summary>
     /// An implementation of <see cref="IObjectGraphTraversalStrategy"/> that traverses

@@ -20,9 +20,9 @@
 // SOFTWARE.
 
 using System;
-using YamlDotNet.Core;
+using VRCAvatars3Tools.Plugins.YamlDotNet.Core;
 
-namespace YamlDotNet.Serialization.EventEmitters
+namespace VRCAvatars3Tools.Plugins.YamlDotNet.Serialization.EventEmitters
 {
     /// <summary>
     /// Provided the base implementation for an IEventEmitter that is a
