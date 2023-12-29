@@ -92,7 +92,7 @@ namespace Gatosyocora.VRCAvatars3Tools
 
             var folder = Selection.activeObject;
             var folderPath = AssetDatabase.GetAssetPath(folder);
-            var assetName = Path.GetFileNameWithoutExtension(baseAssetPath);
+            var assetName = Path.GetFileName(baseAssetPath);
             var assetFullPath = AssetDatabase.GenerateUniqueAssetPath(Path.Combine(folderPath, assetName));
             AssetDatabase.CopyAsset(baseAssetPath, assetFullPath);
             AssetDatabase.SaveAssets();
