@@ -12,7 +12,7 @@
   "dependencies": {},
   "gitDependencies": {},
   "vpmDependencies": {
-    "com.vrchat.avatars" : "3.1.6"
+    "com.vrchat.avatars" : ">=3.1.6"
   },
   "legacyFolders": {
     "Assets\\VRCAvatars3Tools\\Utilitiys" : "f14bc625eff39e443b22fddde23723d5"
