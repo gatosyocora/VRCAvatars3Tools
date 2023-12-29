@@ -13,7 +13,9 @@
   "vpmDependencies": {
     "net.gatosyocora.vrcavatars3tools.animatorbindingseparater": "1.2.0"
   },
-  "legacyFolders": {},
+  "legacyFolders": {
+    "Assets\\VRCAvatars3Tools": "304f63f4e8ed67141a630d8b35a7c6f1"
+  },
   "legacyFiles": {},
   "url": "https://github.com/gatosyocora/VRCAvatars3Tools/releases/download/bom-1.0.0/net.gatosyocora.vrcavatars3tools.bom-1.0.0.zip"
 }
