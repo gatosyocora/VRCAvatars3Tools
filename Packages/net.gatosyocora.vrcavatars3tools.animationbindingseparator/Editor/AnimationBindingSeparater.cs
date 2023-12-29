@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-// ver 1.0
+// ver 1.2.0
 // Copyright (c) 2020 gatosyocora
 // MIT License. See LICENSE.txt
 

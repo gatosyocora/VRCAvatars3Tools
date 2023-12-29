@@ -1,4 +1,4 @@
-﻿# AnimationBindingSeparater (ver 1.1.0)
+﻿# AnimationBindingSeparater (ver 1.2.0)
 
 AnimationClipからTransformを変更するキーを別のAnimationClipに分割します。
 
@@ -19,6 +19,8 @@ AnimationClipのInspectorの上部（AnimationClipの名前付近）を右クリ
 
 ## 更新履歴
 
+### ver1.2.0
+  * Unity2022に対応
 ### ver1.1.0
   * VPM対応
 ### ver1.0

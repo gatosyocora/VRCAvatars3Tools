@@ -1,7 +1,7 @@
 {
   "name": "net.gatosyocora.vrcavatars3tools.animatorbindingseparater",
   "displayName": "AnimatorBindingSeparater",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Unity Editor Extension for dividing AnimationClip into animation keys changed Transform and others",
   "license": "MIT",
   "author": {
@@ -12,11 +12,11 @@
   "dependencies": {},
   "gitDependencies": {},
   "vpmDependencies": {
-    "com.vrchat.avatars" : "3.1.6"
+    "com.vrchat.avatars": ">=3.5.0"
   },
   "legacyFolders": {
     "Assets\\VRCAvatars3Tools\\AnimatorBindingSeparater" : "f5b360238e54c4344bd44c4671f33c10"
   },
   "legacyFiles": {},
-  "url": "https://github.com/gatosyocora/VRCAvatars3Tools/releases/download/animationbindingseparator-1.1.0/net.gatosyocora.vrcavatars3tools.animationbindingseparator-1.1.0.zip"
+  "url": "https://github.com/gatosyocora/VRCAvatars3Tools/releases/download/animationbindingseparator-1.2.0/net.gatosyocora.vrcavatars3tools.animationbindingseparator-1.2.0.zip"
 }
