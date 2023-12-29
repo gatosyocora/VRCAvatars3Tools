@@ -240,7 +240,7 @@
         "com.unity.xr.oculus": "4.0.0"
       }
     },
-    "net.gatosyocora.vrcavatars3tools.animatorbindingseparater": {
+    "net.gatosyocora.vrcavatars3tools.animationbindingseparater": {
       "version": "file:net.gatosyocora.vrcavatars3tools.animationbindingseparator",
       "depth": 0,
       "source": "embedded",
